@@ -1,0 +1,35 @@
+Database Tables
+
+
+Endpoints
+/
+/jobs
+POST /jobs
+/jobs/recent
+/job/show/{id} -> View Single Job
+/articles -> All articles
+/quick_tips
+/quick_tips/{id} -> View Single tip
+/subscribe -> subscribe to our newsletter
+/cv/download/{cv} -> download CV
+/testimony/developers -> Developer testimonials view
+
+Client [General Use]
+/countries
+/states
+/categories
+/levels
+/job_type
+
+Secure
+/User -> User Object
+/auth/register
+/auth/resend -> resend authcode
+/auth/user/activate -> Activate account
+
+Password
+/password/token -> get password token
+/password/reset -> Password reset
+/password/change -> change password
+
+
