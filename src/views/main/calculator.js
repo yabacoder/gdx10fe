@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 // import Layout from './layout';
-import { TECHNOLOGIES } from "../../statics/technologies";
+// import { TECHNOLOGIES } from "../../statics/technologies";
 import Select from "react-select";
-import { Categories } from "../../statics/categories";
-import http from "../../utils/service";
+// import { Categories } from "../../statics/categories";
+// import http from "../../utils/service";
 
 const Calculator = () => {
-	const [technologies, setTechnologies] = useState(TECHNOLOGIES);
+	const [technologies, setTechnologies] = useState();
+	// const [technologies, setTechnologies] = useState(TECHNOLOGIES);
 	const [stayOpen, setStayOpen] = useState(false);
 	const [removeSelected, setRemoveSelected] = useState(true);
 	const [process, setProcess] = useState("");
@@ -18,41 +19,41 @@ const Calculator = () => {
 	 * Get all processes defined on the backend.
 	 */
 	const getProcesses = () => {
-		http("/processes", "get").then(res => {
-			if (res.status) {
-				setProcesses(res.data);
-				// console.log(res.data);
-			} else {
-				console.log("Error occured", res);
-			}
-		});
+		// http("/processes", "get").then(res => {
+		// 	if (res.status) {
+		// 		setProcesses(res.data);
+		// 		// console.log(res.data);
+		// 	} else {
+		// 		console.log("Error occured", res);
+		// 	}
+		// });
 	};
 	const selectProcesses = e => {
 		let pros;
-		if (e.target.checked) {
-			pros = process.concat(e.target.value);
+		// if (e.target.checked) {
+		// 	pros = process.concat(e.target.value);
 
-			console.log(process);
-		} else {
-			let index = processes.indexOf(e.target.value);
-			processes.splice(index, 1);
-			setPerks(processes);
-		}
+		// 	console.log(process);
+		// } else {
+		// 	let index = processes.indexOf(e.target.value);
+		// 	processes.splice(index, 1);
+		// 	setPerks(processes);
+		// }
 
-		//pros.replace(/_([^_]*)$/, "$1");
-		setProcess(pros);
+		// //pros.replace(/_([^_]*)$/, "$1");
+		// setProcess(pros);
 	};
 
 	const calculateSalary = async e => {
 		e.preventDefault();
-		const data = {
-			email,
-			technologies,
-			processes: process,
-		};
+		// const data = {
+		// 	email,
+		// 	technologies,
+		// 	processes: process,
+		// };
 		try {
-			const res = await http("/calculate", "post", data);
-			setResult(res.message);
+			// const res = await http("/calculate", "post", data);
+			// setResult(res.message);
 		} catch (err) {
 			console.log(err);
 		}
@@ -78,7 +79,7 @@ const Calculator = () => {
 		getProcesses();
 	}, []);
 
-	const options = TECHNOLOGIES;
+	const options =''; // TECHNOLOGIES;
 	return (
 		<section className="container pt-32 mx-auto mb-10 bg-white rounded-lg shadow-lg md:w-1/2 md:mt-16 md:p-16">
 			{!result && (
@@ -90,7 +91,7 @@ const Calculator = () => {
 							<label className="block w-full p-2 md:w-1/2 md:p-1">
 								<select className="block w-full mt-1 form-select">
 									<option>Stack</option>
-									{Categories.map(category => (
+									{/* {Categories.map(category => (
 										<option
 											value={category.id}
 											// onChange={this.onChange}
@@ -98,7 +99,7 @@ const Calculator = () => {
 										>
 											{category.name}
 										</option>
-									))}
+									))} */}
 								</select>
 							</label>
 							<label className="block w-full p-2 md:w-1/2 md:p-1">

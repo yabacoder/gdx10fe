@@ -2,12 +2,12 @@ import React from 'react'
 //  import Layout from "./layout";
 
 
-export const FAQ = () => {
+const Faq = () => {
     return (
        
             <section className="px-6 py-32 mx-auto bg-white rounded-md shadow-lg md:p-16 md:mt-16 md:py-10 md:px-16">
                 <div className="mb-4 text-center section-header">
-                    <h3>Frequently Asked Questions</h3>
+                    <h3>FraFaquently Asked Questions</h3>
                 </div>
                 <div class="flex flex-col items-center justify-center md:flex-row">
                     <div className=" md:w-3/5 md:pb-0">
@@ -106,7 +106,6 @@ export const FAQ = () => {
                                             <line id="Line_168" data-name="Line 168" y2="8.278" transform="translate(13.859 9.947) rotate(90)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
                                         </g>
                                     </svg>
-
                                 </div>
                             </div>
                         </div>   
@@ -136,3 +135,4 @@ provide you with an answer</p>
             </section>
        )
 }
+export default Faq;

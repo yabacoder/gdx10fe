@@ -15,6 +15,9 @@ import JobView from './views/job/view';
 import About from './views/main/About';
 import Pricing from './views/main/Pricing';
 import Contact from './views/main/Contact';
+import Calculator from "./views/main/Calculator";
+import TalentManagement from "./views/main/TalentManagement";
+import Faq from "./views/main/Faq";
 
 
 
@@ -56,6 +59,18 @@ export function Routes() {
                 {
                     path: "contact",
                     element: <Contact />,
+                },
+                {
+                    path: "salary_calculator",
+                    element: <Calculator />,
+                },
+                {
+                    path: "talent-management",
+                    element: <TalentManagement />,
+                },
+                {
+                    path: "faq",
+                    element: <Faq />,
                 },
 
             ],
