@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import useAuth from '../../hooks/useAuth';
-import http from '../../utils/service';
+// import http from '../../utils/service';
 // import Layout from "./layout";
 import RightNav from './utils/RightNav';
-import SubmitProject from './utils/SubmitProject';
+// import SubmitProject from './utils/SubmitProject';
 import { useDispatch, useSelector } from 'react-redux';
 import Countdown from 'react-countdown-now';
 
@@ -42,22 +42,22 @@ function Project() {
   };
 
   const pullProject = async () => {
-    const response = await http('/developer/project', 'GET');
-    // response = JSON.stringify(response);
-    if (response.status === 1) {
-      setProject(response.data);
-      // console.log(response.data);
-    }
+    // const response = await http('/developer/project', 'GET');
+    // // response = JSON.stringify(response);
+    // if (response.status === 1) {
+    //   setProject(response.data);
+    //   // console.log(response.data);
+    // }
   };
 
   const newPullProject = async () => {
-    const response = await http('/developer/project', 'POST');
-    // response = JSON.stringify(response);
-    if (response.status === 1) {
-      setProject(response.data);
-      // console.log(response.data);
-      setNewProject(true);
-    }
+    // const response = await http('/developer/project', 'POST');
+    // // response = JSON.stringify(response);
+    // if (response.status === 1) {
+    //   setProject(response.data);
+    //   // console.log(response.data);
+    //   setNewProject(true);
+    // }
   };
 
   useEffect(() => {
@@ -75,14 +75,14 @@ function Project() {
       comment,
     };
 
-    const response = await http(`/developer/project/submit`, 'POST', data);
-    if (response.status) {
-      setStatus(true);
-      setMessage(response.message);
-      setOpenModal(false);
-    } else {
-      setError(response.errors);
-    }
+    // const response = await http(`/developer/project/submit`, 'POST', data);
+    // if (response.status) {
+    //   setStatus(true);
+    //   setMessage(response.message);
+    //   setOpenModal(false);
+    // } else {
+    //   setError(response.errors);
+    // }
   };
 
   return (

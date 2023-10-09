@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Camera from '../../../assets/img/camera.png';
 import profileImage from '../../../assets/img/profile.png';
 // import useAuth from '../../../hooks/useAuth';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = () => {
@@ -19,20 +19,20 @@ const Profile = () => {
    *
    */
   const fetchDetail = async () => {
-    const response = await http('/developer/profile', 'GET');
-    //console.log(response.data);
-    setResponse(response.data);
+    // const response = await http('/developer/profile', 'GET');
+    // //console.log(response.data);
+    // setResponse(response.data);
   };
 
   const fetchProjects = async () => {
-    const response = await http('/developer/project/total', 'GET');
-    // console.log(response.data);
-    setProjects(response.data);
+    // const response = await http('/developer/project/total', 'GET');
+    // // console.log(response.data);
+    // setProjects(response.data);
   };
 
   const fetchTotalJobs = async () => {
-    const response = await http('/developer/applications/total', 'GET');
-    setJobs(response.data);
+    // const response = await http('/developer/applications/total', 'GET');
+    // setJobs(response.data);
     // console.log(jobs)
   };
 

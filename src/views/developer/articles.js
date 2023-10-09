@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Layout from "./layout";
 import RightNav from './utils/RightNav';
 
-function articles() {
+function Articles() {
     //const [openModal, setOpenModal] = useState(false);
     return (
         <>
@@ -125,7 +125,7 @@ Talent Market</p>
     )
 }
 
-export default articles
+export default Articles
 
 // import React from 'react';
 // import {Preload} from "../statics/Preloader";

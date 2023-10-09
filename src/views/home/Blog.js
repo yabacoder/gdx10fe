@@ -1,4 +1,5 @@
 import React from 'react'
+import blogImg from "../../assets/img/blog-4.png";
 
 export const Blog = () => {
     return (
@@ -15,7 +16,40 @@ export const Blog = () => {
                 <div className="w-full  md:flex lg:justify-around overflow-x-scroll md:overflow-x-hidden">               
                     <div className="md:w-1/4  w-full mt-5 p-3 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100 ">
                         <div className="bg-white rounded-md shadow-md ">
-                        <img className="items-stretch object-center " src="img/blog-4.png" alt="Create an Account" />
+                        <img className="items-stretch object-center " src={blogImg} alt="Create an Account" />
+                        <div className="p-8"> 
+                            <p className="font-bold text-gdblue">Attracting the right talent</p>
+                            <p className="py-5 text-xs">Setup profile with expertise and frameworks. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+
+                            <div className="flex justify-between text-xs border-t border-gray-400 pt-3">
+                           
+                                <div className="">
+                                    <div className="flex">
+                                        <svg className="w-5 h-5 text-red-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
+                                        </svg>
+                                            <div className="text-gray-500 -pl-2">
+                                                34
+                                            </div>
+                                    </div>
+                                    
+                                </div>
+                            
+                            <div>
+                                <span className="text-gray-500">July 31, 2020</span>
+                            </div>
+                        </div>
+                        </div>
+                    
+                        </div>
+                        
+                    </div>
+                   
+                   
+                   
+                    <div className="md:w-1/4 w-full mt-5  p-3">
+                        <div className="bg-white rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100">
+                        <img className="items-stretch object-center " src={blogImg} alt="Create an Account" />
                         <div className="p-8"> 
                             <p className="font-bold text-gdblue">Attracting the right talent</p>
                             <p className="py-5 text-xs">Setup profile with expertise and frameworks. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
@@ -45,42 +79,9 @@ export const Blog = () => {
                     </div>
                    
                    
-                   
                     <div className="md:w-1/4 w-full mt-5  p-3">
                         <div className="bg-white rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100">
-                        <img className="items-stretch object-center " src="img/blog-4.png" alt="Create an Account" />
-                        <div className="p-8"> 
-                            <p className="font-bold text-gdblue">Attracting the right talent</p>
-                            <p className="py-5 text-xs">Setup profile with expertise and frameworks. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-    
-                            <div className="flex justify-between text-xs border-t border-gray-400 pt-3">
-                           
-                                <div className="">
-                                    <div className="flex">
-                                        <svg className="w-5 h-5 text-red-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
-                                        </svg>
-                                            <div className="text-gray-500 -pl-2">
-                                                34
-                                            </div>
-                                    </div>
-                                    
-                                </div>
-                            
-                            <div>
-                                <span className="text-gray-500">July 31, 2020</span>
-                            </div>
-                        </div>
-                        </div>
-                    
-                        </div>
-                        
-                    </div>
-                   
-                   
-                    <div className="md:w-1/4 w-full mt-5  p-3">
-                        <div className="bg-white rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100">
-                        <img className="items-stretch object-center " src="img/blog-4.png" alt="Create an Account" />
+                        <img className="items-stretch object-center " src={blogImg} alt="Create an Account" />
                         <div className="p-8"> 
                             <p className="font-bold text-gdblue">Attracting the right talent</p>
                             <p className="py-5 text-xs">Setup profile with expertise and frameworks. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
@@ -112,7 +113,7 @@ export const Blog = () => {
                     
                     <div className="md:w-1/4 w-full mt-5  p-3">
                         <div className="bg-white rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100">
-                        <img className="items-stretch object-center " src="img/blog-4.png" alt="Create an Account" />
+                        <img className="items-stretch object-center " src={blogImg} alt="Create an Account" />
                         <div className="p-8"> 
                             <p className="font-bold text-gdblue">Attracting the right talent</p>
                             <p className="py-5 text-xs">Setup profile with expertise and frameworks. Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>

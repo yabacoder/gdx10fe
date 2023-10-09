@@ -8,7 +8,7 @@ import WorkExperience from './experience';
 import Skills from './skills';
 import Profile from '../../../assets/img/profile.png';
 import BgImg from '../../../assets/img/dev-bg-img.png';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 
 const Account = () => {
   const [openTab, setOpenTab] = useState('portfolio');
@@ -20,44 +20,44 @@ const Account = () => {
   useEffect(() => {
     const getProfile = async () => {
       let profile;
-      if (!localStorage.getItem('profile')) {
-        profile = await http('/developer/profile/edit', 'get');
-        profile = profile.data;
-        localStorage.setItem('profile', JSON.stringify(profile));
-      }
-      //profile = profile.data;
-      profile = JSON.parse(localStorage.getItem('profile'));
-      setProjects(profile.projects);
-      setApplications(profile.applications);
-      setArticles(profile.articles);
-      setQuestions(profile.questions);
+      // if (!localStorage.getItem('profile')) {
+      //   profile = await http('/developer/profile/edit', 'get');
+      //   profile = profile.data;
+      //   localStorage.setItem('profile', JSON.stringify(profile));
+      // }
+      // //profile = profile.data;
+      // profile = JSON.parse(localStorage.getItem('profile'));
+      // setProjects(profile.projects);
+      // setApplications(profile.applications);
+      // setArticles(profile.articles);
+      // setQuestions(profile.questions);
     };
 
     const getProjects = async () => {
-      const pro = await http('/developer/project/total', 'GET');
-      const projects = pro.data;
+      // const pro = await http('/developer/project/total', 'GET');
+      // const projects = pro.data;
 
       return setProjects(projects);
     };
     const getApplicaitons = async () => {
-      const total = await http('/developer/applications/total', 'GET');
-      const total_application = total.data;
-      //   console.log('Total', total_application);
-      return setApplications(total_application);
+      // const total = await http('/developer/applications/total', 'GET');
+      // const total_application = total.data;
+      // //   console.log('Total', total_application);
+      // return setApplications(total_application);
     };
 
     const getArticles = async () => {
-      const total = await http('/developer/articles/dev_total', 'GET');
-      const total_articles = total.data;
-      //   console.log('Total', total_application);
-      return setArticles(total_articles);
+      // const total = await http('/developer/articles/dev_total', 'GET');
+      // const total_articles = total.data;
+      // //   console.log('Total', total_application);
+      // return setArticles(total_articles);
     };
 
     const getTotalQuestions = async () => {
-      const total = await http('/developer/assessment/total_taken', 'GET');
-      const total_questions = total.data;
-      //   console.log('Total', total_application);
-      return setQuestions(total_questions);
+      // const total = await http('/developer/assessment/total_taken', 'GET');
+      // const total_questions = total.data;
+      // //   console.log('Total', total_application);
+      // return setQuestions(total_questions);
     };
 
     getProfile();

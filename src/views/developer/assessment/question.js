@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../layout';
 import RightNav from '../utils/RightNav';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 
 function Question() {
   const [time, setTime] = useState({});
@@ -37,20 +37,20 @@ function Question() {
       preload: !this.state.preload,
       seconds: 60,
     });
-    const result = http('/api/developer/assessment', 'post');
-    if (result.status === 1) {
-      setResult(result);
+  //   const result = http('/api/developer/assessment', 'post');
+  //   if (result.status === 1) {
+  //     setResult(result);
 
-      let time = result.data.time * 60;
-      setAnswer({ question_id: result.data.question_id });
-      setSeconds(time);
-    } else if (result.status === 3) {
-      this.setState({ result: true });
-    } else {
-      this.setState({ alert: true, message: result.error });
-    }
-    this.setState({ preload: !this.state.preload });
-  };
+  //     let time = result.data.time * 60;
+  //     setAnswer({ question_id: result.data.question_id });
+  //     setSeconds(time);
+  //   } else if (result.status === 3) {
+  //     this.setState({ result: true });
+  //   } else {
+  //     this.setState({ alert: true, message: result.error });
+  //   }
+  //   this.setState({ preload: !this.state.preload });
+  // };
 
   //   const timeout = () => {
   //     this.setState({ preload: !this.state.preload });
@@ -58,7 +58,7 @@ function Question() {
   //     const result = http('/api/developer/assessment', this.state)
   //       this.setState({ timeout: true, preload: !this.state.preload });
   //     ;
-  //   };
+    };
 
   const countDown = () => {
     // Remove one second, set state so a re-render happens.
@@ -89,30 +89,30 @@ function Question() {
 
   useEffect(() => {
     const loadQuestion = async () => {
-      const result = await http('/developer/assessment', 'get');
-      console.log(result);
-      if (result.status === 1) {
-        setData(result.data);
-        setTotal(result.total);
-        let time = result.data.time * 60;
-        setAnswer({ question_id: result.data.question_id }); // What else do we have here?
-        if (localStorage.getItem('timer') > 0) {
-          setSeconds(localStorage.getItem('timer'));
-          let timeLeftVar = secondsToTime(localStorage.getItem('timer'));
-          setTime(timeLeftVar);
-        } else {
-          setSeconds(time);
-          let timeLeftVar = secondsToTime(result.data.time * 60);
-          setTime(timeLeftVar);
-        }
-        startTimer();
-      } else if (result.status === 2) {
-        window.location = '/developer/profile/edit';
-      } else if (result.status === 3) {
-        setResult(true);
-      } else {
-        setMessage(result.error);
-      }
+      // const result = await http('/developer/assessment', 'get');
+      // console.log(result);
+      // if (result.status === 1) {
+      //   setData(result.data);
+      //   setTotal(result.total);
+      //   let time = result.data.time * 60;
+      //   setAnswer({ question_id: result.data.question_id }); // What else do we have here?
+      //   if (localStorage.getItem('timer') > 0) {
+      //     setSeconds(localStorage.getItem('timer'));
+      //     let timeLeftVar = secondsToTime(localStorage.getItem('timer'));
+      //     setTime(timeLeftVar);
+      //   } else {
+      //     setSeconds(time);
+      //     let timeLeftVar = secondsToTime(result.data.time * 60);
+      //     setTime(timeLeftVar);
+      //   }
+      //   startTimer();
+      // } else if (result.status === 2) {
+      //   window.location = '/developer/profile/edit';
+      // } else if (result.status === 3) {
+      //   setResult(true);
+      // } else {
+      //   setMessage(result.error);
+      // }
     };
 
     loadQuestion();

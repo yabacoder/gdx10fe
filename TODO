@@ -22,3 +22,17 @@
     -> 
 
 
+Backend API
+Questions of Laravel
+How to set axios.defaults.withCredentials = true; in Redux RTK
+
+CSRF Protection
+To authenticate your SPA, your SPA's "login" page should first make a request to the /sanctum/csrf-cookie endpoint to initialize CSRF protection for the application:
+
+axios.get('/sanctum/csrf-cookie').then(response => {
+    // Login...
+});
+
+If your JavaScript HTTP library does not set the value for you, you will need to manually set the X-XSRF-TOKEN header to match the value of the XSRF-TOKEN cookie that is set by this route.
+
+Grouping endpoints and middleware

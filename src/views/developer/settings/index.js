@@ -10,7 +10,7 @@ import Cv from './Cv';
 import Password from './password';
 // import LeftNav from './LeftNav'
 import { Link } from 'react-router-dom';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 
 const Index = () => {
   const [openTab, setOpenTab] = useState('information');
@@ -18,9 +18,9 @@ const Index = () => {
 
   useEffect(() => {
     const getProfile = async () => {
-      const profile = await http('/developer/profile/edit', 'get');
-      console.log(profile);
-      setProfile(profile.data);
+      // const profile = await http('/developer/profile/edit', 'get');
+      // console.log(profile);
+      // setProfile(profile.data);
     };
 
     getProfile();

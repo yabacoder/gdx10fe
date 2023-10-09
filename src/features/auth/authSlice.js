@@ -12,9 +12,10 @@ const authSlice = createSlice({
     reducers: {
         setCredentials: (state, action) => {
             // console.log(action.payload, "Payload")
-            const { accessToken } = action.payload;
-            state.token = accessToken;
-            // Store token in the local storage
+            const  data  = action.payload;
+            // console.log(data)
+            state.token = data;
+            // Store token in the local storage 
             // setAccessToken(accessToken)
         },
         logOut: (state, action) => {
@@ -33,4 +34,4 @@ export const { setCredentials, logOut } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const selectCurrentToken = (state) => state.auth.token;  
+export const selectCurrentToken = (state) => state.auth.token;   

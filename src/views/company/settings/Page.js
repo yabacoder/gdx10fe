@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '../layout'
+import Layout from './layout'
 // import LeftNav from './LeftNav'
 import { Link } from 'react-router-dom';
 

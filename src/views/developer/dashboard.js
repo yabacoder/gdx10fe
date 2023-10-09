@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Profile from './utils/Profile';
 import profileImage from '../../assets/img/profile.png';
 // import useAuth from '../../hooks/useAuth';
-import http from '../../utils/service';
-import { baseURL } from '../../config';
+// import http from '../../utils/service';
+// import { baseURL } from '../../config';
 
 const Dashboard = () => {
   // const { data } = useAuth();
@@ -26,18 +26,18 @@ const Dashboard = () => {
    */
 
   const fetchRecentApplications = async () => {
-    const response = await http('/developer/applications', 'GET');
-    setJobs(response.data);
+    // const response = await http('/developer/applications', 'GET');
+    // setJobs(response.data);
   };
 
   const fetchRelatedJobs = async () => {
-    const response = await http('/jobs', 'GET');
-    setRelatedJobs(response.data);
+    // const response = await http('/jobs', 'GET');
+    // setRelatedJobs(response.data);
     // console.log(jobs);
   };
   const fetchArticles = async () => {
-    const response = await http('/articles', 'GET');
-    setArticles(response.data);
+    // const response = await http('/articles', 'GET');
+    // setArticles(response.data);
     // console.log(jobs);
   };
 

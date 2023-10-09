@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Layout from './layout';
 import RightNav from '././utils/RightNav';
 import { Link } from 'react-router-dom';
-import http from '../../utils/service';
+// import http from '../../utils/service';
 
 const Applied = () => {
   const [jobs, setJobs] = useState([]);
   const [del, setDel] = useState(false);
 
   const fetchRecentApplications = async () => {
-    const response = await http('/developer/applications', 'GET');
+    // const response = await http('/developer/applications', 'GET');
 
-    setJobs(response.data);
+    // setJobs(response.data);
     // console.log(jobs);
   };
 
@@ -19,10 +19,10 @@ const Applied = () => {
     // e.preventDefault();
     if (window.confirm('Are you sure want to retrieve your application?')) {
       const data = { id: id };
-      const result = await http('/developer/application/delete', 'post', data);
-      if (result.status === 1) {
-        setDel(true);
-      }
+      // const result = await http('/developer/application/delete', 'post', data);
+      // if (result.status === 1) {
+      //   setDel(true);
+      // }
     }
   };
 

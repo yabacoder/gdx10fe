@@ -16,7 +16,7 @@ const Register = () => {
   const [verify, setVerify] = useState('');
   const [message, setMessage] = useState('');
   // const history = useHistory();
-  let error
+  let error;
 
   // const { login, register } = useAuth();
   // const dispatch = useDispatch(); //get the dispatch method from the useDispatch custom hook
@@ -70,13 +70,13 @@ const Register = () => {
   };
 
   // const setSession = authResult => {
-    // Set the time that the access token will expire at
-    // let expiresAt = JSON.stringify(
-    //   authResult.expires_in * 1000 + new Date().getTime()
-    // );
-    // localStorage.setItem('auth', JSON.stringify(authResult.access_token));
-    // localStorage.setItem('expires_at', expiresAt);
-    // login(email, password);
+  // Set the time that the access token will expire at
+  // let expiresAt = JSON.stringify(
+  //   authResult.expires_in * 1000 + new Date().getTime()
+  // );
+  // localStorage.setItem('auth', JSON.stringify(authResult.access_token));
+  // localStorage.setItem('expires_at', expiresAt);
+  // login(email, password);
   // };
 
   // useEffect(() => {
@@ -93,6 +93,19 @@ const Register = () => {
       <form onSubmit={handleRegister}>
         {/* //Show only on mobile */}
         <div className="block p-5 py-16 md:hidden lg:hidden xl:hidden">
+          <div className="hidden md:block p-24 md:w-1/2">
+            <h2 className="font-bold text-gdblue -p-10 text-wide">
+              {' '}
+              Now Let's Get You{' '}
+              <span className="text-blue-500">Signed Up</span>
+            </h2>
+            <p className="mt-10 text-center">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Bibendum est ultricies integer quis. Iaculis urna id volutpat
+              lacus laoreet. Mauris vitae ultricies leo integer malesuada.
+            </p>
+          </div>
           <div className="p-16 px-8 py-8 mt-16 mb-5 bg-white rounded-lg md:bg-gray-300">
             <div class="p-5 border-b-2 border-blue-500 text-blue-600 w-full">
               <h4>Developer Signup</h4>
@@ -126,25 +139,22 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <input
-                onChange={e => setUsername(e.target.value)}
-                value={username}
-                class="form-input mt-1 block w-full pl-8"
-                form-input
-                mt-1
-                block
-                w-full
-                pl-6
-                name="username"
-                placeholder="username"
-              />
+              <div className="px-10 form-input w-full">
+                <input
+                  onChange={e => setUsername(e.target.value)}
+                  value={username}
+                  class=" block w-full px-5 focus:outline-none"
+                  name="username"
+                  placeholder="Username"
+                />
+              </div>
               {error && <p class="text-red-600">{error.errors.username}</p>}
             </label>
 
             <label class="block">
               {/* <span class="text-gray-700">Name</span> */}
               <div className="relative">
-                <div className="absolute inset-y-0 right-0 p-3 pt-4">
+                <div className="absolute inset-y-0 left-0 p-3 pt-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="12.357"
@@ -169,13 +179,15 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <input
-                onChange={e => setEmail(e.target.value)}
-                value={email}
-                class="form-input mt-1 block w-full pl-8"
-                name="email"
-                placeholder="Email"
-              />
+              <div className="px-10 mt-3 form-input w-full">
+                <input
+                  onChange={e => setEmail(e.target.value)}
+                  value={email}
+                  class=" block w-full px-5 focus:outline-none"
+                  name="email"
+                  placeholder="Email"
+                />
+              </div>
               {error && <p class="text-red-600">{error.errors.email}</p>}
             </label>
 
@@ -250,14 +262,16 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <input
-                onChange={e => setPassword(e.target.value)}
-                value={password}
-                class="form-input mt-1 block w-full pl-6"
-                type="password"
-                name="password"
-                placeholder=""
-              />
+              <div className="px-10 mt-3 form-input w-full">
+                <input
+                  onChange={e => setPassword(e.target.value)}
+                  value={password}
+                  class=" block w-full px-5 focus:outline-none"
+                  type="password"
+                  name="password"
+                  placeholder=""
+                />
+              </div>
               {error && <p class="text-red-600">{error.errors.password}</p>}
             </label>
 
@@ -331,20 +345,20 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <input
-                onChange={e => setCpassword(e.target.value)}
-                value={cpassword}
-                class="form-input mt-1 block w-full pl-6"
-                type="password"
-                name="password_confirmation"
-                placeholder=""
-              />
+              <div className="px-10 mt-3 form-input w-full">
+                <input
+                  onChange={e => setCpassword(e.target.value)}
+                  value={cpassword}
+                  class=" block w-full px-5 focus:outline-none"
+                  type="password"
+                  name="password_confirmation"
+                  placeholder=""
+                />
+              </div>
               {/* {result.password_confirmation && (
                 <p class="text-red-600">{result.password_confirmation}</p>
               )} */}
             </label>
-
-            {/* <Input /> */}
 
             <div className="flex flex-col justify-center pt-5">
               <button
@@ -364,17 +378,16 @@ const Register = () => {
             </div>
           </div>
         </div>
-
         {/* <div className="invisible px-0 py-0 lg:px-40 md:py-16 md:visible lg:visible xl:visible">  */}
         <div className="hidden h-screen px-0 py-0 lg:px-40 md:py-32 md:block">
-          <div className="flex items-center justify-between mt-12 rounded-lg shadow-lg md:bg-white ">
-            <div className="p-24 md:w-1/2">
+          <div className="p-16 px-8 py-8 mt-16 mb-5  rounded-lg md:flex md:items-center md:justify-between md:mt-12 md:rounded-lg md:shadow-lg md:bg-white ">
+            <div className="hidden md:block p-24 md:w-1/2">
               <h2 className="font-bold text-gdblue -p-10 text-wide">
                 {' '}
                 Now Let's Get You{' '}
                 <span className="text-blue-500">Signed Up</span>
               </h2>
-              <p>
+              <p className="mt-10 text-center">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 Bibendum est ultricies integer quis. Iaculis urna id volutpat
@@ -414,11 +427,13 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <input
-                    class="form-input mt-1 block w-full pl-8"
-                    name="username"
-                    placeholder="Username"
-                  />
+                  <div className="px-10 form-input w-full">
+                    <input
+                      class=" block w-full px-5 focus:outline-none"
+                      name="username"
+                      placeholder="Username"
+                    />
+                  </div>
                 </label>
 
                 <label class="block mt-2">
@@ -449,11 +464,13 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <input
-                    class="form-input mt-1 block w-full pl-8"
-                    name="email"
-                    placeholder="Email"
-                  />
+                  <div className="px-10 form-input w-full">
+                    <input
+                      class=" block w-full px-5 focus:outline-none"
+                      name="email"
+                      placeholder="Email"
+                    />
+                  </div>
                 </label>
 
                 <label class="block mt-2">
@@ -527,12 +544,14 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <input
-                    class="form-input mt-1 block w-full pl-6"
-                    type="password"
-                    name="password"
-                    placeholder=""
-                  />
+                  <div className="px-10 form-input w-full">
+                    <input
+                      class=" block w-full px-5 focus:outline-none"
+                      type="password"
+                      name="password"
+                      placeholder=""
+                    />
+                  </div>
                 </label>
 
                 <label class="block mt-2">
@@ -606,12 +625,14 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <input
-                    class="form-input mt-1 block w-full pl-6"
-                    type="password"
-                    name="password_confirmation"
-                    placeholder=""
-                  />
+                  <div className="px-10 form-input w-full">
+                    <input
+                      class=" block w-full px-5 focus:outline-none"
+                      type="password"
+                      name="password_confirmation"
+                      placeholder=""
+                    />
+                  </div>
                 </label>
 
                 <div className="flex flex-col justify-center pt-5">

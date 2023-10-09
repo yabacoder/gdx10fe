@@ -20,10 +20,6 @@ const password = () => {
                    </div>
                        
                    </div>
-     
-                  
-              
-
                    <div className="flex items-center justify-between my-3">
                    <div className="w-1/2 ">
                    <p>New password</p>

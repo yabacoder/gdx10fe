@@ -116,7 +116,7 @@ const index = () => {
                             
                             </td>
                             <td>
-                            <Link to="candidates/profile" className="font-bold hover:underline">
+                            <Link to="profile" className="font-bold hover:underline">
                             Soloman Judges
                             </Link>
                             </td>
@@ -161,7 +161,7 @@ const index = () => {
                             
                             </td>
                             <td>
-                            <Link to="candidates/profile" className="font-bold hover:underline">
+                            <Link to="profile" className="font-bold hover:underline">
                             Soloman Judges
                             </Link>
                             </td>

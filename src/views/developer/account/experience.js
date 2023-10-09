@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 
 const Experience = () => {
   const [experience, setExperience] = useState([]);
 
   useEffect(() => {
     const getExperience = async () => {
-      const experience = await http('/developer/resume/work_experience', 'get');
-      // console.log(experience);
-      setExperience(experience.data);
+      // const experience = await http('/developer/resume/work_experience', 'get');
+      // // console.log(experience);
+      // setExperience(experience.data);
     };
 
     getExperience();

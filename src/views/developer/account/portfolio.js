@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 
 const Portfolio = () => {
   const [portfolio, setPortfolio] = useState([]);
 
   useEffect(() => {
     const getPortfolio = async () => {
-      const portfolio = await http('/developer/resume/portfolio', 'get');
-      console.log(portfolio);
-      setPortfolio(portfolio.data);
+      // const portfolio = await http('/developer/resume/portfolio', 'get');
+      // console.log(portfolio);
+      // setPortfolio(portfolio.data);
     };
 
     getPortfolio();

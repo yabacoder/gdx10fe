@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 
 const Education = () => {
   const [education, setEducation] = useState([]);
 
   useEffect(() => {
     const getEducation = async () => {
-      const education = await http('/developer/resume/education', 'get');
-      console.log(education);
-      setEducation(education.data);
+      // const education = await http('/developer/resume/education', 'get');
+      // console.log(education);
+      // setEducation(education.data);
     };
 
     getEducation();

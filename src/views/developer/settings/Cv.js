@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 
 function UploadCv() {
   const [openModal, setOpenModal] = useState(false);
@@ -11,9 +11,9 @@ function UploadCv() {
 
   useEffect(() => {
     const getCv = async () => {
-      let cv = await http('/developer/cv');
-      // console.log(cv);
-      setCv(cv.data);
+      // let cv = await http('/developer/cv');
+      // // console.log(cv);
+      // setCv(cv.data);
       // if (localStorage.getItem('profile')) {
       //   const profile = JSON.parse(localStorage.getItem('profile'));
       //   setCv(profile.cv_content);
@@ -30,25 +30,26 @@ function UploadCv() {
       reader.onload = () => {
         // this.setState({ cv: !this.state.cv });
         console.log(reader.result);
-        http('/developer/upload/cv', 'post', { cv: reader.result }).then(
-          result => {
-            if (result.status === 1) {
-              // this.setState({
-              //   alert: true,
-              //   success: true,
-              //   message: result.message,
-              // });
-              setSuccess(true);
-              setMessage(result.message);
-            } else {
-              setMessage(result.error);
-            }
-            //this.setState({ cv: !this.state.cv });
-          }
-        );
-      };
-      reader.onerror = error => reject(error);
-    });
+      //   http('/developer/upload/cv', 'post', { cv: reader.result }).then(
+      //     result => {
+      //       if (result.status === 1) {
+      //         // this.setState({
+      //         //   alert: true,
+      //         //   success: true,
+      //         //   message: result.message,
+      //         // });
+      //         setSuccess(true);
+      //         setMessage(result.message);
+      //       } else {
+      //         setMessage(result.error);
+      //       }
+      //       //this.setState({ cv: !this.state.cv });
+      //     }
+      //   );
+      // };
+    //   reader.onerror = error => reject(error);
+    }
+  });
   };
 
   const onChange = e => {

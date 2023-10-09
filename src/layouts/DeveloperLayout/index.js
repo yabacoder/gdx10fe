@@ -1,8 +1,10 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import logo from '../../assets/img/logo2.svg'
 import { Link } from 'react-router-dom';
 
-export const DeveloperLayout = (props) => {
+
+export const DeveloperLayout = () => {
     return (
         <div>
             <div className="inset-0 flex w-screen h-screen">
@@ -80,7 +82,7 @@ export const DeveloperLayout = (props) => {
                 <div className="w-9/12 h-screen p-10 overflow-auto text-gray-600 bg-gray-100">
                     
                     <div className="mt-12">
-                        {props.children}
+                        <Outlet />
                     </div>
                 </div>
             </div>

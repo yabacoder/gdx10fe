@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Nav from '../../layouts/MainLayout/Nav';
-import { useDispatch, useSelector } from 'react-redux';
-// import { login } from '../../actions/users';
+import { useLoginMutation } from '../../features/auth/authApiSlice';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../features/auth/authSlice';
 
-const Login = ({ location, history }) => {
+const Login = () => {
   //const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [result, setResult] = useState('');
-  let error;
+  const [selected, setSelected] = useState('developer');
+  const [msg, setMsg] = useState('');
 
-  // const dispatch = useDispatch();
+  // let error;
+  const navigate = useNavigate();
 
-  // const userLogin = useSelector(state => state.userLogin);
+  const [login, {
+    isLoading,
+    // isSuccess,
+    // isError,
+    error
+  }] = useLoginMutation();
+
+  const dispatch = useDispatch();
+
+  // const userLogin = useSelector(state => state.userLogin); 
   // const { loading, error, userInfo } = userLogin;
 
   // useEffect(() => {
@@ -29,26 +40,45 @@ const Login = ({ location, history }) => {
   //   dispatch(login(email, password));
   // };
 
+  const processLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await login({ email, password }).unwrap();
+      console.log(data, "Our data");
+      dispatch(setCredentials({ data }));
+      navigate("/developer/dashboard");
+    } catch (err) {
+      console.log(err, "Cant login from the server");
+      console.log(err.data.message, "Error logging in");
+      setMsg(err?.data.message);
+    }
+  };
+
+
   return (
     <div className="w-full h-screen bg-off">
       <Nav />
       {/* //Show only on mobile */}
 
       <div className="flex items-center justify-center p-5 px-8 py-24 md:py-32 md:px-16 ">
-        <form>
+        <form onSubmit={processLogin}>
           <div className="p-16 px-8 py-8 mt-16 mb-5 bg-white rounded-lg">
-            <div className="flex">
-              <div class="p-5 border-b-2 border-blue-500 text-blue-800 ">
+            <div className="flex border-b">
+              <div class={`p-5 cursor-pointer ${selected === 'developer' ? 'border-b border-blue-500 text-blue-800 transition' : ''}`}
+                onClick={() => { setSelected('developer'); }}
+              >
                 <h4>Developer</h4>
               </div>
-              <div class="p-5 border-b-2 ">
+              <div class={`p-5 cursor-pointer ${selected === 'company' ? 'border-b border-blue-500 text-blue-800' : ''}`}
+                onClick={() => { setSelected('company'); }}
+              >
                 <h4>Company </h4>
               </div>
             </div>
 
             <label class="block mt-10">
               {/* <span class="text-gray-700">Name</span> */}
-              <p className="p-2 text-center text-red-600">{error}</p>
+              <p className="p-2 text-center text-red-600">{msg}</p>
               <div className="relative">
                 <div className="absolute p-3 ">
                   <svg
@@ -62,7 +92,7 @@ const Login = ({ location, history }) => {
                         id="Group_318"
                         data-name="Group 318"
                         transform="translate(0 0)"
-                      >
+                      > 
                         <path
                           id="Path_552"
                           data-name="Path 552"
@@ -75,20 +105,23 @@ const Login = ({ location, history }) => {
                   </svg>
                 </div>
               </div>
-              <input
-                class="form-input mt-1 block w-full pl-8"
-                name="email"
-                placeholder="Email"
-                size="40"
-                onChange={e => setEmail(e.target.value)}
-                value={email}
-              />
+              <div className="px-10 form-input w-full">
+                <input
+                  class=" block w-full px-5 focus:outline-none"
+                  name="email"
+                  placeholder="Email"
+                  size="35"
+                  onChange={e => setEmail(e.target.value)}
+                  value={email}
+                />
+
+              </div>
             </label>
 
-            <label class="block">
+            <label class="block ">
               {/* <span class="text-gray-700">Name</span> */}
               <div className="relative">
-                <div className="absolute p-3 ">
+                <div className="absolute p-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10.813"
@@ -156,24 +189,37 @@ const Login = ({ location, history }) => {
                   </svg>
                 </div>
               </div>
-              <input
-                class="form-input mt-1 block w-full pl-6"
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={e => setPassword(e.target.value)}
-                value={password}
-              />
+              <div className="px-10 form-input w-full mt-5">
+                <input
+                  class="block w-full px-5 focus:outline-none"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  onChange={e => setPassword(e.target.value)}
+                  value={password}
+                />
+              </div>
             </label>
 
             <div className="flex flex-col justify-center pt-5">
               <button
                 type="submit"
-                className="inline-block w-full p-3 text-center btn"
-                // onClick={formHandler}
+                className="w-full p-3 text-center btn "
+
               >
-                {' '}
-                Login{' '}
+
+                {
+                  isLoading ? <div className='flex justify-between w-full'>
+
+                    <svg class="animate-spin h-5 w-5 mr-3 text-white ..." viewBox="0 0 24 24">
+                    </svg>
+                    <p>Processing...</p></div> :
+                    <>
+                      Login{' '}
+                    </>
+                }
+
+
               </button>
             </div>
 

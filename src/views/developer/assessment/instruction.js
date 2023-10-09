@@ -1,20 +1,20 @@
-import React from 'react'
+import React from 'react';
 // import Layout from '../layout'
 import RightNav from '../utils/RightNav';
-import {Link}from 'react-router-dom'
-function instruction() {
+import { Link } from 'react-router-dom';
+function Instruction() {
     return (
-        
-            <div className="flex">
-                <div className="w-8/12 p-6 bg-white rounded-md shadow-md highlights">
-                    <h5 className="pb-2 text-base border-b">Assessment </h5>
-                    <div className="p-5 my-3 bg-gray-200 rounded-lg">
-                        <div className="w-32 px-4 py-2 mt-3 text-red-600 bg-red-200 border border-red-600 rounded-full">
-                            <p className="font-bold text-center">Instructions</p>
-                        </div>
-                        <div className="p-3 text-sm">
-                            <ul> 
-                            
+
+        <div className="flex">
+            <div className="w-8/12 p-6 bg-white rounded-md shadow-md highlights">
+                <h5 className="pb-2 text-base border-b">Assessment </h5>
+                <div className="p-5 my-3 bg-gray-200 rounded-lg">
+                    <div className="w-32 px-4 py-2 mt-3 text-red-600 bg-red-200 border border-red-600 rounded-full">
+                        <p className="font-bold text-center">Instructions</p>
+                    </div>
+                    <div className="p-3 text-sm">
+                        <ul>
+
                             <li>All questions must be attempted before proceeding to the next question.</li>
 
                             <li>The time for each question is 1 minutes. After this time elapses, the question shall be removed.</li>
@@ -25,34 +25,34 @@ function instruction() {
 
                             <li>If you have any problems during the test send us a mail at hire@getdev.co</li>
 
-                            </ul>
-                        </div>
+                        </ul>
+                    </div>
 
-                        
-                    </div>
-                    <div className="my-5">
-                        <Link to="/developer/assessment/question" className="w-full px-5 py-3 text-sm btn"> Start Assessment  <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="inline-flex w-6" viewBox="0 0 20 20" fill="currentColor">
-  <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-</svg>
-                                </span> </Link>
-                    </div>
+
                 </div>
-                
-                
-                
-                <div className="flex flex-col w-4/12 px-5 ml-5 topNews">
-                    <RightNav/>
+                <div className="my-5">
+                    <Link to="/developer/assessment/question" className="w-full px-5 py-3 text-sm btn"> Start Assessment  <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="inline-flex w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </span> </Link>
                 </div>
-                
             </div>
-            // </Layout>
 
 
-)
+
+            <div className="flex flex-col w-4/12 px-5 ml-5 topNews">
+                <RightNav />
+            </div>
+
+        </div>
+        // </Layout>
+
+
+    );
 }
 
-export default instruction
+export default Instruction;
 
 // import React from 'react';
 // import {Button} from "../../statics/form";

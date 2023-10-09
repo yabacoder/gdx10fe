@@ -77,7 +77,8 @@ label {
 .input-border {
   @apply border-gray-500;
 }
-.form-input {
+.form-input, select, textarea {
+  @apply border focus:outline-none p-2
 }
 /**
 * this is for icon embeded in a form input

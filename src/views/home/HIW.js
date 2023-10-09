@@ -1,4 +1,9 @@
 import React from 'react';
+import add from "../../assets/img/add.svg";
+import assess from "../../assets/img/assess.svg";
+import application from "../../assets/img/application.svg";
+import interviews from "../../assets/img/interviews.svg";
+
 
 export const HIW = () => {
   return (
@@ -16,7 +21,7 @@ export const HIW = () => {
         <div className="flex flex-col items-center justify-between">
           <img
             className="h-32 p-5 md:h-full"
-            src="img/add.svg"
+            src={add}
             alt="Create an Account"
           />
           <p className="font-bold text-center thick-color">Create Profile</p>
@@ -27,7 +32,7 @@ export const HIW = () => {
         <div className="flex flex-col items-center justify-between">
           <img
             className="h-32 p-5 md:h-full"
-            src="img/assess.svg"
+            src={assess}
             alt="Create an Account"
           />
           <p className="font-bold thick-color">Create Profile</p>
@@ -38,7 +43,7 @@ export const HIW = () => {
         <div className="flex flex-col items-center justify-between">
           <img
             className="h-32 p-5 md:h-full"
-            src="img/application.svg"
+            src={application}
             alt="Create an Account"
           />
           <p className="font-bold text-center thick-color">Create Profile</p>
@@ -49,7 +54,7 @@ export const HIW = () => {
         <div className="flex flex-col items-center justify-between">
           <img
             className="h-32 p-5 md:h-full"
-            src="img/interviews.svg"
+            src={interviews}
             alt="Create an Account"
           />
           <p className="font-bold thick-color">Create Profile</p>

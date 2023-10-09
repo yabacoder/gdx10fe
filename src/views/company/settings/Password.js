@@ -1,12 +1,12 @@
 import React from 'react'
-import Layout from '../layout'
+import Layout from './layout'
 // import LeftNav from './LeftNav'
 import { Link } from 'react-router-dom';
 
 const Index = () => {
     let  currentLocation = window.location.pathname;
     return (
-        <Layout title="Change Password">
+        <div title="Change Password">
             <div className="flex mt-10">
                 <div className="w-1/4 bg-white rounded-md links">
                     <div>
@@ -61,7 +61,6 @@ const Index = () => {
                             </label>
                             </div>
                         </div>
-
                 </div>
                 <div className="flex justify-start mt-5">
                     <button className="flex items-center justify-between px-5 py-3 bg-red-600 btn hover:bg-red-500">Save 
@@ -70,7 +69,7 @@ const Index = () => {
                 </div>
             </div>
             </div>
-        </Layout>
+        </div>
     )
 }
 

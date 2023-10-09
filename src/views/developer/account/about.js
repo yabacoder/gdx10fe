@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import http from '../../../utils/service';
+// import http from '../../../utils/service';
 const About = () => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {
-      const user = await http('/developer/profile', 'get');
-      // console.log(user);
-      setUser(user.data);
+      // const user = await http('/developer/profile', 'get');
+      // // console.log(user);
+      // setUser(user.data);
     };
 
     getUser();

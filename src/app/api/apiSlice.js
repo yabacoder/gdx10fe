@@ -2,14 +2,42 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCredentials } from '../../features/auth/authSlice';
 // import { REACT_APP_API_URL } from '../../../config';
 
+export const getCookie = (cookieName) => {
+    const cookieArray = document.cookie.split(';');
+
+    for (const cookie of cookieArray) {
+        let cookieString = cookie;
+
+        while (cookieString.charAt(0) === ' ') {
+            cookieString = cookieString.substring(1, cookieString.length);
+        }
+        if (cookieString.indexOf(cookieName + '=') === 0) {
+            return cookieString.substring(cookieName.length + 1, cookieString.length);
+        }
+
+    }
+
+    return undefined;
+};
+
+const getCsrf = () => {
+
+};
+
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
+        const cookie = getState().auth.csrfToken;
         // console.log(token);
         if (token) {
             headers.set("authorization", `Bearer ${token}`);
+        }
+
+        // console.log(cookie, "Plenty cookies");
+        if (typeof cookie == 'string') {
+            headers.set('X-XSRF-TOKEN', cookie);
         }
         return headers;
     }
@@ -20,15 +48,15 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     // console.log(api) // signal, dispatch, getState()
     // console.log(extraOptions) //custom like {shout: true}
 
-    let result = await baseQuery(args, api, extraOptions); 
+    let result = await baseQuery(args, api, extraOptions);
 
     // If you want, handle other status codes, too
     if (result?.error?.status === 403) {
         console.log('sending refresh token');
 
         // send refresh token to get new access token 
-        const refreshResult = await baseQuery('/auth/refresh', api, extraOptions); 
- 
+        const refreshResult = await baseQuery('/auth/refresh', api, extraOptions);
+
         if (refreshResult?.data) {
 
             // store the new token 

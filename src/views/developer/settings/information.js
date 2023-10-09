@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Profile from '../../../assets/img/profile.png';
 import Camera from '../../../assets/img/camera.png';
-import http from '../../../utils/service';
-import states from '../../../statics/states';
+// import http from '../../../utils/service';
+import states from '../../../statics/states'
 const countries = require('../../../statics/countries.json');
 
 const Information = () => {

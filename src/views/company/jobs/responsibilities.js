@@ -8,7 +8,7 @@ const Responsibilities = () => {
             <div className="flex mt-10">
                 <div className="w-1/4 bg-white rounded-md links">
                    
-                        <LeftNav location="/job/JobDescription" />
+                    <LeftNav location="/job/JobResponsibilities" />
                     
                 </div>
                 <div className="w-3/4 px-12 py-6 ml-5 bg-white rounded-md shadow-md content">

@@ -91,7 +91,9 @@ const AddJob = () => {
 
                 </form>
                 <div className="flex justify-end my-5">
-                    <button className="flex items-center justify-between w-32 p-3 bg-red-600 btn hover:bg-red-500">Next 
+                    <button className="flex items-center justify-between w-32 p-3 bg-red-600 btn hover:bg-red-500">
+                        <div>
+                            Next</div> 
                         <svg className="w-4 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                         </svg>
