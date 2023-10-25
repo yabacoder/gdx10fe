@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 function UploadCv() {
   const [openModal, setOpenModal] = useState(false);
-  const [cv, setCv] = useState([]);
+  const [cv, setCv] = useState([1,2,3]);
   const [fileName, setFileName] = useState('Select Your CV');
   const [file, setFile] = useState('');
   const [success, setSuccess] = useState(false);
@@ -61,7 +61,6 @@ function UploadCv() {
   return (
     <div>
       <h6>Upload Cv</h6>
-
       <div className="flex">
         <div className="w-8/12">
           <div className="">
@@ -84,13 +83,13 @@ function UploadCv() {
                           />
                         </svg>
                       </span>
-                    </div>
+                    </div> 
                     <div className="items-center flex-1 px-3 py-4 text-left">
                       <h5 className="text-xs font-getdev">
                         {' '}
-                        <a href="">{vc.url}</a>{' '}
+                        <a href="#">{vc.url}</a>{' '}
                       </h5>
-                    </div>
+                    </div> 
                     {!vc.isDefault ? (
                       <div className="py-4">
                         <ul className="inline-flex">

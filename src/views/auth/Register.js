@@ -1,100 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from '../../layouts/MainLayout/Nav';
-// import http from '../../utils/service';
-// import useAuth from "../../hooks/useAuth";
-// import Input from '../../components/Input';
-// import { register } from '../../actions/users';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useRegisterMutation } from '../../features/auth/authApiSlice';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../features/auth/authSlice';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCpassword] = useState('');
-  const [result, setResult] = useState({});
-  const [verify, setVerify] = useState('');
-  const [message, setMessage] = useState('');
-  // const history = useHistory();
-  let error;
+  // const [result, setResult] = useState({});
+  // const [verify, setVerify] = useState('');
+  // const [message, setMessage] = useState('');
+  const [msg, setMsg] = useState('');
 
-  // const { login, register } = useAuth();
-  // const dispatch = useDispatch(); //get the dispatch method from the useDispatch custom hook
-  // const userLogin = useSelector(state => state.userLogin);
-  // const { loading, error, userInfo } = userLogin;
+  const dispatch = useDispatch(); 
+  const [register, {
+    isLoading,
+    error
+  }] = useRegisterMutation();
 
   const handleRegister = async event => {
     event.preventDefault();
-    // console.log(email, password, username);
-    /**
-     * 1. Collect form fields
-     * 2. Make API call to the end point
-     * 3. Auto-login the user
-     * 4. set session
-     */
-    // const data = {
-    //   role_id: 1,
-    //   email,
-    //   username,
-    //   password,
-    //   password_confirmation: cpassword,
-    //   referrer: sessionStorage.getItem('referrer'),
-    // };
+
     try {
-      // let response = await register(data);
-      // if (!response) return;
-      // console.log(response);
-      // if (response.role_id == 1) {
-      // }
-      // dispatch(register(data));
-      // history.push('/developer/dashboard');
-    } catch (error) {
-      //console.log('errorMessage', errorMessage);
-      // setResult(error);
+      const  data  = await register({
+        role_id: 1,
+        email,
+        username,
+        password,
+        password_confirmation: cpassword, 
+      }).unwrap();
+      console.log(data, "Our data");
+      dispatch(setCredentials({ data }));
+      navigate("/developer/profile/edit");
+
+    } catch (err) {
+      console.log(err, "Cant login from the server");
+      // console.log(err.data.message, "Error logging in");
+      setMsg(err?.data?.message);
     }
-    // 2. Api call to save data
-    // register(data);
-    // try {
-    // 	const res = await http("/auth/register", "post", data);
-    // 	console.log(res.errors);
-    // 	if (res.access_token) {
-    // 		setSession(res);
-    // 	} else {
-    // 		setResult(res.errors);
-    // 		setMessage(res.message);
-    // 	}
-    // } catch (err) {
-    // 	console.log(err);
-    // }
-    //console.log(result);
+
+    console.log(error)
+
   };
-
-  // const setSession = authResult => {
-  // Set the time that the access token will expire at
-  // let expiresAt = JSON.stringify(
-  //   authResult.expires_in * 1000 + new Date().getTime()
-  // );
-  // localStorage.setItem('auth', JSON.stringify(authResult.access_token));
-  // localStorage.setItem('expires_at', expiresAt);
-  // login(email, password);
-  // };
-
-  // useEffect(() => {
-  //   window.scroll(0, 0);
-  //   let ref = window.location.search;
-  //   if (window.location.search) {
-  //     sessionStorage.setItem('referrer', ref.split('=')[1]);
-  //   }
-  // }, []);
 
   return (
     <div className="w-full h-screen bg-off">
       <Nav />
       <form onSubmit={handleRegister}>
         {/* //Show only on mobile */}
+        {
+          isLoading && <p>Processing...</p>
+        }
         <div className="block p-5 py-16 md:hidden lg:hidden xl:hidden">
           <div className="hidden md:block p-24 md:w-1/2">
-            <h2 className="font-bold text-gdblue -p-10 text-wide">
+            <h2 className="font-bold text-gdblue -p-10 text-wide text-center">
               {' '}
               Now Let's Get You{' '}
               <span className="text-blue-500">Signed Up</span>
@@ -110,7 +73,7 @@ const Register = () => {
             <div class="p-5 border-b-2 border-blue-500 text-blue-600 w-full">
               <h4>Developer Signup</h4>
             </div>
-            {error && <p className="p-2 text-red-600"> {error.message}</p>}
+            <p className="p-2 text-center text-red-600">{msg}</p>
             <label class="block mt-10">
               {/* <span class="text-gray-700">Name</span> */}
               <div className="relative">
@@ -148,7 +111,7 @@ const Register = () => {
                   placeholder="Username"
                 />
               </div>
-              {error && <p class="text-red-600">{error.errors.username}</p>}
+              {error && <p class="text-red-600">{error?.errors?.username}</p>}
             </label>
 
             <label class="block">
@@ -188,7 +151,7 @@ const Register = () => {
                   placeholder="Email"
                 />
               </div>
-              {error && <p class="text-red-600">{error.errors.email}</p>}
+              {error && <p class="text-red-600">{error?.errors?.email}</p>}
             </label>
 
             <label class="block">
@@ -272,7 +235,7 @@ const Register = () => {
                   placeholder=""
                 />
               </div>
-              {error && <p class="text-red-600">{error.errors.password}</p>}
+              {error && <p class="text-red-600">{error?.errors?.password}</p>}
             </label>
 
             <label class="block">
@@ -363,6 +326,7 @@ const Register = () => {
             <div className="flex flex-col justify-center pt-5">
               <button
                 type="submit"
+                onClick={handleRegister}
                 className="inline-block w-full p-3 text-center btn"
               >
                 Sign me Up
@@ -429,6 +393,8 @@ const Register = () => {
                   </div>
                   <div className="px-10 form-input w-full">
                     <input
+                      onChange={e => setUsername(e.target.value)}
+                      value={username}
                       class=" block w-full px-5 focus:outline-none"
                       name="username"
                       placeholder="Username"
@@ -467,6 +433,8 @@ const Register = () => {
                   <div className="px-10 form-input w-full">
                     <input
                       class=" block w-full px-5 focus:outline-none"
+                      onChange={e => setEmail(e.target.value)}
+                      value={email}
                       name="email"
                       placeholder="Email"
                     />
@@ -547,6 +515,8 @@ const Register = () => {
                   <div className="px-10 form-input w-full">
                     <input
                       class=" block w-full px-5 focus:outline-none"
+                      onChange={e => setPassword(e.target.value)}
+                      value={password}
                       type="password"
                       name="password"
                       placeholder=""
@@ -628,6 +598,8 @@ const Register = () => {
                   <div className="px-10 form-input w-full">
                     <input
                       class=" block w-full px-5 focus:outline-none"
+                      onChange={e => setCpassword(e.target.value)}
+                      value={cpassword}
                       type="password"
                       name="password_confirmation"
                       placeholder=""
@@ -637,6 +609,7 @@ const Register = () => {
 
                 <div className="flex flex-col justify-center pt-5">
                   <button
+                    onClick={handleRegister}
                     type="submit"
                     className="inline-block w-full p-3 text-center btn"
                   >

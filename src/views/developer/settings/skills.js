@@ -4,39 +4,129 @@ import states from '../../../statics/states';
 import Select from 'react-select';
 import { Categories } from '../../../statics/categories';
 import { TECHNOLOGIES } from '../../../statics/technologies';
-const countries = require('../../../statics/countries.json');
+// const countries = require('../../../statics/countries.json');
+import {
+  useGetDevSkillQuery,
+  useUpdateSkillMutation,
+  useGetProfileEditQuery,
+  useGetDevAvailabilityQuery,
+  useUpdateDevAvailabilityMutation,
+  useAddProfileMutation
+} from '../../../features/developer/profileSlice';
 
 const Skills = () => {
-  const [fulltime, setFulltime] = useState(0);
-  const [parttime, setParttime] = useState(0);
-  const [remote, setRemote] = useState(0);
+  const [fulltime, setFulltime] = useState(false);
+  const [parttime, setParttime] = useState(false);
+  const [remote, setRemote] = useState(false);
   const [category_id, setCategory_id] = useState('');
-  const [level_id, setLevel_id] = useState('');
+  const [level_id, setLevel_id] = useState();
   const [technologies, setTechnologies] = useState(TECHNOLOGIES);
   const [stayOpen, setStayOpen] = useState(false);
   const [removeSelected, setRemoveSelected] = useState(true);
   const [tech, setTech] = useState({});
+  const [msg, setMsg] = useState('');
+  const [profile, setProfile] = useState([]);
+
+
+  const {
+    data: defaultData,
+    isSuccess
+  } = useGetProfileEditQuery();
+  const {
+    data: defaultTech,
+    isSuccess: techIsSuccess
+  } = useGetDevSkillQuery();
+  const {
+    data: devAvailability,
+    isSuccess: devIsSuccess
+  } = useGetDevAvailabilityQuery();
+
+  const [updateSkill, {
+    isError
+  }] = useUpdateSkillMutation();
+
+  const [updateDevAvailability, {
+    isError: devIsError
+  }] = useUpdateDevAvailabilityMutation();
+
+  // console.log(defaultTech, "Techs");
 
   useEffect(() => {
-    const getProfile = async () => {
-      if (localStorage.getItem('profile')) {
-        const profile = JSON.parse(localStorage.getItem('profile'));
-        // console.log(profile.category_id);
-        setCategory_id(profile.category_id);
-        setLevel_id(profile.level);
-        setTech(profile.technologies);
-        setFulltime(profile.availability.fulltime);
-        setParttime(profile.availability.parttime);
-        setRemote(profile.availability.remote);
-      }
-    };
+    setCategory_id(defaultData?.data.category_id);
+    setLevel_id(defaultData?.data.level_id);
+    setFulltime(devAvailability?.data.fulltime);
+    setParttime(devAvailability?.data.parttime);
+    setRemote(devAvailability?.data.remote);
+    setTech(defaultTech?.data);
+  }, [isSuccess,
+    techIsSuccess,
+    devIsSuccess]);
 
-    getProfile();
-  }, []);
+
+  const [addProfile, {
+    isSuccess: addProfileIsSuccess
+  }] = useAddProfileMutation();
+
+  const processSubmit = async (e) => {
+    // console.log(tech, "Technologies submitted");
+    //Update profile
+    // Update tech stack
+    // Update availability
+    e.preventDefault();
+    // try {
+    //   const data = await updateDevAvailability({
+    //     category_id,
+    //     level_id,
+    //     fulltime,
+    //     parttime,
+    //     remote,
+    //   }).unwrap();
+    //   console.log(data, "Update skill and tech categories");
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    try {
+      console.log(tech, "Tech for edit")
+      const data = await updateSkill({
+        value: tech
+      }).unwrap();
+      console.log(data, "Update skill and tech categories");
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(
+      category_id,
+      level_id,
+      fulltime,
+      parttime,
+      remote, 
+      "Update going backend"
+    );
+    try {
+      const data = await updateDevAvailability({
+        category_id,
+        level_id,
+        fulltime,
+        parttime,
+        remote
+      }).unwrap();
+      console.log(data, "Update skill and  availability categories");
+      setMsg(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const options = TECHNOLOGIES;
   return (
     <div>
       <h6> Skills and Availability</h6>
+      {
+        msg &&
+        <div className='bg-green-600 p-2'>
+          <p className='text-white'>{msg}</p>
+        </div>
+      }
       <div className="flex">
         <div className="w-5/6">
           <div className="mt-5">
@@ -48,7 +138,7 @@ const Skills = () => {
                   // onChange={this.onChange}
                   name="category_id"
                   className="w-full form-select"
-                  // className={state.errors.category_id ? 'w3-border-red' : ''}
+                // className={state.errors.category_id ? 'w3-border-red' : ''}
                 >
                   <option value="">Select</option>
                   {Categories.map(data => (
@@ -64,7 +154,7 @@ const Skills = () => {
                 <select
                   // onChange={this.onChange}
                   name="level_id"
-                  // className={
+                  // className={ 
                   //   'w3-select w3-border w3-white w3-round-large' +
                   //   ' ' +
                   //   (this.state.errors.level_id ? 'w3-border-red' : '')
@@ -136,6 +226,7 @@ const Skills = () => {
                     type="checkbox"
                     class="form-checkbox"
                     checked={fulltime}
+                    onChange={() => setFulltime(!fulltime)}
                   />
                   <span class="ml-2">Full time</span>
                 </label>
@@ -146,6 +237,7 @@ const Skills = () => {
                     type="checkbox"
                     class="form-checkbox"
                     checked={parttime}
+                    onChange={() => setParttime(!parttime)}
                   />
                   <span class="ml-2">Part time</span>
                 </label>
@@ -156,6 +248,8 @@ const Skills = () => {
                     type="checkbox"
                     class="form-checkbox"
                     checked={remote}
+                    // value={}
+                    onChange={() => setRemote(!remote)}
                   />
                   <span class="ml-2">Contract</span>
                 </label>
@@ -166,6 +260,7 @@ const Skills = () => {
       </div>
       <div className="flex justify-start mt-5">
         <button
+          onClick={processSubmit}
           type="submit"
           className="flex items-center justify-center w-40 py-2 text-sm bg-red-600 btn hover:bg-red-500"
         >

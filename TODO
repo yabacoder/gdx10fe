@@ -36,3 +36,13 @@ axios.get('/sanctum/csrf-cookie').then(response => {
 If your JavaScript HTTP library does not set the value for you, you will need to manually set the X-XSRF-TOKEN header to match the value of the XSRF-TOKEN cookie that is set by this route.
 
 Grouping endpoints and middleware
+
+Endpoint Design
+Developer
+-> profile/edit
+-> skills-availability : 
+-> portfolio
+-> work-experience  - 
+-> education
+-> cv
+-> socials

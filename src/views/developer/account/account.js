@@ -9,6 +9,7 @@ import Skills from './skills';
 import Profile from '../../../assets/img/profile.png';
 import BgImg from '../../../assets/img/dev-bg-img.png';
 // import http from '../../../utils/service';
+import { useGetProfileQuery } from '../../../features/developer/profileSlice';
 
 const Account = () => {
   const [openTab, setOpenTab] = useState('portfolio');
@@ -16,6 +17,11 @@ const Account = () => {
   const [applications, setApplications] = useState('');
   const [articles, setArticles] = useState(0);
   const [questions, setQuestions] = useState(0);
+
+  const {
+    data
+  } = useGetProfileQuery();
+  console.log(data, "Api call");
 
   useEffect(() => {
     const getProfile = async () => {

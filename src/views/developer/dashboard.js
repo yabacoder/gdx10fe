@@ -3,15 +3,22 @@ import { Link } from 'react-router-dom';
 // import Layout from "./layout";
 import Profile from './utils/Profile';
 import profileImage from '../../assets/img/profile.png';
-// import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 // import http from '../../utils/service';
 // import { baseURL } from '../../config';
+import { useGetProfileQuery } from '../../features/developer/profileSlice';
+
 
 const Dashboard = () => {
   // const { data } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [articles, setArticles] = useState([]);
   const [relatedJobs, setRelatedJobs] = useState([]);
+
+  const {
+    data
+  } = useGetProfileQuery();
+  console.log(data, "Api call");
 
   /**
    * This pull the developer data from the Backend

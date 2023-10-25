@@ -20,25 +20,23 @@ export const getCookie = (cookieName) => {
     return undefined;
 };
 
-const getCsrf = () => {
-
-};
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
-        const cookie = getState().auth.csrfToken;
+        // const cookie = getState().auth.csrfToken;
         // console.log(token);
         if (token) {
-            headers.set("authorization", `Bearer ${token}`);
+            headers.set("authorization", `Bearer ${token.data.accessToken}`);
+            headers.append("Accept", 'application/json');
         }
 
         // console.log(cookie, "Plenty cookies");
-        if (typeof cookie == 'string') {
-            headers.set('X-XSRF-TOKEN', cookie);
-        }
+        // if (typeof cookie == 'string') {
+        //     headers.set('X-XSRF-TOKEN', cookie);
+        // }
         return headers;
     }
 });

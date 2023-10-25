@@ -10,9 +10,9 @@ const Socials = () => {
     const getSocial = async () => {
       let social = await http('/developer/social');
       social = social.data;
-      setGithub(social.github);
-      setTwitter(social.twitter);
-      setLinkedin(social.linkedin);
+      setGithub(social?.github);
+      setTwitter(social?.twitter);
+      setLinkedin(social?.linkedin);
       // console.log(social);
       // social.map(sc => (
       //   // if (sc.type == 1) {

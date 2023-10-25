@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function WorkExperience() {
   const [openModal, setOpenModal] = useState(false);
-  const [experience, setExperience] = useState([]);
+  const [experience, setExperience] = useState([1,2,4]);
   useEffect(() => {
     const getExperience = async () => {
       if (localStorage.getItem('profile')) {
@@ -117,7 +117,7 @@ function WorkExperience() {
             <div className="w-full p-10 project-submission">
               <div className="flex justify-between py-5 border-b">
                 <h6>Work Experience</h6>
-                <div className="">
+                <div className="hover:cursor-pointer">
                   <div onClick={() => setOpenModal(false)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

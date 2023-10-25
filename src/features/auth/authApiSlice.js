@@ -29,11 +29,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials }
             }),
+            providesTags: (result, error) => [{ type: 'User' }],
             
         }),
         sendLogout: builder.mutation({
             query: () => ({
-                url: '/auth/logout',
+                url: '/logout',
                 method: 'POST',
             }),
             invalidatesTags: [

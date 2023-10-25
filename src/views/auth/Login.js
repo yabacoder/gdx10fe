@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
-
 import Nav from '../../layouts/MainLayout/Nav';
 import { useLoginMutation } from '../../features/auth/authApiSlice';
 import { useDispatch } from 'react-redux';
@@ -19,26 +18,9 @@ const Login = () => {
 
   const [login, {
     isLoading,
-    // isSuccess,
-    // isError,
-    error
   }] = useLoginMutation();
 
   const dispatch = useDispatch();
-
-  // const userLogin = useSelector(state => state.userLogin); 
-  // const { loading, error, userInfo } = userLogin;
-
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     history.push('/developer/dashboard');
-  //   }
-  // }, [history, userInfo]);
-
-  // const formHandler = async e => {
-  //   e.preventDefault();
-  //   dispatch(login(email, password));
-  // };
 
   const processLogin = async (e) => {
     e.preventDefault();
@@ -46,10 +28,14 @@ const Login = () => {
       const { data } = await login({ email, password }).unwrap();
       console.log(data, "Our data");
       dispatch(setCredentials({ data }));
-      navigate("/developer/dashboard");
+      if (!data.profile) {
+        navigate("/developer/profile/edit");
+      } else {
+        navigate("/developer/dashboard");
+      }
     } catch (err) {
       console.log(err, "Cant login from the server");
-      console.log(err.data.message, "Error logging in");
+      console.log(err.data.message, "Error logging in"); 
       setMsg(err?.data.message);
     }
   };
@@ -92,7 +78,7 @@ const Login = () => {
                         id="Group_318"
                         data-name="Group 318"
                         transform="translate(0 0)"
-                      > 
+                      >
                         <path
                           id="Path_552"
                           data-name="Path 552"

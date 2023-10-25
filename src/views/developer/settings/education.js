@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function Education() {
   const [openModal, setOpenModal] = useState(false);
-  const [education, setEducation] = useState([]);
+  const [education, setEducation] = useState([1,2,3]);
   useEffect(() => {
     const getEducation = async () => {
       if (localStorage.getItem('profile')) {
@@ -116,7 +116,7 @@ function Education() {
             <div className="w-full p-10 project-submission">
               <div className="flex justify-between py-5 border-b">
                 <h6>Education</h6>
-                <div className="">
+                <div className="hover:cursor-pointer">
                   <div onClick={() => setOpenModal(false)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

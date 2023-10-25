@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const Portfolio = () => {
-  const [portfolio, setPortfolio] = useState([]);
+  const [portfolio, setPortfolio] = useState([1,2,4]);
   useEffect(() => {
     const getPortfolio = async () => {
       if (localStorage.getItem('profile')) {
         const profile = JSON.parse(localStorage.getItem('profile'));
-
         setPortfolio(profile.portfolio);
       }
     };
@@ -53,6 +52,12 @@ const Portfolio = () => {
 
                       <span className="px-2">{port.title}</span>
                       <span className="w-4/6 px-2 text-blue-500">
+                        <input
+                        className='form-input mx-2 w-2/3'
+                        type="text"
+                        name="github"
+                        value=""
+                        />
                         <a href="">Add Link +</a>
                       </span>
                       <span>
@@ -60,7 +65,7 @@ const Portfolio = () => {
                           <li className="flex items-center px-4 text-sm border-r border-gray-500">
                             <svg
                               viewBox="0 0 18 17"
-                              className="inline-flex w-4 mx-2"
+                              className="inline-flex w-4 mx-2 hover:cursor-pointer"
                             >
                               <defs />
                               <g
@@ -79,7 +84,7 @@ const Portfolio = () => {
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
-                              className="w-5"
+                              className="w-5 hover:cursor-pointer"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
                             >
