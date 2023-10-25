@@ -14,7 +14,7 @@ export const educationApiSplice = apiSlice.injectEndpoints({
         }),
         getEducation: builder.query({
             query: (id) => ({
-                url: `/developer/education/${id}`, use
+                url: `/developer/education/${id}`,
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
