@@ -44,7 +44,7 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         getDevSkill: builder.query({
             query: () => ({
-                url: '/developer/technology',
+                url: '/developer/profile/technology',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
@@ -52,7 +52,7 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         updateSkill: builder.mutation({
             query: profile => ({
-                url: '/developer/technology',
+                url: '/developer/profile/technology',
                 method: 'POST',
                 body: {
                     ...profile
@@ -64,7 +64,7 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         getDevAvailability: builder.query({
             query: () => ({
-                url: '/developer/availability',
+                url: '/developer/profile/availability',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
@@ -72,7 +72,7 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         updateDevAvailability: builder.mutation({
             query: profile => ({
-                url: '/developer/availability',
+                url: '/developer/profile/availability',
                 method: 'POST', 
                 body: {
                     ...profile

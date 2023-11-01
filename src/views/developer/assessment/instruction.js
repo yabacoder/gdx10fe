@@ -48,7 +48,6 @@ function Instruction() {
         </div>
         // </Layout>
 
-
     );
 }
 

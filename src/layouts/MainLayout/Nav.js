@@ -24,23 +24,23 @@ import logo from '../../assets/img/logo.svg'
             <nav>
                 <ul className="items-center justify-between pt-4 text-base text-white lg:flex lg:pt:0">
                     <li>
-                    <Link to="/pricing" className="py-1 mx-6 text-white font-getdevM ">For Companies </Link>
+                                <Link to="/pricing" className="py-1 md:mx-6 text-white font-getdevM ">For Companies </Link>
                     </li>
                     <li>
-                        <Link to="/pricing" className="py-1 mx-6 mt-1 text-white font-getdevM">How it works</Link>
+                                <Link to="/pricing" className="py-1 md:mx-6 mt-1 text-white font-getdevM">How it works</Link>
                     </li>
                     {/* <li>
                         <Link to="/success_stories" className="py-1 mx-6 mt-1 text-white font-getdevM ">Success Stories</Link>
                     </li> */}
                     
                     <li>
-                    <li  className="relative inline-block py-1 mx-6 mt-1 text-white dropdown font-getdevM ">
+                    <li  className="relative inline-block py-1 md:mx-6 mt-1 text-white dropdown font-getdevM ">
                         <div className="inline-flex items-center">
                         <span class="mr-1"> Resources</span>
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
   
                         </div>
-                            <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 md:w-56 ">
+                            <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 w-60 md:w-56 ">
                                 <li class="">
                                     <Link to="#" class=" rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" >Career Paths</Link>
                                     {/* <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 md:w-56">
@@ -55,10 +55,10 @@ import logo from '../../assets/img/logo.svg'
                     </li>
 
                     <li className=""> 
-                    <Link to="/jobs" className="py-2 mx-6 font-getdevM" > Jobs</Link>
+                    <Link to="/jobs" className="py-2 md:mx-6 font-getdevM" > Jobs</Link>
                     </li>
                     
-                    <li className="lg:ml-5">
+                    <li className="lg:ml-5 mt-5 md:mt-0">
                     <Link to="/login" className="px-4 py-2 text-white transition duration-150 ease-in-out border border-white rounded-full font-getdevM hover:bg-white hover:text-black" > Login </Link>
                     </li>
                 </ul>

@@ -9,30 +9,30 @@ import { Login, Register, Logout } from "./views/auth";
 // import DefaultLayout from  './layouts/MainLayout';
 // import { CompanyLayout } from './layouts/CompanyLayout';
 import { DeveloperLayout } from './layouts/DeveloperLayout';
-import DeveloperAccount from './views/developer/account/account'
-import Settings from './views/developer/settings'
-import Applied from './views/developer/applied'
-import Articles from './views/developer/articles'
-import Dashboard  from './views/developer/dashboard'
+import DeveloperAccount from './views/developer/account/account';
+import Settings from './views/developer/settings';
+import Applied from './views/developer/applied';
+import Articles from './views/developer/articles';
+import Dashboard from './views/developer/dashboard';
 import Project from './views/developer/project';
 import Instruction from './views/developer/assessment/Instruction';
 import Question from './views/developer/assessment/Question';
 
 
 import CompanyLayout from './layouts/CompanyLayout';
-import CompanyDashboard from './views/company/dashboard'
-import CompanyJobs from './views/company/jobs'
-import CompanyAddJob from './views/company/jobs/AddJob'
-import CompanyJobDescription from './views/company/jobs/description'
-import CompanyJobResponsibilities from './views/company/jobs/responsibilities'
-import CompanyJobSkill from './views/company/jobs/skill'
-import CompanyJobStack from './views/company/jobs/stack'
-import CompanyCandidates from './views/company/candidates'
-import CompanyCandidatesProfile from './views/company/candidates/profile'
-import CompanyInterviewers from './views/company/interviewers'
-import CompanySettings from './views/company/settings'
-import CompanySettingsPage from './views/company/settings/Page'
-import CompanySettingsPassword from './views/company/settings/Password'
+import CompanyDashboard from './views/company/dashboard';
+import CompanyJobs from './views/company/jobs';
+import CompanyAddJob from './views/company/jobs/AddJob';
+import CompanyJobDescription from './views/company/jobs/description';
+import CompanyJobResponsibilities from './views/company/jobs/responsibilities';
+import CompanyJobSkill from './views/company/jobs/skill';
+import CompanyJobStack from './views/company/jobs/stack';
+import CompanyCandidates from './views/company/candidates';
+import CompanyCandidatesProfile from './views/company/candidates/profile';
+import CompanyInterviewers from './views/company/interviewers';
+import CompanySettings from './views/company/settings';
+import CompanySettingsPage from './views/company/settings/Page';
+import CompanySettingsPassword from './views/company/settings/Password';
 
 
 
@@ -46,6 +46,9 @@ import Contact from './views/main/Contact';
 import Calculator from "./views/main/Calculator";
 import TalentManagement from "./views/main/TalentManagement";
 import Faq from "./views/main/Faq";
+import Backend from "./views/main/career_path/backend";
+import Frontend from "./views/main/career_path/frontend";
+import Fullstack from "./views/main/career_path/fullstack";
 
 
 
@@ -63,6 +66,10 @@ export function Routes() {
                 {
                     path: "jobs",
                     element: <Joblist />,
+                },
+                {
+                    path: "talent_management",
+                    element: <TalentManagement />,
                 },
                 {
                     path: "jobs/:id",
@@ -93,13 +100,41 @@ export function Routes() {
                     element: <Calculator />,
                 },
                 {
-                    path: "talent-management",
-                    element: <TalentManagement />,
+                    path: "career_path/backend",
+                    element: <Backend />,
                 },
                 {
-                    path: "faq",
+                    path: "faq", 
                     element: <Faq />,
                 },
+
+            ],
+        },
+        {
+            path: "/career_path",
+            element: <MainLayout />,
+            children: [
+
+                {
+                    path: "backend",
+                    element: <Backend />,
+                },
+                {
+                    path: "frontend",
+                    element: <Frontend />,
+                },
+                {
+                    path: "fullstack",
+                    element: <Fullstack />,
+                },
+                // {
+                //     path: "backend",
+                //     element: <Backend />,
+                // },
+                // {
+                //     path: "backend",
+                //     element: <Backend />,
+                // },
 
             ],
         },
@@ -140,9 +175,14 @@ export function Routes() {
                     element: <Articles />,
                 },
                 {
+                    path: "profile/edit/:cv",
+                    element: <Settings />,
+                },
+                {
                     path: "profile/edit",
                     element: <Settings />,
                 },
+
                 {
                     path: "contact",
                     element: <Contact />,
@@ -161,6 +201,7 @@ export function Routes() {
                 },
 
             ],
+            // TalentManagement
         },
         {
             path: "/company",
@@ -180,7 +221,7 @@ export function Routes() {
                 },
                 {
                     path: "job/JobDescription",
-                    element: <CompanyJobDescription />, 
+                    element: <CompanyJobDescription />,
 
                 },
                 {
@@ -228,24 +269,20 @@ export function Routes() {
                     element: <Calculator />,
                 },
                 {
-                    path: "talent-management",
-                    element: <TalentManagement />,
-                },
-                {
                     path: "faq",
                     element: <Faq />,
                 },
 
             ],
         },
-       {
+        {
             path: "login",
             element: <Login />,
-        }, 
-       {
+        },
+        {
             path: "logout",
             element: <Logout />,
-        }, 
+        },
         {
             path: "register",
             element: <Register />,

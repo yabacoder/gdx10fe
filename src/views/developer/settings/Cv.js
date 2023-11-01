@@ -84,7 +84,7 @@ function UploadCv() {
                         </svg>
                       </span>
                     </div> 
-                    <div className="items-center flex-1 px-3 py-4 text-left">
+                    <div className=" items-center flex-1 px-3 py-4 text-left">
                       <h5 className="text-xs font-getdev">
                         {' '}
                         <a href="#">{vc.url}</a>{' '}

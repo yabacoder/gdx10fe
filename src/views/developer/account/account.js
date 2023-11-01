@@ -16,12 +16,12 @@ const Account = () => {
   const [projects, setProjects] = useState('');
   const [applications, setApplications] = useState('');
   const [articles, setArticles] = useState(0);
-  const [questions, setQuestions] = useState(0);
+  const [questions, setQuestions] = useState(0); 
 
   const {
     data
   } = useGetProfileQuery();
-  console.log(data, "Api call");
+  // console.log(data, "Api call");
 
   useEffect(() => {
     const getProfile = async () => {
@@ -92,8 +92,8 @@ const Account = () => {
               <img src={Camera} alt="" className="-mt-10 -mr-28" />
             </div>
 
-            <h5>Light Nduka</h5>
-            <p>UX Designer</p>
+            <h5>Sheriff Shittu</h5>
+            <p>Fullstack Developer</p>
             <hr className="my-3" />
             <p>
               <span>
@@ -123,7 +123,9 @@ const Account = () => {
               </Link>
             </span>
             <span className="mx-1">
-              <Link className="p-2 px-5 my-2 text-xs text-white transition duration-150 ease-in-out bg-blue-700 border rounded-md hover:border hover:bg-transparent hover:text-blue-700">
+              <Link
+                to="/developer/profile/edit/?cv=true"
+                className="p-2 px-5 my-2 text-xs text-white transition duration-150 ease-in-out bg-blue-700 border rounded-md hover:border hover:bg-transparent hover:text-blue-700">
                 Add Resume
               </Link>
             </span>

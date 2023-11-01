@@ -9,12 +9,17 @@ import Socials from './socials';
 import Cv from './Cv';
 import Password from './password';
 // import LeftNav from './LeftNav'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 // import http from '../../../utils/service';
 
 const Index = () => {
   const [openTab, setOpenTab] = useState('information');
   const [profile, setProfile] = useState([]);
+  const { cv } = useParams();
+  console.log(cv, "CV");
+  if (cv) {
+    setOpenTab("cv");
+  }
 
   useEffect(() => {
     const getProfile = async () => {
@@ -24,6 +29,8 @@ const Index = () => {
     };
 
     getProfile();
+
+
   }, []);
 
   return (

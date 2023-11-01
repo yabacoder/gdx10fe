@@ -10,15 +10,15 @@ import {Link} from "react-router-dom";
                 <h3 className="pb-5 ">Why You are yet to Attract Great Talent</h3>
 
                     <div className="">
-                        <img src="https://via.placeholder.com/350" className="rounded-md md:w-full md:w-3/6" />
+                        <img src="https://via.placeholder.com/350" className="rounded-md p-4" align="left" alt='frontend' />
                     </div>
                     <div className="content">
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum est ultricies integer quis. Iaculis urna id volutpat lacus laoreet. Mauris vitae ultricies leo integer malesuada. Ac odio tempor orci dapibus ultrices in. Egestas diam in arcu cursus euismod. Dictum fusce ut placerat orci nulla. Tincidunt ornare massa
                             </p>
-                            <p>
+                            <h3 className='text-gdblue mt-2'>
                             Delay in Interview Process
-                            </p>
+                            </h3>
                             <p>
                             Once a candidate apply for a job his/her expectation is to be invited for an interview - well that is at the discretion of the company/recruitment agency which depend on the applicants meeting the job requirements. But let’s leave out biases or what’s not. An applicant looks forward to attending an interview as that would typically be the next line of action to further prove competencies. When days turn into weeks and then months, after the application deadline, a large number of great talents are dissuaded as other companies who are swift at processing applications attracts them. This has been observed by the GetDev Hiring Team. In addition, refusing to give feedback to unsuccessful candidates can discourage same applicants in the future from applying to positions in your company, as well as not updating successful candidates on the next stage promptly. This was even taken to Twitter by some developers in the past few weeks.
                             </p>

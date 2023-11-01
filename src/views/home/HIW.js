@@ -12,8 +12,7 @@ export const HIW = () => {
         <div>
           <h3 className="text-center text-gdblue">How it works</h3>
           <p className="text-xs text-center ">
-            Aliquam vestibulum cursus felis. In iaculis iaculis sapien ac
-            condimentum.{' '}
+            GetDev simplify hiring process for developers, from setting up your profile and getting a job.{' '}
           </p>
         </div>
       </div>
@@ -26,7 +25,7 @@ export const HIW = () => {
           />
           <p className="font-bold text-center thick-color">Create Profile</p>
           <p className="text-xs">
-            Setup profile with expertise and frameworks.
+            Setup profile with your expertise and frameworks.
           </p>
         </div>
         <div className="flex flex-col items-center justify-between">
@@ -35,9 +34,9 @@ export const HIW = () => {
             src={assess}
             alt="Create an Account"
           />
-          <p className="font-bold thick-color">Create Profile</p>
+          <p className="font-bold thick-color">Take Test</p>
           <p className="text-xs">
-            Setup profile with expertise and frameworks.
+            Take our automated tests matching your skill-sets.
           </p>
         </div>
         <div className="flex flex-col items-center justify-between">
@@ -46,9 +45,9 @@ export const HIW = () => {
             src={application}
             alt="Create an Account"
           />
-          <p className="font-bold text-center thick-color">Create Profile</p>
+          <p className="font-bold text-center thick-color">Interview</p>
           <p className="text-xs">
-            Setup profile with expertise and frameworks.
+            Get Shortlisted for an interview.
           </p>
         </div>
         <div className="flex flex-col items-center justify-between">
@@ -57,9 +56,9 @@ export const HIW = () => {
             src={interviews}
             alt="Create an Account"
           />
-          <p className="font-bold thick-color">Create Profile</p>
+          <p className="font-bold thick-color">Get Job</p>
           <p className="text-xs">
-            Setup profile with expertise and frameworks.
+            Recieve contract your email!
           </p>
         </div>
       </div>
