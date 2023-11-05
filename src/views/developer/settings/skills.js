@@ -49,7 +49,31 @@ const Skills = () => {
     isError: devIsError
   }] = useUpdateDevAvailabilityMutation();
 
-  // console.log(defaultTech, "Techs");
+  console.log(defaultTech?.data, "Techs");
+
+  const filterArray = (array1, array2) => {
+    const filtered = array1.filter(el => {
+      return array2.value === el;
+    });
+    return filtered;
+  };
+
+  const tt = defaultTech;
+  // const filtered = filterArray(tt, TECHNOLOGIES);
+  // console.log(filtered, "Preprocessed");
+  const newTech = defaultTech;
+  // const newTech = filtered.forEach(TECHNOLOGIES.filter(v => v.value === filtered ))
+
+  // let obj = {};
+
+  let i,fil,obj, j;
+  for (i = 0; i <= tt?.length; i++) {
+    j = tt[i];
+    fil = TECHNOLOGIES.filter(v => v.value == j);
+    console.log(j, "filled")
+  }
+  obj = fil;
+  console.log(obj, "OBJ");
 
   useEffect(() => {
     setCategory_id(defaultData?.data.category_id);
@@ -86,7 +110,7 @@ const Skills = () => {
     //   console.log(error);
     // }
     try {
-      console.log(tech, "Tech for edit")
+      console.log(tech, "Tech for edit");
       const data = await updateSkill({
         value: tech
       }).unwrap();
@@ -99,7 +123,7 @@ const Skills = () => {
       level_id,
       fulltime,
       parttime,
-      remote, 
+      remote,
       "Update going backend"
     );
     try {
@@ -200,18 +224,18 @@ const Skills = () => {
             <p>Professional Skills</p>
 
             <label className="block w-full p-2 md:p-1">
-              {console.log(tech)}
+              {console.log(newTech)}
               <Select
                 className="block w-full mt-1 "
                 closeOnSelect={!stayOpen}
-                defaultValue={tech}
+                defaultValue={newTech}
                 required
                 isMulti
                 onChange={e => setTechnologies(e.target)}
                 options={options}
                 placeholder="Select"
                 removeSelected={removeSelected}
-                // value={tech}
+                value={newTech}
                 classNamePrefix="select"
               />
             </label>
@@ -227,7 +251,7 @@ const Skills = () => {
                     class="form-checkbox"
                     checked={fulltime}
                     onChange={() => setFulltime(!fulltime)}
-                  />
+                  /> 
                   <span class="ml-2">Full time</span>
                 </label>
               </div>

@@ -27,7 +27,7 @@ function Assess() {
                 name="radio"
                 value="1"
               />
-              <span className="ml-2 text-gdblue">Option 1</span>
+              <span className="ml-2 text-gdblue">2</span>
             </label>
           </div>
           <div className="p-2 px-2 py-2 mb-2 bg-gray-300 rounded-lg hover:bg-red-600">
@@ -38,7 +38,7 @@ function Assess() {
                 name="radio"
                 value="1"
               />
-              <span className="ml-2 text-gdblue">Option 2</span>
+              <span className="ml-2 text-gdblue">Null</span>
             </label>
           </div>
           <div className="p-2 px-2 py-2 mb-2 bg-white rounded-lg hover:bg-red-600">
@@ -49,7 +49,7 @@ function Assess() {
                 name="radio"
                 value="1"
               />
-              <span className="ml-2 text-gdblue">Option 3</span>
+              <span className="ml-2 text-gdblue">5</span>
             </label>
           </div>
           <div className="p-2 px-2 py-2 mb-2 bg-white rounded-lg hover:bg-red-600">
@@ -60,14 +60,14 @@ function Assess() {
                 name="radio"
                 value="1"
               />
-              <span className="ml-2 text-gdblue">Option 4</span>
+              <span className="ml-2 text-gdblue">undefined</span>
             </label>
           </div>
-          <div className="flex justify-center pt-5">
+          <div className="flex justify-center pt-5 hover:cursor-pointer">
             <input
               type="submit"
               value="Submit"
-              className="inline-block w-full p-3 text-center btn"
+              className="inline-block w-full p-3 text-center btn "
             />
           </div>
         </div>
@@ -108,7 +108,7 @@ function Assess() {
                       name="radio"
                       value="1"
                     />
-                    <span className="ml-2 text-gdblue">Option 1</span>
+                    <span className="ml-2 text-gdblue hover:text-white">2</span>
                   </label>
                 </div>
                 <div className="p-2 px-2 py-2 mb-2 bg-white rounded-lg hover:bg-red-600">
@@ -119,7 +119,7 @@ function Assess() {
                       name="radio"
                       value="1"
                     />
-                    <span className="ml-2 text-gdblue">Option 2</span>
+                    <span className="ml-2 text-gdblue hover:text-white">null</span>
                   </label>
                 </div>
                 <div className="p-2 px-2 py-2 mb-2 bg-white rounded-lg hover:bg-red-600">
@@ -130,7 +130,7 @@ function Assess() {
                       name="radio"
                       value="1"
                     />
-                    <span className="ml-2 text-gdblue">Option 3</span>
+                    <span className="ml-2 text-gdblue hover:text-white">5</span>
                   </label>
                 </div>
                 <div className="p-2 px-2 py-2 mb-2 bg-white rounded-lg hover:bg-red-600">
@@ -141,14 +141,14 @@ function Assess() {
                       name="radio"
                       value="1"
                     />
-                    <span className="ml-2 text-gdblue">Option 4</span>
+                    <span className="ml-2 text-gdblue hover:text-white">undefined</span>
                   </label>
                 </div>
-                <div className="flex justify-center ">
+                <div className="flex justify-center  ">
                   <input
                     type="submit"
                     value="Submit"
-                    className="inline-block w-full p-3 text-center btn"
+                    className="inline-block w-full p-3 text-center btn hover:cursor-pointer"
                   />
                 </div>
               </div>
