@@ -15,7 +15,7 @@ const countries = require('../../../statics/countries.json');
 const Information = () => {
   const { email, userId, username } = useAuth();
   const [profile, setProfile] = useState([]);
-  // const [email, setEmail] = useState([]);
+  const [github, setGithub] = useState([]);
   const [uname, setUsername] = useState(username);
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
@@ -32,7 +32,7 @@ const Information = () => {
     data,
     isSuccess
   } = useGetProfileEditQuery();
-  console.log(data)
+  // console.log(data)
 
   const [addProfile, {
     isSuccess: addProfileIsSuccess
@@ -46,6 +46,7 @@ const Information = () => {
     (async () => {
       setProfile(data?.data);
       setBio(data?.data.bio);
+      setGithub(data?.data.github);
       setName(data?.data.name);
       setUsername(data?.data.username);
       setPhone(data?.data.phone);
@@ -78,6 +79,7 @@ const Information = () => {
           name,
           sex,
           bio,
+          github,
           dob,
           image,
           country_id,
@@ -89,6 +91,7 @@ const Information = () => {
           name,
           sex,
           bio,
+          github,
           dob,
           image,
           country_id,
@@ -101,7 +104,7 @@ const Information = () => {
       console.log(error);
     }
   };
-  console.log(name)
+  // console.log(name)
 
   return (
     <div>
@@ -130,6 +133,7 @@ const Information = () => {
                 </div>
               </div>
             </div>
+            
             <div className="my-3">
               <p> Username</p>
               {/* <label htmlFor="price" class="block text-sm leading-5 font-medium text-gray-700">Price</label> */}
@@ -245,6 +249,27 @@ const Information = () => {
                     </option>
                   ))}
                 </select>
+              </div>
+            </div>
+            <div className="mt-5">
+              <div className="flex items-center justify-between my-3">
+                <div className="w-full ">
+                  <p>Github</p>
+                  <label htmlFor="" class="mt-1 relative rounded-md shadow-sm">
+                    <div class="border rounded-md focus  left-0 flex items-center ">
+                      <span class="border text-gray-500 bg-gray-300 p-2 sm:text-sm sm:leading-5 h-full">
+                        www.github.com/
+                      </span>
+                      <input
+                        className="w-full form-input"
+                        type="text"
+                        value={github}
+                        onChange={e => setGithub(e.target.value)}
+                      />
+                    </div>
+                  </label>
+                 
+                </div>
               </div>
             </div>
             <div className="my-3">

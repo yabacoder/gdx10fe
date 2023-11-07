@@ -19,8 +19,20 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError;
                 }
             }),
+            // invalidatesTags: (result, error, arg) => [
+            //     { type: 'Portfolio' }
+            // ]
+        }),
+        addPortfolio: builder.mutation({
+            query: portfolio => ({
+                url: '/developer/portfolio',
+                method: 'POST',
+                body: {
+                    ...portfolio
+                }
+            }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Portfolio', id: arg.id }
+                { type: 'Portfolio'}
             ]
         }),
         updatePortfolio: builder.mutation({
@@ -32,7 +44,7 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Portfolio', id: arg.id }
+                { type: 'Portfolio' }
             ]
         }),
         deletePortfolio: builder.mutation({
@@ -43,21 +55,19 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
                     ...portfolio
                 }
             }),
-            // invalidatesTags: (result, error, arg) => [
-            //     { type: 'Portfolio', id: arg.id }
-            // ]
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Portfolio' }
+            ]
         }),
- 
+
     })
 });
 
 export const {
-    useGetPortfolioQuery, 
-    useGetPortfolioEditQuery, 
+    useGetPortfolioQuery,
+    useGetPortfolioEditQuery,
     useAddPortfolioMutation,
     useUpdatePortfolioMutation,
-    useGetDevSkillQuery,
-    useUpdateSkillMutation,
-    useGetDevAvailabilityQuery,
-    useUpdateDevAvailabilityMutation
+    useDeletePortfolioMutation,
+    useLoadPortfolioQuery
 } = portfolioApiSplice;

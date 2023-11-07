@@ -20,7 +20,19 @@ export const educationApiSplice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Education', id: arg.id }
+                { type: 'Education' }
+            ]
+        }),
+        addEducation: builder.mutation({
+            query: education => ({
+                url: '/developer/education',
+                method: 'POST',
+                body: {
+                    ...education
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Education' }
             ]
         }),
         updateEducation: builder.mutation({
@@ -32,7 +44,7 @@ export const educationApiSplice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Education', id: arg.id }
+                { type: 'Education' }
             ]
         }),
         deleteEducation: builder.mutation({
@@ -44,7 +56,7 @@ export const educationApiSplice = apiSlice.injectEndpoints({
                 }
             }),
             // invalidatesTags: (result, error, arg) => [
-            //     { type: 'Education', id: arg.id }
+            //     { type: 'Education' }
             // ]
         }),
  
@@ -52,12 +64,10 @@ export const educationApiSplice = apiSlice.injectEndpoints({
 });
 
 export const {
+    useLoadEducationQuery,
     useGetEducationQuery, 
     useGetEducationEditQuery, 
     useAddEducationMutation,
     useUpdateEducationMutation,
-    useGetDevSkillQuery,
-    useUpdateSkillMutation,
-    useGetDevAvailabilityQuery,
-    useUpdateDevAvailabilityMutation
+    useDeleteEducationMutation
 } = educationApiSplice;

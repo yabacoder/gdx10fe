@@ -1,19 +1,102 @@
 import React, { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
+
+import {
+  useLoadWorkExperienceQuery,
+  useGetWorkExperienceQuery,
+  useGetWorkExperienceEditQuery,
+  useAddWorkExperienceMutation,
+  useUpdateWorkExperienceMutation,
+  useDeleteWorkExperienceMutation
+} from '../../../features/developer/workExperienceSlice';
+import "react-datepicker/dist/react-datepicker.css";
 
 function WorkExperience() {
   const [openModal, setOpenModal] = useState(false);
-  const [experience, setExperience] = useState([1,2,4]);
+  const [experiences, setExperiences] = useState([1, 2, 4]);
+  const [experience, setExperience] = useState({});
+  const [edit, setEdit] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [title, setTitle] = useState(experience?.title);
+  const [company, setCompany] = useState(experience?.company);
+  const [id, setId] = useState(experience?.id);
+  const [present, setPresent] = useState(experience?.present);
+  const [description, setDescription] = useState(experience?.description);
+
+
+  const {
+    data,
+    isSuccess,
+    isError,
+    error,
+    isLoading
+  } = useLoadWorkExperienceQuery();
+
+  console.log(data?.data, "Work experience");
+
   useEffect(() => {
-    const getExperience = async () => {
-      if (localStorage.getItem('profile')) {
-        const profile = JSON.parse(localStorage.getItem('profile'));
+    setExperiences(data?.data);
+  }, [isSuccess]);
 
-        setExperience(profile.experience);
+  const [addWorkExperience, {
+    isSuccess: addIsSuccess,
+    isError: addIsError,
+    error: addErr,
+    isLoading: AdIsLoading
+  }] = useAddWorkExperienceMutation();
+
+  const [updateWorkExperience, {
+    isSuccess: updateSuccess,
+    isError: updateIsError,
+    error: updateError,
+    isLoading: updateIsLoading
+  }] = useUpdateWorkExperienceMutation();
+
+  const [deleteWorkExperience, {
+    isSuccess: deleteSuccess,
+    isError: deleteIsError,
+    error: deleteError,
+    isLoading: deleteIsLoading
+  }] = useDeleteWorkExperienceMutation();
+
+  useEffect(() => {
+    (async () => { 
+      setExperiences(data?.data);
+    })();
+  }, [isSuccess, updateSuccess, isLoading, addIsSuccess]);
+
+
+  const processSave = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (edit) {
+        // update edit
+        const { data } = await updateWorkExperience({ id, title, company, start: startDate, end: endDate, present, description }).unwrap();
+      } else {
+        // Add new
+        const { data } = await addWorkExperience({ title, company, start: startDate, end: endDate, present, description }).unwrap();
       }
-    };
+      console.log(data);
+      setEdit(false);
+      setOpenModal(false);
 
-    getExperience();
-  }, []);
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const processDelete = async (id) => {
+    try {
+      const { data } = await deleteWorkExperience({ id }).unwrap();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <h6> Work Experience</h6>
@@ -21,8 +104,8 @@ function WorkExperience() {
         <div className="w-8/12">
           <div className="">
             <div className="flex flex-col jobs">
-              {experience &&
-                experience.map(exp => (
+              {experiences &&
+                experiences.map(exp => (
                   <div className="flex justify-between my-3 bg-transparent border border-gray-400 rounded-md ">
                     <div className="flex items-center px-3 border-r">
                       <span className="">
@@ -41,25 +124,34 @@ function WorkExperience() {
                       </span>
                     </div>
                     <div className="py-3">
-                      <h4 className="text-sm text-blue-800">{exp.company}</h4>
-                      <h5 className="text-xs font-getdev">{exp.title}</h5>
+                      <h4 className="text-sm text-blue-800">{exp?.company}</h4>
+                      <h5 className="text-xs font-getdev">{exp?.title}</h5>
                       <div className="info">
                         <ul className="flex items-center">
                           <li className="pr-4 text-xs ">
-                            {exp.start} -{/* {exp.end} */}
+                            {exp.start} -{exp?.end}
                           </li>
                         </ul>
                       </div>
                     </div>
                     <div className="py-4">
                       <ul className="inline-flex">
-                        {/* <li className="px-4 py-1 text-sm text-white bg-blue-500"> */}
-                        {/* <a href=""> clas</a> */}
-                        {/* See Interview</li> */}
-                        <li className="flex items-center px-4 text-sm border-r-2 border-gray-500">
+                        <li className="flex items-center px-4 text-sm border-r border-gray-500">
                           <svg
                             viewBox="0 0 18 17"
-                            className="inline-flex w-4 mx-2"
+                            className="inline-flex w-4 mx-2 hover:cursor-pointer"
+                            onClick={() => {
+                              setExperience(exp);
+                              setId(exp.id);
+                              setTitle(exp.title);
+                              setCompany(exp.company);
+                              setStartDate(new Date(exp.startDate));
+                              setEndDate(new Date(exp.endDate));
+                              setPresent(exp.present);
+                              setDescription(exp.description);
+                              setEdit(true);
+                              setOpenModal(true);
+                            }}
                           >
                             <defs />
                             <g
@@ -76,9 +168,12 @@ function WorkExperience() {
                         </li>
                         <li className="px-3">
                           <svg
+                            onClick={() => {
+                              processDelete(exp.id);
+                            }}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
-                            className="w-5"
+                            className="w-5 hover:cursor-pointer"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                           >
@@ -98,7 +193,15 @@ function WorkExperience() {
               <div className="my-3">
                 <div
                   className="w-full py-3 text-sm text-center transition duration-150 ease-in-out bg-transparent border border-red-600 rounded-md cursor-pointer hover:bg-red-600 hover:text-white"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setTitle("");
+                    setCompany("");
+                    setStartDate("");
+                    setEndDate("");
+                    setPresent("");
+                    setDescription("");
+                    setOpenModal(true);
+                  }}
                 >
                   Add Work Experience +
                 </div>
@@ -139,14 +242,22 @@ function WorkExperience() {
               <div className="flex justify-between my-3">
                 <div className="w-1/2">
                   <p>Company Name</p>
-                  <input type="text" className="w-full mt-2 form-input" />
+                  <input
+                    value={company}
+                    onChange={e => setCompany(e.target.value)}
+                    type="text"
+                    className="w-full mt-2 form-input" />
                 </div>
                 <div className="w-1/2 ml-5">
-                  <p>Website</p>
-                  <input type="text" className="w-full mt-2 form-input" />
+                  <p>Position/Title</p>
+                  <input
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    type="text"
+                    className="w-full mt-2 form-input" />
                 </div>
               </div>
-              <div className="flex justify-between my-3">
+              {/* <div className="flex justify-between my-3">
                 <div className="w-1/2">
                   <p>Country</p>
                   <input
@@ -163,31 +274,48 @@ function WorkExperience() {
                     className="w-full mt-2 form-input"
                   />
                 </div>
-              </div>
-              <div className="my-3 ">
+              </div> */}
+              {/* <div className="my-3 ">
                 <p>Position</p>
                 <input type="text" className="w-full mt-3 form-input" />
-              </div>
+              </div> */}
               <div className="flex items-center justify-between my-5">
                 <div className="w-1/3">
                   <p>Start Date</p>
-                  <input
+                  {/* <input
                     id="start"
                     type="date"
                     className="w-full mt-2 form-input"
+                    value={Date(startDate)}
+                    onChange={e => setStartDate(e.target.value)}
+                  /> */}
+                  <DatePicker
+                    // showIcon
+                    className="w-full mt-2 form-input"
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
                   />
+                  {/* {new Date(startDate)} */}
                 </div>
                 <div className="w-1/3 ml-5">
                   <p>End Date</p>
-                  <input
+                  {/* <input
                     id="end"
                     type="date"
                     className="w-full mt-2 form-input"
+                    value={new Date(endDate)}
+                    onChange={e => setEndDate(e.target.value)}
+                  /> */}
+                  <DatePicker
+                    // showIcon={20}
+                    className="w-full mt-2 form-input"
+                    selected={endDate ? endDate : ''}
+                    onChange={(date) => setEndDate(date)}
                   />
                 </div>
                 <div className="flex items-center justify-center w-1/3 mx-3 my-auto">
                   <label class="inline-flex items-center">
-                    <input type="checkbox" class="form-checkbox" checked />
+                    <input type="checkbox" class="form-checkbox" checked={present} onClick={() => setPresent(!present)} />
                     <span class="ml-2">Present</span>
                   </label>
                 </div>
@@ -200,11 +328,14 @@ function WorkExperience() {
                     class="form-textarea mt-1 block w-full"
                     rows="3"
                     placeholder=""
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
                   ></textarea>
                 </label>
               </div>
               <div className="flex w-full mt-5">
                 <button
+                  onClick={processSave}
                   type="submit"
                   className="w-full py-2 text-sm text-center bg-red-600 btn hover:bg-red-500"
                 >

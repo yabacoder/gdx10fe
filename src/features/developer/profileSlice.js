@@ -33,14 +33,14 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         updateProfile: builder.mutation({
             query: profile => ({
                 url: '/developer/profile/edit',
-                method: 'POST',
+                method: 'POST', 
                 body: {
                     ...profile
                 }
             }),
             // invalidatesTags: (result, error, arg) => [
             //     { type: 'Profile', id: arg.id }
-            // ]
+            // ] 
         }),
         getDevSkill: builder.query({
             query: () => ({

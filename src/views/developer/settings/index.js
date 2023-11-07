@@ -143,7 +143,7 @@ const Index = () => {
             >
               <div className="">Upload CV</div>
             </div>
-            <div
+            {/* <div
               data-target="socials"
               onClick={e => {
                 e.preventDefault();
@@ -156,7 +156,7 @@ const Index = () => {
               }
             >
               <div className="">Social Media</div>
-            </div>
+            </div> */}
             <div
               data-target="password"
               onClick={e => {

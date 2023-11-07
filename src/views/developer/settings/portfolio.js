@@ -1,26 +1,102 @@
 import React, { useState, useEffect } from 'react';
+import {
+  useAddPortfolioMutation,
+  useGetPortfolioEditQuery,
+  useGetPortfolioQuery,
+  useUpdatePortfolioMutation,
+  useDeletePortfolioMutation,
+  useLoadPortfolioQuery
+} from '../../../features/developer/portfolioSlice';
 
 const Portfolio = () => {
-  const [portfolio, setPortfolio] = useState([1,2,4]);
-  useEffect(() => {
-    const getPortfolio = async () => {
-      if (localStorage.getItem('profile')) {
-        const profile = JSON.parse(localStorage.getItem('profile'));
-        setPortfolio(profile.portfolio);
-      }
-    };
+  const [openModal, setOpenModal] = useState(false);
+  const [portfolios, setPortfolios] = useState([]);
+  const [portfolio, setPortfolio] = useState({});
+  const [edit, setEdit] = useState(false);
+  // const [deletePortfolio, setDeletePortfolio] = useState('');
+  const [title, setTitle] = useState(portfolio?.title);
+  const [url, setUrl] = useState(portfolio?.url);
+  const [id, setId] = useState(portfolio?.id);
+  const [description, setDescription] = useState(portfolio?.description);
 
-    getPortfolio();
-  }, []);
+
+
+  const {
+    data,
+    isSuccess: fetchSuccess
+  } = useLoadPortfolioQuery();
+  // console.log(data, "Fetched data");
+  const [addPortfolio, {
+    isSuccess,
+    isError,
+    error,
+    isLoading
+  }] = useAddPortfolioMutation();
+
+  const [updatePortfolio, {
+    isSuccess: updateSuccess,
+    isError: updateIsError,
+    error: updateError,
+    isLoading: updateIsLoading
+  }] = useUpdatePortfolioMutation();
+
+  const [deletePortfolio, {
+    isSuccess: deleteSuccess,
+    isError: deleteIsError,
+    error: deleteError, 
+    isLoading: deleteIsLoading
+  }] = useDeletePortfolioMutation();
+
+  useEffect(() => {
+    (async () => {
+      setPortfolios(data?.data);
+    })();
+  }, [fetchSuccess, updateSuccess, isLoading]);
+
+  useEffect(() => {
+    // setPortfolio(data?.data);
+
+  }, [edit]);
+
+  const processSave = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (edit) {
+        // update edit
+        const { data } = await updatePortfolio({ id, title, url, description }).unwrap();
+      } else {
+        // Add new
+        const { data } = await addPortfolio({ title, url, description }).unwrap();
+      }
+      console.log(data);
+      setEdit(false);
+      setOpenModal(false);
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const processDelete = async (id) => {
+    try {
+      const { data } = await deletePortfolio({ id }).unwrap();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
-      <h6> Portfolio</h6>
+      <h6>Portfolio</h6>
       <div className="flex">
         <div className="w-4/6">
           <div className="py-5">
             <ul className="text-sm">
-              {portfolio &&
-                portfolio.map(port => (
+              {portfolios &&
+                portfolios?.map(port => (
                   <>
                     {' '}
                     <li className="flex justify-between py-4 border-b">
@@ -38,7 +114,7 @@ const Portfolio = () => {
                           />
                         </svg>
                       </span>
-                      <span className="px-2">
+                      {/* <span className="px-2">
                         <svg viewBox="0 0 30 29" className="w-6">
                           <defs />
                           <path
@@ -48,24 +124,23 @@ const Portfolio = () => {
                             opacity=".3"
                           />
                         </svg>
-                      </span>
-
+                      </span> */}
                       <span className="px-2">{port.title}</span>
-                      <span className="w-4/6 px-2 text-blue-500">
-                        <input
-                        className='form-input mx-2 w-2/3'
-                        type="text"
-                        name="github"
-                        value=""
-                        />
-                        <a href="">Add Link +</a>
-                      </span>
                       <span>
                         <ul className="inline-flex">
                           <li className="flex items-center px-4 text-sm border-r border-gray-500">
                             <svg
                               viewBox="0 0 18 17"
                               className="inline-flex w-4 mx-2 hover:cursor-pointer"
+                              onClick={() => {
+                                // setPortfolio(port);
+                                setId(port.id);
+                                setTitle(port.title);
+                                setUrl(port.url);
+                                setDescription(port.description);
+                                setEdit(true);
+                                setOpenModal(true);
+                              }}
                             >
                               <defs />
                               <g
@@ -82,6 +157,9 @@ const Portfolio = () => {
                           </li>
                           <li className="px-3">
                             <svg
+                              onClick={() => {
+                                processDelete(port.id);
+                              }}
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               className="w-5 hover:cursor-pointer"
@@ -105,13 +183,92 @@ const Portfolio = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-start mt-5">
-        <button
-          type="submit"
-          className="flex items-center justify-center w-40 py-2 text-sm bg-red-600 btn hover:bg-red-500"
+
+      <div className="my-3">
+        <div
+          className="w-full py-3 text-sm text-center transition duration-150 ease-in-out bg-transparent border border-red-600 rounded-md cursor-pointer hover:bg-red-600 hover:text-white"
+          onClick={() => {
+            setTitle('');
+            setUrl('');
+            setDescription('');
+            setOpenModal(true);
+          }}
         >
-          Save
-        </button>
+          Add Portfolio +
+        </div>
+      </div>
+
+
+      <div
+        className={
+          openModal
+            ? 'absolute flex justify-end transform scale-y-110 transition duration-500 ease-in-out bg-gray-800 bg-opacity-50 inset-0 h-screen'
+            : 'hidden'
+        }
+      >
+        <div className="flex w-1/2 h-screen transition duration-500 ease-in-out bg-white main-container">
+          <div className="w-full p-10 project-submission">
+            <div className="flex justify-between py-5 border-b">
+              <h6>{edit ? "Edit" : "Add a"} Portfolio</h6>
+              <div className="hover:cursor-pointer">
+                <div onClick={() => setOpenModal(false)}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between my-3">
+              <div className="w-1/2">
+                <p>Project Title</p>
+                <input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  type="text" className="w-full mt-2 form-input" />
+              </div>
+              <div className="w-1/2 ml-5">
+                <p>Link</p>
+                <input
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  type="text" className="w-full mt-2 form-input" />
+              </div>
+            </div>
+            <div className="my-3">
+              <p>Description</p>
+              <label class="block">
+                <textarea
+                  class="form-textarea mt-1 block w-full"
+                  rows="3"
+                  placeholder=""
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                >
+                </textarea>
+              </label>
+            </div>
+            <div className="flex w-full mt-5">
+              <button
+                onClick={processSave}
+                type="submit"
+                className="w-full py-2 text-sm text-center bg-red-600 btn hover:bg-red-500"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
