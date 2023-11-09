@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import Layout from "./layout";
-import Profile from './utils/Profile';
+import Profile from '../../components/Profile';
 import profileImage from '../../assets/img/profile.png';
 import useAuth from '../../hooks/useAuth';
 // import http from '../../utils/service';
@@ -10,7 +10,13 @@ import { useGetProfileQuery } from '../../features/developer/profileSlice';
 
 
 const Dashboard = () => {
-  // const { data } = useAuth();
+  const { profile: {
+    id,
+    name,
+    level,
+    location,
+    cv: asCV
+  } } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [articles, setArticles] = useState([]);
   const [relatedJobs, setRelatedJobs] = useState([]);

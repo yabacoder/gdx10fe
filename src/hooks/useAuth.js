@@ -4,11 +4,12 @@ import { selectCurrentToken } from "../features/auth/authSlice";
 
 const useAuth = () => {
   const token = useSelector(selectCurrentToken);
-  // console.log(token.data.accessToken)
+  // console.log(token.data)
 
   if (token) {
     // const decoded = jwtDecode(token);
-    const { id: userId, email, username } = token.data.user;
+    const { profile, user } = token.data;
+    // const { id: userId, email, username } = token.data.user;
     // console.log(decoded.UserInfo);
     // const name = `${fname} ${lname}`;
 
@@ -18,7 +19,7 @@ const useAuth = () => {
     // if (isManager) status = "Manager";
     // if (isAdmin) status = "Admin";
 
-    return { userId, email, username };
+    return { profile, user};
   }
 
   return { email: '', username: '' };

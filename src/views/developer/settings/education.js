@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   useLoadEducationQuery,
-  useGetEducationQuery,
-  useGetEducationEditQuery,
+  // useGetEducationQuery,
+  // useGetEducationEditQuery,
   useAddEducationMutation,
   useUpdateEducationMutation,
   useDeleteEducationMutation
@@ -34,7 +34,7 @@ function Education() {
     isLoading
   } = useLoadEducationQuery();
 
-  console.log(data?.data, " education");
+  // console.log(data?.data, " education");
 
   useEffect(() => {
     setEducations(data?.data);
@@ -126,7 +126,7 @@ function Education() {
                     </div>
                     <div className="py-3">
                       <h4 className="text-sm text-blue-800">{exp.institute}</h4>
-                      <h5 className="text-xs font-getdev">{exp.title} hyy</h5>
+                      <h5 className="text-xs font-getdev">{exp.title}</h5>
                       <div className="info">
                         <ul className="flex items-center">
                           <li className="pr-4 text-xs ">
@@ -203,7 +203,7 @@ function Education() {
                     setEndDate(new Date());
                     setPresent("");
                     setDescription("");
-                    setEdit(true);
+                    setEdit(false);
                     setOpenModal(true);
                   }}
                   

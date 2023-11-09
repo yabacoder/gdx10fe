@@ -27,22 +27,20 @@ function WorkExperience() {
 
   const {
     data,
-    isSuccess,
+    isSuccess, 
     isError,
     error,
     isLoading
   } = useLoadWorkExperienceQuery();
 
-  console.log(data?.data, "Work experience");
-
   useEffect(() => {
-    setExperiences(data?.data);
+    setExperiences(data?.data); 
   }, [isSuccess]);
 
   const [addWorkExperience, {
     isSuccess: addIsSuccess,
     isError: addIsError,
-    error: addErr,
+    error: addError,
     isLoading: AdIsLoading
   }] = useAddWorkExperienceMutation();
 

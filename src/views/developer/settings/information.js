@@ -13,7 +13,7 @@ import {
 
 const countries = require('../../../statics/countries.json');
 const Information = () => {
-  const { email, userId, username } = useAuth();
+  const { user: {email, username} } = useAuth();
   const [profile, setProfile] = useState([]);
   const [github, setGithub] = useState([]);
   const [uname, setUsername] = useState(username);
@@ -111,7 +111,7 @@ const Information = () => {
       <h6> Basic Information</h6>
       {
         msg && 
-        <div className='bg-green-600 p-2'>
+        <div className='p-2 bg-green-600'>
             <p className='text-white'>{msg}</p>
         </div>
       }

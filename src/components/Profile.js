@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import Camera from '../../../assets/img/camera.png';
-import profileImage from '../../../assets/img/profile.png';
+import Camera from '../assets/img/camera.png';
+import profileImage from '../assets/img/profile.png';
+import DPCard from './DPCard';
+import useAuth from '../hooks/useAuth';
 // import useAuth from '../../../hooks/useAuth';
 // import http from '../../../utils/service';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = () => {
-  // const { data } = useAuth();
+  const { profile: {
+    id,
+    name,
+    level,
+    location,
+    cv: asCV
+  } } = useAuth();
   const [response, setResponse] = useState([]);
   const [projects, setProjects] = useState([]);
   const [jobs, setJobs] = useState([]);
@@ -89,12 +97,7 @@ const Profile = () => {
       </div>
       <div className="flex flex-col items-center w-full p-10 text-center text-white bg-red-600 rounded-b-md profile-detail">
         <div className="w-24 h-24 mx-auto mb-3 -m-20 bg-gray-400 border-gray-100 rounded-full">
-          <img
-            alt=""
-            src={profileImage}
-            className="object-cover w-full h-24 border-2 border-gray-100 rounded-full "
-          />
-          <img src={Camera} alt="" className="-mt-10 -mr-28" />
+          <DPCard id={id} />
         </div>
         <div>
           {' '}

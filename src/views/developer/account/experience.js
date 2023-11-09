@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from 'react';
-// import http from '../../../utils/service';
+import {
+  useLoadWorkExperienceQuery,
+
+} from '../../../features/developer/workExperienceSlice';
 
 const Experience = () => {
   const [experience, setExperience] = useState([]);
+  
+  const {
+    data,
+    isSuccess,
+    isError,
+    error,
+    isLoading
+  } = useLoadWorkExperienceQuery();
 
-  useEffect(() => {
-    const getExperience = async () => {
+  useEffect(() => { 
+    const getExperience = async () => { 
       // const experience = await http('/developer/resume/work_experience', 'get');
       // // console.log(experience);
       // setExperience(experience.data);
+      setExperience(data?.data);
     };
 
     getExperience();
-  }, []);
+  }, [isSuccess]);
   return (
     <div className="p-4 px-6 bg-white rounded-md">
       <div className="flex flex-col jobs">
@@ -27,23 +39,7 @@ const Experience = () => {
                     <li className="pr-4 text-xs border-r-2">
                       {exp.start} - {exp.end}
                     </li>
-                    {/* <li className="mx-1 text-xs text-blue-800">
-                      <span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="inline-flex w-4 mx-1"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                      Lagos, Nigeria
-                    </li> */}
+                   
                   </ul>
                 </div>
               </div>

@@ -1,18 +1,34 @@
 import React, { useState, useEffect } from 'react';
-// import http from '../../../utils/service';
+import {
+  useLoadEducationQuery,
+  // useGetEducationQuery,
+  // useGetEducationEditQuery,
+  useAddEducationMutation,
+  useUpdateEducationMutation,
+  useDeleteEducationMutation
+} from '../../../features/developer/educationSlice';
 
 const Education = () => {
   const [education, setEducation] = useState([]);
 
+  const {
+    data,
+    isSuccess,
+    isError,
+    error,
+    isLoading
+  } = useLoadEducationQuery();
+
   useEffect(() => {
     const getEducation = async () => {
       // const education = await http('/developer/resume/education', 'get');
-      // console.log(education);
       // setEducation(education.data);
+      setEducation(data?.data);
+      console.log(education);
     };
 
     getEducation();
-  }, []);
+  }, [isSuccess]);
   return (
     <div className="p-4 px-6 bg-white rounded-md">
       <div className="flex flex-col jobs">
@@ -48,7 +64,7 @@ const Education = () => {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <ul className="inline-flex">
                   <li className="flex items-center px-4 text-sm border-r-2 border-gray-500">
                     <svg viewBox="0 0 18 17" className="inline-flex w-4 mx-2">
@@ -82,7 +98,7 @@ const Education = () => {
                     </svg>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           ))}
       </div>

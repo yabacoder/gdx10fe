@@ -91,7 +91,7 @@ const Login = () => {
                   </svg>
                 </div>
               </div>
-              <div className="px-10 form-input w-full">
+              <div className="w-full px-10 form-input">
                 <input
                   class=" block w-full px-5 focus:outline-none"
                   name="email"
@@ -175,7 +175,7 @@ const Login = () => {
                   </svg>
                 </div>
               </div>
-              <div className="px-10 form-input w-full mt-5">
+              <div className="w-full px-10 mt-5 form-input">
                 <input
                   class="block w-full px-5 focus:outline-none"
                   type="password"

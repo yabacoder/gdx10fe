@@ -49,7 +49,7 @@ const Skills = () => {
     isError: devIsError
   }] = useUpdateDevAvailabilityMutation();
 
-  console.log(defaultTech?.data, "Techs");
+  // console.log(defaultTech?.data, "Techs");
 
   const filterArray = (array1, array2) => {
     const filtered = array1.filter(el => {
@@ -66,14 +66,14 @@ const Skills = () => {
 
   // let obj = {};
 
-  let i,fil,obj, j;
+  let i, fil, obj, j;
   for (i = 0; i <= tt?.length; i++) {
     j = tt[i];
     fil = TECHNOLOGIES.filter(v => v.value == j);
-    console.log(j, "filled")
+    console.log(j, "filled");
   }
-  obj = fil;
-  console.log(obj, "OBJ");
+  // obj = fil;
+  // console.log(obj, "OBJ");
 
   useEffect(() => {
     setCategory_id(defaultData?.data.category_id);
@@ -109,30 +109,32 @@ const Skills = () => {
     // } catch (error) {
     //   console.log(error);
     // }
-    try {
-      console.log(tech, "Tech for edit");
-      const data = await updateSkill({
-        value: tech
-      }).unwrap();
-      console.log(data, "Update skill and tech categories");
-    } catch (error) {
-      console.log(error);
-    }
-    console.log(
-      category_id,
-      level_id,
-      fulltime,
-      parttime,
-      remote,
-      "Update going backend"
-    );
+    // try {
+    //   console.log(tech, "Tech for edit");
+    //   const data = await updateSkill({
+    //     value: technologies
+    //   }).unwrap();
+    //   console.log(data, "Update skill and tech categories");
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    // console.log(
+    //   category_id,
+    //   level_id,
+    //   fulltime,
+    //   parttime,
+    //   remote,
+    //   "Update going backend"
+    // );
+    console.log(technologies, "Incoming technologies");
     try {
       const data = await updateDevAvailability({
         category_id,
         level_id,
         fulltime,
         parttime,
-        remote
+        remote,
+        value: technologies
       }).unwrap();
       console.log(data, "Update skill and  availability categories");
       setMsg(data);
@@ -147,7 +149,7 @@ const Skills = () => {
       <h6> Skills and Availability</h6>
       {
         msg &&
-        <div className='bg-green-600 p-2'>
+        <div className='p-2 bg-green-600'>
           <p className='text-white'>{msg}</p>
         </div>
       }
@@ -224,11 +226,11 @@ const Skills = () => {
             <p>Professional Skills</p>
 
             <label className="block w-full p-2 md:p-1">
-              {console.log(newTech)}
+              {/* {console.log(newTech)} */}
               <Select
                 className="block w-full mt-1 "
                 closeOnSelect={!stayOpen}
-                defaultValue={newTech}
+                // defaultValue={newTech}
                 required
                 isMulti
                 onChange={e => setTechnologies(e.target)}
@@ -251,7 +253,7 @@ const Skills = () => {
                     class="form-checkbox"
                     checked={fulltime}
                     onChange={() => setFulltime(!fulltime)}
-                  /> 
+                  />
                   <span class="ml-2">Full time</span>
                 </label>
               </div>

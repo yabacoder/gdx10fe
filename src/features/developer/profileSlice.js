@@ -12,6 +12,15 @@ export const profileApiSplice = apiSlice.injectEndpoints({
             }),
             providesTags: { type: 'Profile', }
         }),
+        getProfileDp: builder.query({
+            query: (id) => ({
+                url: '/profile/dp/'+id,
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError;
+                }
+            }),
+            providesTags: { type: 'Profile', }
+        }),
         getProfileEdit: builder.query({
             query: () => ({
                 url: '/developer/profile/edit',
@@ -62,6 +71,30 @@ export const profileApiSplice = apiSlice.injectEndpoints({
                 { type: 'Profile', id: arg.id }
             ]
         }),
+        uploadCV: builder.mutation({
+            query: profile => ({
+                url: '/developer/profile/upload/cv',
+                method: 'POST',
+                body: {
+                    ...profile
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Profile'}
+            ]
+        }),
+        uploadDP: builder.mutation({
+            query: profile => ({
+                url: '/developer/profile/upload/image',
+                method: 'POST',
+                body: {
+                    ...profile
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Profile' }
+            ]
+        }),
         getDevAvailability: builder.query({
             query: () => ({
                 url: '/developer/profile/availability',
@@ -79,7 +112,7 @@ export const profileApiSplice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Profile', id: arg.id }
+                { type: 'Profile' }
             ]
         }),
     })
@@ -93,5 +126,8 @@ export const {
     useGetDevSkillQuery,
     useUpdateSkillMutation,
     useGetDevAvailabilityQuery,
-    useUpdateDevAvailabilityMutation
+    useUpdateDevAvailabilityMutation,
+    useUploadCVMutation,
+    useUploadDPMutation,
+    useGetProfileDpQuery
 } = profileApiSplice;
