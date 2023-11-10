@@ -7,6 +7,11 @@ import RightNav from './utils/RightNav';
 // import SubmitProject from './utils/SubmitProject';
 import { useDispatch, useSelector } from 'react-redux';
 import Countdown from 'react-countdown-now';
+import { 
+  useLoadProjectsQuery, 
+  useStartProjectMutation,
+  useSubmitProjectMutation 
+} from '../../features/developer/projectSlice';
 
 // // Random component
 const Timeout = () => {
@@ -25,6 +30,24 @@ function Project() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState([]);
   const [newProject, setNewProject] = useState(false); //Make request for a new project
+
+
+  const {
+    data,
+    isSuccess
+  } = useLoadProjectsQuery();
+
+  const [startProject, {
+    data: startData,
+    isSuccess: startIsSuccess
+  }] = useStartProjectMutation();
+  
+  const [submitProject, {
+    data: submitData,
+    isSuccess: submitIsSuccess
+  }] = useSubmitProjectMutation();
+
+
 
   //Renderer callback with condition
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -51,6 +74,16 @@ function Project() {
   };
 
   const newPullProject = async () => {
+    try {
+      await startProject();
+      if (startIsSuccess) { 
+        setProject(startData);
+        setNewProject(true);
+      }
+    } catch (error) {
+      console.log(error.message);
+      setMessage(error.message);
+    }
     // const response = await http('/developer/project', 'POST');
     // // response = JSON.stringify(response);
     // if (response.status === 1) {
@@ -61,8 +94,10 @@ function Project() {
   };
 
   useEffect(() => {
-    pullProject();
-  }, [newProject]);
+    // pullProject();
+    setProject(data?.data[0]);
+  }, [isSuccess, newProject]);
+  console.log(data);
 
   const submitHandler = async e => {
     e.preventDefault();
@@ -96,6 +131,8 @@ function Project() {
               things done! Attempt the project below, the earlier you completed
               them, the higher your rating.
             </p>
+            {!project && (
+              <>
             <div className="flex flex-col items-center justify-center p-10 my-4 bg-gray-300 rounded-md ">
               <svg viewBox="0 0 47.8 62.3" className="w-12">
                 <defs />
@@ -104,20 +141,22 @@ function Project() {
                   fill="rgba(72,86,133,0.28)"
                 />
               </svg>
-              {!project && (
+              
                 <p className="my-2 text-xs text-center text-gray-600">
                   Sorry, we currently do not have a project for you, please try
                   again later!
                 </p>
-              )}
             </div>
+              
+              </>
+            )}
             <div className="mt-5">
               <button
                 className="w-full px-5 py-3 text-sm rounded-sm btn focus:border-current"
                 onClick={newPullProject}
               >
                 {' '}
-                Start Project{' '}
+                Request a Project{' '}
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -128,7 +167,7 @@ function Project() {
                     <path
                       fillRule="evenodd"
                       d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
+                      clipRule="evenodd" 
                     />
                   </svg>
                 </span>{' '}
@@ -143,7 +182,7 @@ function Project() {
               </div>
               <div
                 className="p-10 bg-gray-200 border rounded-b-md border-t-none project-detail"
-                dangerouslySetInnerHTML={{ __html: project.task }}
+                dangerouslySetInnerHTML={{ __html: project?.task }}
               ></div>
 
               <div className="flex justify-around p-5 mt-10 border rounded-lg">
@@ -151,7 +190,7 @@ function Project() {
                   <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
                     Submission Date
                   </div>
-                  <p className="mt-2 font-bold">{project.duration}</p>
+                  <p className="mt-2 font-bold">{project?.duration}</p>
                 </div>
                 <div className="flex flex-col items-center w-1/2">
                   <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
@@ -160,7 +199,7 @@ function Project() {
                   <p className="mt-2 font-bold text-red-600">
                     <Countdown
                       className="text-sm font-bold "
-                      date={project.countdown}
+                      date={project?.countdown}
                       renderer={renderer}
                     />
                   </p>
@@ -255,7 +294,7 @@ function Project() {
                   {comment}
                 </textarea>
               </div>
-              <div className="mt-10">
+              <div className="mt-10 ">
                 <button className="w-full px-5 py-3 btn">
                   {' '}
                   Submit Project
@@ -277,7 +316,7 @@ function Project() {
               </div>
             </form>
           </div>
-          <div className="w-2/5 p-10 bg-gray-100">
+          <div className="w-1/2 p-10 bg-gray-100">
             <div className="flex justify-end">
               <div>
                 <button onClick={() => setOpenModal(false)}>X</button>
@@ -287,7 +326,7 @@ function Project() {
               <h6>Task Overview</h6>
             </div>
             <div
-              className="p-5 my-5 text-blue-800 bg-gray-300 border rounded-lg"
+              className="p-5 my-5 overflow-y-auto text-blue-800 bg-gray-300 border rounded-lg h-2/3"
               dangerouslySetInnerHTML={{ __html: project.task }}
             ></div>
 

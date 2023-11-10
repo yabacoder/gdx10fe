@@ -12,7 +12,7 @@ import { DeveloperLayout } from './layouts/DeveloperLayout';
 import DeveloperAccount from './views/developer/account/account';
 import Settings from './views/developer/settings';
 import Applied from './views/developer/applied';
-import Articles from './views/developer/articles';
+import Articles from './views/main/Articles';
 import Dashboard from './views/developer/dashboard';
 import Project from './views/developer/project';
 import Instruction from './views/developer/assessment/Instruction';
@@ -74,6 +74,14 @@ export function Routes() {
                 {
                     path: "jobs/:id",
                     element: <JobView />,
+                },
+                {
+                    path: "articles",
+                    element: <Articles />,
+                },
+                {
+                    path: "articles/:link",
+                    element: <Articles />,
                 },
                 {
                     path: "jobs/:id/:name",

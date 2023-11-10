@@ -44,7 +44,7 @@ const Experience = () => {
                 </div>
               </div>
 
-              <div>
+              {/* <div>
                 <ul className="inline-flex">
                   <li className="flex items-center px-4 text-sm border-r-2 border-gray-500">
                     <svg viewBox="0 0 18 17" className="inline-flex w-4 mx-2">
@@ -78,7 +78,7 @@ const Experience = () => {
                     </svg>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           ))}
       </div>

@@ -282,7 +282,7 @@ const Information = () => {
             </div>
           </div>
           <div className="w-2/6 py-8 mx-10 h-1/2 ">
-            <div className="p-10 leading-none text-center border-2 border-dashed ">
+            {/* <div className="p-10 leading-none text-center border-2 border-dashed ">
               <div className="border-b">
                 <div className="w-24 h-24 mx-auto mb-3 bg-gray-400 border-gray-100 rounded-full">
                   <img
@@ -296,7 +296,7 @@ const Information = () => {
                 <img src={Camera} alt="" className="mx-auto " />
               </div>
               <p>click or drag photo to upload</p>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="flex justify-start mt-5">
