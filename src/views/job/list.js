@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react';
 // import Layout from "../layout";
 // import Footer from "../layout/footer";
 import { Link } from 'react-router-dom';
-// import http from '../../utils/service';
+import http from '../../utils/service';
 // import { Categories } from '../../statics/categories';
 import Pagination from 'react-js-pagination';
+import { useLoadJobsQuery } from '../../features/job/jobSlice';
 
 const Joblist = () => {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState([1,2,3,4]);
   const [level_id, setLevel_id] = useState(0);
   const [jobType, setJobType] = useState();
   const [category, setCategory] = useState();
@@ -18,14 +19,14 @@ const Joblist = () => {
   const [limit, setLimit] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   const fetchJobs = async () => {
-    // const response = await http('/jobs', 'GET');
-    // //do pagination
-    // setJobs(response.data);
-    // console.log(response.data);
+    const response = await http('/jobs', 'GET');
+    //do pagination
+    setJobs(response.data);
+    console.log(response.data);
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-    // fetchJobs();
+    fetchJobs();
   }, []);
 
   const handleFilter = async e => {
@@ -157,7 +158,7 @@ const Joblist = () => {
                   <div class="md:w-1/2 p-2">
                     <div class="text-gray-700 md:shadow-cardShadow md:rounded-lg   p-2">
                       <Link
-                        to={`jobs/${job.id}`}
+                        to={`${job.id}`}
                         className="flex items-center pt-5 border-b md:border-b-0 md:pt-0"
                       >
                         <div className="p-2 mr-6 md:w-1/5">
@@ -298,6 +299,7 @@ const Joblist = () => {
                 <p>Next</p>
               </div> */}
               <Pagination
+              className="flex"
                 activePage={activePage}
                 itemsCountPerPage={10}
                 totalItemsCount={jobs.length}

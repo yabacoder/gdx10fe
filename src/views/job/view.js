@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import http from '../../utils/service';
+import http from '../../utils/service';
 import { useParams } from 'react-router-dom';
 
 //import Nav from "../home/nav";
@@ -14,14 +14,14 @@ const JobView = () => {
 
   useEffect(() => {
     const fetchJob = async () => {
-      // const job = await http(`/job/show/${params.id}`, 'get');
-      // console.log(job);
-      // setJob(job.data);
+      const job = await http(`/jobs/${params.id}`, 'GET');
+      console.log(job);
+      setJob(job.data);
     };
 
     fetchJob();
   }, []);
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const handleApply = async id => {
     // const response = await http(`/developer/job/apply/${id}`, 'POST'); //status // error
@@ -75,29 +75,33 @@ const JobView = () => {
                 error && <p className="error">{error}</p>
               )}
               <p className="mt-3 text-2xl md:text-3xl text-gdblue font-getdevM">
-                {job.name}
+                {job?.name}
               </p>
               <p className="mb-2 text-lg text-gray-500 md:text-sm">
                 {' '}
-                <span className="inline-block"></span> {job.location}
+                <span className="inline-block"></span> {job?.location}
               </p>
               <div className="w-4/5 py-2 text-center text-white bg-red-600 rounded-full shadow-sm md:w-2/5 font-getdevM ">
-                ₦{job.salary} - ₦{job.salary_max}
+                ₦{job?.salary} - ₦{job?.salary_max}
               </div>
 
               <div className="mt-10">
                 <p
                   className="pt-2 pb-8 text-sm border-b font-getdevM"
-                  dangerouslySetInnerHTML={{ __html: job.brief }}
+                  dangerouslySetInnerHTML={{ __html: job?.brief }}
                 ></p>
+                {
+                  job?.responsibility && (
 
-                <div className="pt-6 pb-8 ">
-                  <h6 className="mb-2 text-gdsubBlue">Responsibility</h6>
-                  <div
-                    className="text-sm font-getdevM "
-                    dangerouslySetInnerHTML={{ __html: job.responsibility }}
-                  ></div>
-                </div>
+                    <div className="pt-6 pb-8 ">
+                      <h6 className="mb-2 text-gdsubBlue">Responsibility</h6>
+                      <div
+                        className="text-sm font-getdevM "
+                        dangerouslySetInnerHTML={{ __html: job?.responsibility }}
+                      ></div>
+                    </div>
+                  )
+                }
 
                 {/* <div className="pt-6 pb-8 ">
                   <h6 className="mb-2 text-gdsubBlue">
@@ -134,7 +138,7 @@ const JobView = () => {
 
                 <div class="inline-flex shadow-md mb-3 text-white">
                   <span class="  py-3 px-4 rounded-l text-gdsubBlue bg-gray-200">
-                    {job.type}
+                    {job?.type}
                   </span>
                   {/* <span class="   py-3 px-4 rounded-r bg-blue-700">
                     1 Month
@@ -146,7 +150,7 @@ const JobView = () => {
                       From:
                     </span>{' '}
                     <span className="pl-3 text-base font-getdevM">
-                      {job.date}
+                      {job?.date}
                     </span>
                   </div>
                   {/* <div className="p-3 mb-3 border-2 border-gray-200 rounded-lg">
@@ -161,7 +165,7 @@ const JobView = () => {
                 <div className="py-3 border-gray-200 md:border-b-2">
                   <h6 className="text-gdblue">Job Availability</h6>
                   <div className="inline-flex my-2 ">
-                    <div className="px-4 tag "> {job.status}</div>
+                    <div className="px-4 tag "> {job?.status}</div>
                     {/* <div className="px-4 mx-3 tag">Remote </div> */}
                   </div>
                 </div>
@@ -169,8 +173,8 @@ const JobView = () => {
                   <h6 className="my-2 text-gdblue"> Tech Stack </h6>
 
                   <div className="inline-flex ">
-                    {job.technologies &&
-                      job.technologies.map(tech => (
+                    {job?.technologies &&
+                      job?.technologies.map(tech => (
                         <div className="tag "> {tech}</div>
                       ))}
                     {/* <div className="tag "> PHP</div>
@@ -181,7 +185,7 @@ const JobView = () => {
               <div className="mt-5 mb-5">
                 <button
                   class="btn inline-block w-full p-5 text-center bg-red-500 shadow-md"
-                  onClick={() => handleApply(job.id)}
+                  onClick={() => handleApply(job?.id)}
                 >
                   Apply for this job
                 </button>

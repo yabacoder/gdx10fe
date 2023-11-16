@@ -12,7 +12,7 @@ const Index = () => {
             <div>
                 <div className="flex items-center justify-between w-full intro">
                     <div className="w-1/3 welcome">
-                        <h1 className="leading-none text-blue-800">Let's get you started</h1>
+                        <h1 className="text-4xl leading-none text-blue-800 font-getdevBL">Let's get you started</h1>
                         <p className="py-3">Lorem ipsum dolor sit amet consec
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, ullam.
                         </p>

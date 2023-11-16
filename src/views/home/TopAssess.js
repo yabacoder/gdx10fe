@@ -8,7 +8,7 @@ export const TopAssess = () => {
     <div class="  ">
       <section className="container relative px-8 py-8 pb-10 mx-auto md:pt-10 lg:py-20 md:flex lg:items-center ">
         <div className="mt-16 md:w-1/2 md:mt-10">
-          <h1 className="text-4xl font-bold leading-none tracking-tighter lg:text-7xl md:text-6xl font-getdevB">
+          <h1 className="text-4xl font-bold leading-none tracking-tight text-white lg:text-7xl md:text-6xl font-getdevB">
             Are You a World-Class Developer?
           </h1>
           <p className="pt-4 text-lg text-gray-300 ">
@@ -19,7 +19,7 @@ export const TopAssess = () => {
             <Link
               to="/assess"
               className="flex items-center justify-around px-6 py-3 text-xs leading-6 text-white transition duration-150 ease-in-out bg-red-600 border border-transparent rounded-full hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-red md:py-2 md:text-sm md:px-8"
-            >
+            > 
               Get Assessed
               <span className="ml-3">
                 <svg

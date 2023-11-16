@@ -80,11 +80,7 @@ const Index = () => {
 
                         </div>
                     </div>
-
                 </div>
-
-
-
                 <div className="flex justify-start px-5 py-4 space-x-2 bg-white rounded-lg shadow-md">
 
                     <div className="bg-gray-200">

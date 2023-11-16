@@ -52,3 +52,20 @@ Task
     -> Get Developer Tech
         -> save √
     -> 
+
+Company
+    -> /jobs -> Jobs /edit /update /delete /{id} 
+    -> /jobs/active
+    -> /jobs/{id}/candidates
+    -> /candidates
+        -> candidates/{id} -> /shortlist /invite /reject 
+    -> /candidates/shortlisted -> All shortlisted candidates
+    -> /candidates/hired
+
+    Interviewers
+    -> /interviewers -> /{id} /invite /accept /suspend /decline /role /delete 
+    
+    Settings
+    -> /profile
+    -> /page
+    -> /changePassword 
