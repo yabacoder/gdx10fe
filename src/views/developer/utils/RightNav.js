@@ -6,7 +6,7 @@ function RightNav() {
         <div>
             <Profile />
                     
-                    <div className="flex flex-col w-full p-5 mt-10 bg-white rounded-md shadow-md topNews">
+                    {/* <div className="flex flex-col w-full p-5 mt-10 bg-white rounded-md shadow-md topNews">
                     
                         <h5>Top Articles</h5>
                         <div className="flex items-center justify-between px-3 py-3 my-3 bg-gray-200 rounded-lg">
@@ -43,7 +43,7 @@ Talent Market </h4>
                         
                         </div>
                        
-                    </div>
+                    </div> */}
         </div>
     )
 }

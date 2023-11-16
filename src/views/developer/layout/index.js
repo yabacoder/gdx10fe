@@ -48,14 +48,14 @@ const Index = (props) => {
                         Assessments
                         </li>
                         </Link>
-                        <Link to="/dashboard/articles">
+                        {/* <Link to="/dashboard/articles">
                         <li className={(currentLocation === '/dashboard/articles') ? 'text-blue-800 flex items-center p-5 font-getdevM text-sm' : 'flex items-center p-5 font-getdevM text-sm text-gray-500'}> 
                         <svg className="p-1 fill-current" xmlns="http://www.w3.org/2000/svg" width="25.847" height="24" viewBox="0 0 25.847 18.091">
                         <path id="Icon_material-library-books" data-name="Icon material-library-books" d="M4.95,6.9H3V20.55A1.956,1.956,0,0,0,4.95,22.5H18.6V20.55H4.95ZM20.55,3H8.85A1.956,1.956,0,0,0,6.9,4.95v11.7A1.956,1.956,0,0,0,8.85,18.6h11.7a1.956,1.956,0,0,0,1.95-1.95V4.95A1.956,1.956,0,0,0,20.55,3Zm-.975,8.775H9.825V9.825h9.75Zm-3.9,3.9H9.825v-1.95h5.85Zm3.9-7.8H9.825V5.925h9.75Z" transform="translate(-3 -3)"/>
                         </svg>
                         My Articles
                         </li>
-                        </Link >
+                        </Link > */}
                         <Link to="/applications">
                         <li className={(currentLocation === '/applications') ? 'text-blue-800 flex items-center p-5 font-getdevM text-sm' : 'flex items-center p-5 font-getdevM text-sm text-gray-500'}> 
                         <svg className="p-1 fill-current" xmlns="http://www.w3.org/2000/svg" width="21.083" height="23" viewBox="0 0 21.083 23">

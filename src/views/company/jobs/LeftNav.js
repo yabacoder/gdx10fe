@@ -13,7 +13,6 @@ function LeftNav(props) {
                 <div >
                     <Link to="/company/job/AddJob">
                         <p className={(currentLocation === '/company/job/AddJob') ? 'px-5 py-6  bg-red-100 border-r-4 border-red-600 rounded-r-md font-getdevB' : 'px-5 py-6'}>    Basic Information </p>
-                     
                     </Link>
                 </div>
                 <div >
@@ -31,7 +30,7 @@ function LeftNav(props) {
                 </div>
                 <div >
                     <Link to="/company/job/JobResponsibilities">
-                        <p className={(currentLocation === 'JobResponsibilities') ? 'px-5  py-6 bg-red-100 border-r-4 border-red-600 rounded-r-md font-getdevB' : 'px-5 py-6 '}>Responsibilities</p>
+                    <p className={(currentLocation === '/company/job/JobResponsibilities') ? 'px-5  py-6 bg-red-100 border-r-4 border-red-600 rounded-r-md font-getdevB' : 'px-5 py-6 '}>Responsibilities</p>
                       
                     </Link>
                 </div>

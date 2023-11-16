@@ -19,22 +19,52 @@ if (token) {
 // }
 // console.log(Authorization);
 
-export const baseUrl =
-  window.location.hostname === 'localhost'
-    ? 'http://gdxbe.test/api'
-    : 'https://api.getdev.co';
+export const baseUrl = process.env.REACT_APP_API_URL;
+// window.location.hostname === 
+// 'localhost'
+//   ? process.env.REACT_APP_API_URL
+//   : 'https://api.getdev.co';
 
-async function http(path, method, data, object) {
-  return new Promise((resolve, reject) => {
-    // console.log(Authorization);
-    fetch(baseUrl + path, {
+export const http2 = async (path, method, token, data) => {
+  try {
+    // console.log(data);
+    const body = "body: " + JSON.stringify({ answer: "optA", question_id: "223" });
+    // let bd = (method === 'POST') ? body + "," : '';
+    // var myHeaders = new Headers();
+
+    // myHeaders.append("Authorization", `Bearer ${token}`);
+    const response = await fetch(baseUrl + path, {
       method,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization,
+        Authorization: `Bearer ${token}`,
       },
-      body: object ? data : JSON.stringify(data),
+      body: JSON.stringify(data)
+    });
+    console.log(response);
+    return response.json();
+  } catch (error) {
+    console.log("Error making call", error);
+  }
+};
+
+async function http(path, method, token, data, object) {
+  return new Promise((resolve, reject) => {
+    console.log(data);
+    const body = "body:" + JSON.stringify(data);
+    let bd = (method === 'POST') ? body  : '';
+    // var myHeaders = new Headers();
+
+    // myHeaders.append("Authorization", `Bearer ${token}`);
+    fetch(baseUrl + path, {
+      method,
+      headers: { 
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      bd
     })
       .then(response => response.json())
       .then(res => {
@@ -43,6 +73,7 @@ async function http(path, method, data, object) {
       .catch(error => {
         reject(error);
       });
+    // console.log(bd)
   });
 
   // const response = await fetch(baseUrl + path, {

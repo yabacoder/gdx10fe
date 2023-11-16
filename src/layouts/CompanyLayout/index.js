@@ -71,14 +71,14 @@ const CompanyLayout = (props) => {
                         Settings
                         </li>
                         </Link>
+                        <Link to="/logout" className='flex'>
                         <li className="flex items-center p-5 text-sm text-gray-500 font-getdevM"> 
-                            <Link to="/logout">
                         <svg className="p-1 fill-current" xmlns="http://www.w3.org/2000/svg" width="16.571" height="17.403" viewBox="0 0 16.571 17.403">
                             <path id="Icon_simple-docusign" data-name="Icon simple-docusign" d="M6.9,0h3.6V6.313h2.4L8.7,12.626,4.5,6.313H6.9ZM0,14.993H17.4v1.578H0Z" transform="translate(16.571) rotate(90)" />
                         </svg>
                         Logout
-                        </Link>
                         </li>
+                        </Link>
                     </ul>
 
                 </div>

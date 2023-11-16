@@ -6,10 +6,8 @@ const AddJob = () => {
     return (
         <>
             <div className="flex mt-10">
-                <div className="w-1/4 bg-white rounded-md links">
-                   
+                <div className="w-1/4 bg-white rounded-md links"> 
                         <LeftNav location="/job/AddJob" />
-                    
                 </div>
                 <div className="w-3/4 px-12 py-6 ml-5 bg-white rounded-md content">
                     <form className="flex flex-col justify-around w-5/6">

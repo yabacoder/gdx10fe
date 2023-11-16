@@ -1,6 +1,7 @@
 import React from 'react'
 // import Layout from '../layout'
 import LeftNav from './LeftNav'
+import Editor from '../../../components/editor/Editor';
 
 const Responsibilities = () => {
     return (
@@ -14,9 +15,9 @@ const Responsibilities = () => {
                 <div className="w-3/4 px-12 py-6 ml-5 bg-white rounded-md shadow-md content">
                     <div className="flex flex-col justify-around w-5/6 ">
                     <h6>Responsibilities </h6>
-                       <div className="py-3">
-                       <textarea className="w-full h-full border border-blue-500 rounded-md form-text" />
-                 
+                        <div className="mt-4 overflow-y-auto border rounded-lg h-80">
+                       {/* <textarea className="w-full h-full border border-blue-500 rounded-md form-text" /> */}
+                            <Editor placeholder="Describe the responsibilities ..." />
                        </div>
                             
                    </div>

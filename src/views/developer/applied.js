@@ -2,11 +2,25 @@ import React, { useEffect, useState } from 'react';
 import Layout from './layout';
 import RightNav from '././utils/RightNav';
 import { Link } from 'react-router-dom';
-// import http from '../../utils/service';
+// import http from '../../utils/service'; 
+import { useLoadApplicationQuery, useDeleteApplicationMutation } from '../../features/developer/applicationSlice';
 
 const Applied = () => {
   const [jobs, setJobs] = useState([]);
   const [del, setDel] = useState(false);
+  const [message, setMessage] = useState('');
+
+
+  const {
+    data,
+    isSuccess,
+    isLoading
+  } = useLoadApplicationQuery();
+
+  const [deleteApplication, {
+    isSuccess: deleteIsSuccess,
+    isLoading: deleteIsLoading
+  }] = useDeleteApplicationMutation();
 
   const fetchRecentApplications = async () => {
     // const response = await http('/developer/applications', 'GET');
@@ -18,18 +32,29 @@ const Applied = () => {
   const deleteHandler = async id => {
     // e.preventDefault();
     if (window.confirm('Are you sure want to retrieve your application?')) {
-      const data = { id: id };
+      // const data = { id: id };
       // const result = await http('/developer/application/delete', 'post', data);
       // if (result.status === 1) {
       //   setDel(true);
       // }
+      try {
+        const result = await deleteApplication({ id }).unwrap();
+        if (deleteIsSuccess) {
+          setDel(true);
+          setMessage(result.data.message);
+        }
+      } catch (error) {
+        setMessage(error.message);
+      }
     }
   };
 
   useEffect(() => {
     window.scroll(0, 0);
-    fetchRecentApplications();
-  }, [del]);
+    // fetchRecentApplications();
+    setJobs(data?.data);
+  }, [isSuccess, del]);
+
   return (
     <div>
       <>
@@ -77,10 +102,13 @@ const Applied = () => {
                 </div>
               )}{' '}
             </div>
-
             <div className="mt-5 withJobs">
               <div className="flex items-center justify-between header">
                 <h5 className="text-base">Applied Jobs </h5>
+                {
+                  message && <p className="p-2 mb-4 text-white bg-green-600">{message}</p>
+
+                }
                 <div>
                   <Link
                     to="/jobs"
@@ -104,20 +132,24 @@ const Applied = () => {
                   </Link>
                 </div>
               </div>
-
               <div className="flex flex-col jobs">
                 {/* {console.log(jobs)} */}
                 {jobs &&
-                  jobs.splice(0, 4).map((job, index) => (
+                  jobs.map((job, index) => (
                     <div className="flex items-center justify-between px-6 py-4 my-3 bg-gray-200 rounded-lg">
                       <div>
                         <h4 className="text-base text-blue-800">{job.name}</h4>
                         <div className="info">
                           <ul className="flex items-center">
-                            <li className="px-4 py-1 text-xs text-red-600 bg-red-300 bg-opacity-50 border border-red-600 rounded-full">
-                              ₦{job.salary} - ₦{job.salary_max}
-                            </li>
-                            <li className="mx-1 text-xs text-blue-800">
+                            {
+                              job.salary && (
+                                <li className="px-4 py-1 text-xs text-red-600 bg-red-300 bg-opacity-50 border border-red-600 rounded-full">
+                                  ₦{job.salary} {job.salary_max && <> - ₦{job.salary_max}</>}
+                                </li>
+                              )
+                            }
+
+                            <li className={`mx-1 ${!job.salary ? "-ml-3" : ""} text-xs text-blue-800`}>
                               <span>
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +182,7 @@ const Applied = () => {
                           {/* <li className="px-4 py-1 text-sm text-white bg-blue-500"> */}
                           {/* <a href=""> clas</a> */}
                           {/* See Interview</li> */}
-                          {job.status === 'Shortlisted' && (
+                          {job?.status === 'Shortlisted' && (
                             <li className="p-1 text-xs text-white transition duration-500 ease-in-out bg-blue-600 border border-blue-600 rounded-md cursor-pointer hover:border-blue-600 hover:text-blue-600 hover:bg-transparent">
                               See interview
                             </li>
@@ -168,12 +200,13 @@ const Applied = () => {
                                 <circle cx="8" cy="8" r="8" />
                               </svg>
                             </span>
-                            {job.status}
+                            {job?.status}
                           </li>
                           <li className="px-3">
                             <Link
                               onClick={e => {
-                                deleteHandler(job.id);
+                                console.log(job?.id);
+                                deleteHandler(job?.id);
                               }}
                             >
                               {' '}

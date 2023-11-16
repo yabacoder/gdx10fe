@@ -8,7 +8,7 @@ const useAuth = () => {
 
   if (token) {
     // const decoded = jwtDecode(token);
-    const { profile, user } = token.data;
+    const { profile, user, accessToken } = token.data;
     // const { id: userId, email, username } = token.data.user;
     // console.log(decoded.UserInfo);
     // const name = `${fname} ${lname}`;
@@ -19,7 +19,7 @@ const useAuth = () => {
     // if (isManager) status = "Manager";
     // if (isAdmin) status = "Admin";
 
-    return { profile, user};
+    return { profile, user, accessToken};
   }
 
   return { email: '', username: '' };

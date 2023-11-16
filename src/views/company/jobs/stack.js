@@ -28,7 +28,7 @@ const Stack = () => {
                             
                             <div className="flex">
                                 <div className="w-1/2">
-                                <p> Starting From</p>
+                                <p> Opening From</p>
                                
                                     <div className="w-full py-2">
                                        

@@ -12,6 +12,8 @@ import {
   useStartProjectMutation,
   useSubmitProjectMutation 
 } from '../../features/developer/projectSlice';
+import http from '../../utils/service';
+import useAuth from '../../hooks/useAuth';
 
 // // Random component
 const Timeout = () => {
@@ -19,7 +21,7 @@ const Timeout = () => {
 };
 
 function Project() {
-  // const { data } = useAuth();
+  const { accessToken: token } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [project, setProject] = useState('');
   const [repo, setRepo] = useState('');
@@ -84,19 +86,20 @@ function Project() {
       console.log(error.message);
       setMessage(error.message);
     }
-    // const response = await http('/developer/project', 'POST');
-    // // response = JSON.stringify(response);
-    // if (response.status === 1) {
-    //   setProject(response.data);
-    //   // console.log(response.data);
-    //   setNewProject(true);
-    // }
+    const response = await http('/developer/project/all', 'GET', token);
+    // response = JSON.stringify(response);
+    if (response.status === 1) {
+      setProject(response.data[0]);
+      console.log(response.data);
+      setNewProject(true); 
+    }
   };
 
   useEffect(() => {
+    newPullProject()
     // pullProject();
-    setProject(data?.data[0]);
-  }, [isSuccess, newProject]);
+    // setProject(data?.data[0]);
+  }, []);
   console.log(data);
 
   const submitHandler = async e => {
@@ -109,6 +112,15 @@ function Project() {
       lang,
       comment,
     };
+
+    try {
+      const savedData = await submitProject(data);
+      setMessage(savedData.data.message);
+      setOpenModal(false)
+      console.log(savedData);
+    } catch (error) {
+      console.log(error)
+    }
 
     // const response = await http(`/developer/project/submit`, 'POST', data);
     // if (response.status) {
@@ -174,6 +186,9 @@ function Project() {
               </button>
             </div>
           </div>
+          {
+            message && <p className='p-2 mt-4 text-white bg-green-600'>{message}</p> 
+          }
 
           {project && (
             <div className="mt-5 project-available">
@@ -327,7 +342,7 @@ function Project() {
             </div>
             <div
               className="p-5 my-5 overflow-y-auto text-blue-800 bg-gray-300 border rounded-lg h-2/3"
-              dangerouslySetInnerHTML={{ __html: project.task }}
+              dangerouslySetInnerHTML={{ __html: project?.task }}
             ></div>
 
             <hr />
@@ -337,16 +352,15 @@ function Project() {
                   <div className="px-2 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
                     Submission Date
                   </div>
-                  <p className="text-sm font-bold">{project.duration}</p>
+                  <p className="text-sm font-bold">{project?.duration}</p>
                 </div>
                 <div className="flex flex-row items-center justify-between my-2">
                   <div className="px-4 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
                     Countdown
                   </div>
-
                   <Countdown
                     className="text-sm font-bold "
-                    date={project.countdown}
+                    date={project?.countdown}
                     renderer={renderer}
                   />
                 </div>

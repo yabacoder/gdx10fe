@@ -14,21 +14,13 @@ function Instruction() {
                     </div>
                     <div className="p-3 text-sm">
                         <ul>
-
                             <li>All questions must be attempted before proceeding to the next question.</li>
-
                             <li>The time for each question is 1 minutes. After this time elapses, the question shall be removed.</li>
-
                             <li> This test does not permit you to go back after you have passed a certain question.</li>
-
                             <li> Make sure you have a strong internet connection before you proceed with the test.</li>
-
                             <li>If you have any problems during the test send us a mail at hire@getdev.co</li>
-
                         </ul>
                     </div>
-
-
                 </div>
                 <div className="my-5">
                     <Link to="/developer/assessment/question" className="w-full px-5 py-3 text-sm btn"> Start Assessment  <span>

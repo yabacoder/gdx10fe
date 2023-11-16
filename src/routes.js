@@ -258,7 +258,7 @@ export function Routes() {
                 },
                 {
                     path: "settings",
-                    element: <CompanySettings />,
+                    element: <CompanySettings title="Settings" />,
                 },
                 {
                     path: "settings/page",

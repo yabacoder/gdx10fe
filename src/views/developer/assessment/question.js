@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../layout';
 import RightNav from '../utils/RightNav';
-// import http from '../../../utils/service';
+import http, { http2 } from '../../../utils/service';
+import useAuth from '../../../hooks/useAuth';
 
 function Question() {
+  const { accessToken: token } = useAuth();
   const [time, setTime] = useState({});
   const [data, setData] = useState({ options: [] });
   const [total, setTotal] = useState(0);
+  const [current, setCurrent] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [answer, setAnswer] = useState('');
-  // const [timeout, setTimeout] = useState(false);
+  const [questionId, setQuestionId] = useState('');
+  const [timeouts, setTimeouts] = useState(false);
   const [result, setResult] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [preload, setPreload] = useState(false);
   const [message, setMessage] = useState('');
   let timer = 0;
 
@@ -32,33 +38,34 @@ function Question() {
   };
 
   const cont = async () => {
-    this.setState({
-      timeout: !this.state.timeout,
-      preload: !this.state.preload,
-      seconds: 60,
-    });
-  //   const result = http('/api/developer/assessment', 'post');
-  //   if (result.status === 1) {
-  //     setResult(result);
+    setTimeouts(!timeout);
+    setPreload(!preload);
+    setSeconds(60);
+    const data = { answer, question_id: questionId}
+    const result = await  http2('/developer/assessment', 'POST', token, data);
+    console.log(result);
+    if (result.status === 1) {
+      setResult(result);
+      let time = result.data.time * 60;
+      setAnswer("");
+      // setQuestionId( result.data.question_id);
+      setSeconds(time);
+      window.scrollTo(0, 0);
+    } else if (result.status === 3) {
+      setResult(true);
+    } else {
+      setAlert(true);
+      setMessage(result.error);
+    }
+    setPreload(!preload);
+  };
 
-  //     let time = result.data.time * 60;
-  //     setAnswer({ question_id: result.data.question_id });
-  //     setSeconds(time);
-  //   } else if (result.status === 3) {
-  //     this.setState({ result: true });
-  //   } else {
-  //     this.setState({ alert: true, message: result.error });
-  //   }
+  // const timeout = () => {
   //   this.setState({ preload: !this.state.preload });
+  //   localStorage.removeItem('timer');
+  //   const result = http('/api/developer/assessment', this.state);
+  //   this.setState({ timeout: true, preload: !this.state.preload });
   // };
-
-  //   const timeout = () => {
-  //     this.setState({ preload: !this.state.preload });
-  //     localStorage.removeItem('timer');
-  //     const result = http('/api/developer/assessment', this.state)
-  //       this.setState({ timeout: true, preload: !this.state.preload });
-  //     ;
-    };
 
   const countDown = () => {
     // Remove one second, set state so a re-render happens.
@@ -85,117 +92,162 @@ function Question() {
     // http('/api/developer/assessment', 'post', data).then(result => {
     // this.setState({ timeout: true, preload: !this.state.preload });
     // });
+    setTimeouts(!timeout);
+    setPreload(!preload);
+    setSeconds(60);
   };
 
   useEffect(() => {
     const loadQuestion = async () => {
-      // const result = await http('/developer/assessment', 'get');
-      // console.log(result);
-      // if (result.status === 1) {
-      //   setData(result.data);
-      //   setTotal(result.total);
-      //   let time = result.data.time * 60;
-      //   setAnswer({ question_id: result.data.question_id }); // What else do we have here?
-      //   if (localStorage.getItem('timer') > 0) {
-      //     setSeconds(localStorage.getItem('timer'));
-      //     let timeLeftVar = secondsToTime(localStorage.getItem('timer'));
-      //     setTime(timeLeftVar);
-      //   } else {
-      //     setSeconds(time);
-      //     let timeLeftVar = secondsToTime(result.data.time * 60);
-      //     setTime(timeLeftVar);
-      //   }
-      //   startTimer();
-      // } else if (result.status === 2) {
-      //   window.location = '/developer/profile/edit';
-      // } else if (result.status === 3) {
-      //   setResult(true);
-      // } else {
-      //   setMessage(result.error);
-      // }
+      setPreload(!preload);
+      const result = await http('/developer/assessment', 'get', token);
+      // console.log(result); 
+      if (result.status === 1) {
+        setData(result.data);
+        setCurrent(result.current);
+        setTotal(result.total);
+        let time = result.data.time * 60;
+        // setAnswer(""); // What else do we have here?
+        setQuestionId(result.data.question_id); // What else do we have here?
+
+        if (localStorage.getItem('timer') > 0) {
+          setSeconds(localStorage.getItem('timer'));
+          let timeLeftVar = secondsToTime(localStorage.getItem('timer'));
+          setTime(timeLeftVar);
+        } else {
+          setSeconds(time);
+          let timeLeftVar = secondsToTime(result.data.time * 60);
+          setTime(timeLeftVar);
+        }
+        startTimer();
+      } else if (result.status === 2) {
+        localStorage.setItem("result", JSON.stringify(result))
+        window.location = '/developer/profile/edit';
+      } else if (result.status === 3) {
+        setResult(true);
+      } else {
+        setAlert(true);
+        setMessage(result.error);
+      }
+      setPreload(!preload);
     };
 
     loadQuestion();
-  }, []);
+  }, [result]);
+
+  // Output after last question
+//{
+//   "status": 2,
+//     "result": {
+//     "percentage": 80,
+//       "point": 8,
+//         "validity": "2023-11-15 08:36:56";
+//   },
+//   "ratings": [
+//     {
+//       "subject": " HTML5",
+//       "percentage": "51.783070919123"
+//     }
+//   ];
+// }
 
   return (
     <>
       <div className="flex">
-        <div className="w-8/12 p-8 bg-white rounded-md shadow-md highlights">
-          <div className="flex justify-between top-bit">
-            <div className="flex justify-around p-5 mt-10 rounded-md shadow-md subject-section">
-              <div className="pr-5 border-r subject-section">
-                <p>Subject</p>
+        {
+          message ? (
+            <div className="w-8/12 p-8 bg-white rounded-md shadow-md highlights">
+              <p className="p-2 text-white bg-red-600 rounded-lg">{message}</p>
+            </div>
+          ) : (
+
+            <div className="w-8/12 p-8 bg-white rounded-md shadow-md highlights">
+              <div className="flex justify-between top-bit">
+                <div className="flex justify-around p-5 mt-10 rounded-md shadow-md subject-section">
+                  <div className="pr-5 border-r subject-section">
+                    <p>Subject</p>
+                  </div>
+                  <div className="ml-4 ">
+                    <p className="font-bold">{data.subject}</p>
+                  </div>
+                </div>
+                <div className="px-5 py-8 -mt-8 text-white bg-red-600 rounded-b shadow-lg timer">
+                  <p>Time</p>
+                  <h6>
+                    {time.m} : {time.s} 
+                  </h6>
+                </div>
+                <div className="flex justify-around p-5 mt-10 rounded-md shadow-md subject-section">
+                  <div className="pr-5 border-r subject-section">
+                    <p>Questions</p>
+                  </div>
+                  <div className="ml-4 ">
+                    <p className="font-bold">{current} / {total}</p>
+                  </div>
+                </div>
               </div>
-              <div className="ml-4 ">
-                <p className="font-bold">{data.subject}</p>
+              <div
+                className="p-10 mt-10 bg-gray-200 border rounded-md"
+                dangerouslySetInnerHTML={{ __html: data.question }}
+              ></div>
+              <div className="mt-6 mb-4 ml-12 border-t-2 border-dashed">
+                <p className="pr-5 -mt-3 -ml-12">Options &nbsp;&nbsp;</p>
+              </div>
+              <div className="flex flex-wrap justify-between">
+                <div className="w-1/2 ">
+                  <div 
+                    onClick={() => { setAnswer("optA"); }}
+                    className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optA" ? "bg-red-600 text-white" : ""}`}>
+                    <p>{data.options.optA}</p>
+                  </div>
+                </div>
+                <div className="w-1/2 ">
+                  <div
+                    onClick={() => { setAnswer("optB"); }}
+                    className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optB" ? "bg-red-600" : ""}`}>
+                    <p>{data.options.optB}</p>
+                  </div>
+                </div>
+                <div className="w-1/2 ">
+                  <div 
+                    onClick={() => { setAnswer("optC"); }}
+                    className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optC" ? "bg-red-600 text-white" : ""}`}>
+                    <p>{data.options.optC}</p>
+                  </div>
+                </div>
+                <div className="w-1/2 ">
+                  <div 
+                    onClick={() => { setAnswer("optD"); }}
+                    className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optD" ? "bg-red-600 text-white" : ""}`}>
+                    <p>{data.options.optD}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-end mt-10">
+                <button
+                  onClick={cont}
+                  className="px-5 py-3 transition duration-200 ease-in-out rounded-md btn hover:bg-red-500 hover:text-white">
+                  {' '}
+                  Next{' '}
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="inline-flex w-6"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </span>{' '}
+                </button>
               </div>
             </div>
-            <div className="px-5 py-8 -mt-8 text-white bg-red-600 rounded-b shadow-lg timer">
-              <p>Time</p>
-              <h6>
-                {time.m} : {time.s}
-              </h6>
-            </div>
-            <div className="flex justify-around p-5 mt-10 rounded-md shadow-md subject-section">
-              <div className="pr-5 border-r subject-section">
-                <p>Questions</p>
-              </div>
-              <div className="ml-4 ">
-                <p className="font-bold">{total}</p>
-              </div>
-            </div>
-          </div>
-          <div
-            className="p-10 mt-10 bg-gray-200 border rounded-md"
-            dangerouslySetInnerHTML={{ __html: data.question }}
-          ></div>
-          <div className="mt-6 mb-4 ml-12 border-t-2 border-dashed">
-            <p className="pr-5 -mt-3 -ml-12">Options &nbsp;&nbsp;</p>
-          </div>
-          <div className="flex flex-wrap justify-between">
-            <div className="w-1/2 ">
-              <div className="px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white">
-                <p>{data.options.optA}</p>
-              </div>
-            </div>
-            <div className="w-1/2 ">
-              <div className="px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white">
-                <p>{data.options.optB}</p>
-              </div>
-            </div>
-            <div className="w-1/2 ">
-              <div className="px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white">
-                <p>{data.options.optC}</p>
-              </div>
-            </div>
-            <div className="w-1/2 ">
-              <div className="px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white">
-                <p>{data.options.optD}</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-end mt-10">
-            <button className="px-5 py-3 transition duration-200 ease-in-out rounded-md btn hover:bg-red-500 hover:text-white">
-              {' '}
-              Next{' '}
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="inline-flex w-6"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </span>{' '}
-            </button>
-          </div>
-        </div>
+          )
+        }
 
         <div className="flex flex-col w-4/12 px-5 ml-5 topNews">
           <RightNav />

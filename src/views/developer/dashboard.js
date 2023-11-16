@@ -45,7 +45,8 @@ const Dashboard = () => {
 
     const {
         data: appliedJobs,
-        isSuccess: appliedIsSuccess
+        isSuccess: appliedIsSuccess,
+        isLoading
     } = useLoadApplicationQuery();
 
     const {
@@ -92,6 +93,14 @@ const Dashboard = () => {
                                     <th className="px-4 py-2 text-sm">Status</th>
                                 </tr>
                             </thead>
+                            {/* {
+                                isLoading && <button type="button" class="bg-indigo-500 ..." disabled>
+                                    <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+                                        
+                                    </svg>
+                                    Processing...
+                                </button>
+                            } */}
                             <tbody>
                                 {jobs &&
                                     jobs.map((job, index) => (

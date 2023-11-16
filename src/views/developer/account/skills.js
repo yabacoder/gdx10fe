@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import http from '../../../utils/service';
 
 const Skills = () => {
+  useEffect(() => {
+    // http("/")
+  },[])
   return (
     <div className="p-4 px-6 bg-white rounded-md">
       <div className="flex flex-col jobs">
