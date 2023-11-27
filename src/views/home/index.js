@@ -20,7 +20,7 @@ export const HomeView = () => {
         <Hire />
         <Partners />
         <HIW />
-        <Blog />
+        {/* <Blog /> */}
         {/* <div class="bg-gdbas">
           <Footer />
         </div> */}

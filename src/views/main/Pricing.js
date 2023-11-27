@@ -14,10 +14,10 @@ const Pricing = () => {
         <div className=" md:flex md:mx-16">
           <div className="w-full px-6 pt-6 pb-3 md:w-1/2 md:p-6 ">
             <div class="md:mx-auto w-full md:max-w-6xl md:py-12 pb-0 pt-12 h-8/10">
-              <h1 className="text-xl text-red-500 mt-10 md:text-3xl leading-none md:text-white lg:text-5xl font-getdevB md:my-4">
+              <h1 className="mt-10 text-xl leading-none text-red-500 md:text-3xl md:text-white lg:text-5xl font-getdevB md:my-4">
                 ACCESS THE MOST ENGAGED NETWORK OF ENGINEERS
               </h1>
-              <div className="text-base md:text-lg text-white">
+              <div className="text-base text-white md:text-lg">
                 <div class="py-4 md:text-lg lg:text-xl mt-8 md:mt-0 bg-blue-900 rounded-2xl shadow-cardShadow px-4">
                   <div class="flex justify-start items-center  py-2 my-2 ">
                     <span class="text-red-600 h-6 w-6 flex items-center justify-center  rounded-full bg-white">
@@ -35,11 +35,11 @@ const Pricing = () => {
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                      {/* <CheckIcon className="h-7 w-7 text-red-600" /> */}
+                      {/* <CheckIcon className="text-red-600 h-7 w-7" /> */}
 
 
-                      {/* <CheckCircleIcon className="h-6 w-6 white" />
-                      <CheckIcon className="h-6 w-6 text-gray-500" /> */}
+                      {/* <CheckCircleIcon className="w-6 h-6 white" />
+                      <CheckIcon className="w-6 h-6 text-gray-500" /> */}
 
 
                     </span>
@@ -163,7 +163,7 @@ const Pricing = () => {
               <div class="flex flex-col md:flex-row justify-center">
                 <div class="md:w-full flex justify-start md:mt-2 md:justify-end w-full  ">
                   <div class="shadow-md bg-white rounded-lg flex-auto max-w-sm p-5 md:p-10 md:pb-20 pb-20">
-                    <h4 className="text-gdsubBlue font-getdevB uppercase">
+                    <h4 className="uppercase text-gdsubBlue font-getdevB">
                       {' '}
                       Learn about our pricing
                     </h4>
@@ -260,7 +260,7 @@ const Pricing = () => {
           </div>
         </div>
       </section>
-      <section className=" bg-transparent bg-white rounded-b-lg shadow-lg md:pt-16 ">
+      <section className="bg-transparent bg-white rounded-b-lg shadow-lg md:pt-16">
         <div className="px-8 md:px-24 md:py-10 md:mx-10">
           <div className="flex flex-col items-center justify-center mx-auto text-center">
             <h3 className="text-gdsubBlue font-getdevB">
@@ -300,7 +300,7 @@ const Pricing = () => {
                     <p className="text-gdblue ">
                       Source from a large pool of technically-assessed candidates.
                       Access proprietary skills data on each candidate, collected
-                      and validated by Triplebyte, to quickly understand their
+                      and validated by GetDev, to quickly understand their
                       abilities and make smarter hiring decisions.
                     </p>
                   </div>
@@ -314,9 +314,9 @@ const Pricing = () => {
                     Save time and effort in the hiring process
                   </h4>
                   <div className='flex w-2/3'>
-                    <p className="text-gdblue text-right">
-                      Triplebyte recommends the most relevant candidates for each
-                      open position. With Triplebyte, hiring companies can reduce
+                    <p className="text-right text-gdblue">
+                      GetDev recommends the most relevant candidates for each
+                      open position. With GetDev, hiring companies can reduce
                       the time wasted by reaching out to the engineers with the
                       most relevant and validated skill set, and the highest
                       likelihood to engage with you.
@@ -347,8 +347,8 @@ const Pricing = () => {
                   </h4>
                   <div className='flex w-2/3'>
                     <p className="text-gdblue ">
-                      Triplebyte recommends the most relevant candidates for each
-                      open position. With Triplebyte, hiring companies can reduce
+                      GetDev recommends the most relevant candidates for each
+                      open position. With GetDev, hiring companies can reduce
                       the time wasted by reaching out to the engineers with the
                       most relevant and validated skill set, and the highest
                       likelihood to engage with you.
