@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 // import Layout from "../layout";
 // import Footer from "../layout/footer";
 import { Link } from 'react-router-dom';
-import http from '../../utils/service';
+import http, { http2 } from '../../utils/service';
 // import { Categories } from '../../statics/categories';
 import Pagination from 'react-js-pagination';
 import { useLoadJobsQuery } from '../../features/job/jobSlice';
 
 const Joblist = () => {
-  const [jobs, setJobs] = useState([1,2,3,4]);
+  const [jobs, setJobs] = useState([1, 2, 3, 4]);
   const [level_id, setLevel_id] = useState(0);
   const [jobType, setJobType] = useState();
   const [category, setCategory] = useState();
@@ -18,16 +18,24 @@ const Joblist = () => {
   const [paginate, setPaginate] = useState(10);
   const [limit, setLimit] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
+  const {
+    data,
+    isSuccess
+  } = useLoadJobsQuery();
+
+  console.log(data?.data?.rows);
+
   const fetchJobs = async () => {
-    const response = await http('/jobs', 'GET');
+    const response = await http2('/jobs', 'GET');
     //do pagination
-    setJobs(response.data);
-    console.log(response.data);
+    setJobs(response?.data);
+    console.log(response);
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchJobs();
-  }, []);
+    // fetchJobs();
+    setJobs(data?.data?.rows);
+  }, [isSuccess]);
 
   const handleFilter = async e => {
     const data = {
@@ -60,88 +68,98 @@ const Joblist = () => {
               </p>
             </div>
 
-            <label class="block border-0 p-4 md:-pr-1 md:mt-0 md:-ml-4 text-blue-800 ">
+            <div className="bg-white">
+            <label class="block border-0 p-4 md:-pr-1 md:mt-0 md:-ml-4 text-blue-800">
               {/* <span class="text-gray-700">Requested Limit</span> */}
               <select class="form-select mt-1 ">
                 <option>Filter</option>
-                <option>$5,000</option>
-                <option>$10,000</option>
-                <option>$25,000</option>
+                <option>NGN 150,000 and below</option>
+                <option>NGN 2500,000 and below</option>
+                <option>NGN 250,000 - 500, 000</option>
+                <option>NGN 500,000 - 800, 000</option>
+                <option>NGN 800,000 - 1,000, 000</option>
               </select>
             </label>
+            </div>
 
             <div className="flex flex-col md:flex-row md:border md:items-center md:rounded-xlg md:px-4 md:py-6 ">
-              <label class="block md:w-56   md:flex mx-2">
-                <select
-                  class="form-select mt-1 block w-full bg-gray-200 border-0 p-4 md:pr-20 text-blue-800 "
-                  onChange={e => setCategory(e.target.value)}
-                >
-                  <option>Job Category</option>
-                  {/* {Categories &&
+              <div className='flex flex-col space-y-2 md:flex-row md:space-x-2'>
+                <div className="bg-gray-200">
+                  <label class="block md:w-56   md:flex mx-2">
+                    <select
+                      class="form-select mt-1 block w-full bg-gray-200 border-0 p-4 md:pr-20 text-blue-800 "
+                      onChange={e => setCategory(e.target.value)}
+                    >
+                      <option>Job Category</option>
+                      {/* {Categories &&
                     Categories.map((cat, index) => (
                       <option value={cat.id}>{cat.name}</option>
                     ))} */}
-                </select>
-              </label>
+                    </select>
+                  </label>
+                </div>
 
-              <label class="block md:w-56  mx-2">
-                <select
-                  class="form-select mt-1 block w-full bg-gray-200 border-0 p-4 md:pr-20 text-blue-800 "
-                  value={level_id}
-                  onChange={e => setLevel_id(e.target.value)}
-                >
-                  <option>Skill Level</option>
-                  <option
-                    selected={level_id === '1' || level_id === 1}
-                    value="1"
-                  >
-                    Intern
-                  </option>
-                  <option
-                    selected={level_id === '2' || level_id === 2}
-                    value="2"
-                  >
-                    Junior
-                  </option>
-                  <option
-                    selected={level_id === '3' || level_id === 3}
-                    value="3"
-                  >
-                    Intermediate
-                  </option>
-                  <option
-                    selected={level_id === '4' || level_id === 4}
-                    value="4"
-                  >
-                    Advance
-                  </option>
-                  <option
-                    selected={level_id === '5' || level_id === 5}
-                    value="5"
-                  >
-                    Senior
-                  </option>
-                </select>
-              </label>
-
-              <label class="block md:w-56 mx-2">
-                <select
-                  class="form-select mt-1 block w-full bg-gray-200 border-0 p-4 md:pr-20 text-blue-800 "
-                  onChange={e => setJobType(e.target.value)}
-                >
-                  <option>Job Type</option>
-                  <option value="1">Fulltime</option>
-                  <option value="2">Part time</option>
-                  <option value="3">Remote</option>
-                </select>
-              </label>
-
+                <div className="bg-gray-200">
+                  <label class="block md:w-56  mx-2">
+                    <select
+                      class="form-select mt-1 block w-full bg-gray-200 border-0 p-4 md:pr-20 text-blue-800 "
+                      value={level_id}
+                      onChange={e => setLevel_id(e.target.value)}
+                    >
+                      <option>Skill Level</option>
+                      <option
+                        selected={level_id === '1' || level_id === 1}
+                        value="1"
+                      >
+                        Intern
+                      </option>
+                      <option
+                        selected={level_id === '2' || level_id === 2}
+                        value="2"
+                      >
+                        Junior
+                      </option>
+                      <option
+                        selected={level_id === '3' || level_id === 3}
+                        value="3"
+                      >
+                        Intermediate
+                      </option>
+                      <option
+                        selected={level_id === '4' || level_id === 4}
+                        value="4"
+                      >
+                        Advance
+                      </option>
+                      <option
+                        selected={level_id === '5' || level_id === 5}
+                        value="5"
+                      >
+                        Senior
+                      </option>
+                    </select>
+                  </label>
+                </div>
+                <div className="bg-gray-200">
+                  <label class="block md:w-56 mx-2">
+                    <select
+                      class="form-select mt-1 block w-full bg-gray-200 border-0 p-4 md:pr-20 text-blue-800 "
+                      onChange={e => setJobType(e.target.value)}
+                    >
+                      <option>Job Type</option>
+                      <option value="1">Fulltime</option>
+                      <option value="2">Part time</option>
+                      <option value="3">Remote</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
               {/* <label class="block md:w-56 mx-2">
                 <select class="form-select mt-1 block w-full bg-gray-200 border-0 p-4 md:pr-20  text-blue-800">
                   <option>Job Availability</option>
                 </select>
               </label> */}
-              <div className="mx-2 md:ml-auto">
+              {/* <div className="mx-2 md:ml-auto">
                 <button
                   onClick={handleFilter}
                   type="submit"
@@ -149,7 +167,7 @@ const Joblist = () => {
                 >
                   Apply Filter
                 </button>
-              </div>
+              </div> */}
             </div>
 
             <div class="flex flex-wrap justify-between md:mt-10">
@@ -165,34 +183,42 @@ const Joblist = () => {
                           <img
                             src="https://via.placeholder.com/75"
                             className="w-full rounded-md"
+                            alt='logo'
                           />
                         </div>
                         <div className="-ml-5 md:pl-1 md:-ml-2 ">
-                          <h5>{job.name}</h5>
-
-                          <p className="text-sm text-left text-gray-700">
-                            <span>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg "
-                                className="inline-flex w-4 mr-2"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                  clip-rule="evenodd"
-                                />
-                              </svg>
-                            </span>
-                            {job.location}
-                            <span className="pl-3 ml-2 text-gray-400 border-l-2 md:hidden">
+                          <h5>{job.title}</h5>
+                          {
+                            job.location && (
+                              <p className="text-sm text-left text-gray-700">
+                                <span>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg "
+                                    className="inline-flex w-4 mr-2"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                      clip-rule="evenodd"
+                                    />
+                                  </svg>
+                                </span>
+                                {job.location}
+                                {/* <span className="pl-3 ml-2 text-gray-400 border-l-2 md:hidden">
                               12 mins ago
-                            </span>
-                          </p>
-                          <p className="text-sm text-blue-800 font-getdevB md:text-center md:mt-2 md:rounded-full md:p-2 md:bg-gray-300">
-                            ₦{job.salary} - ₦{job.salary_max}
-                          </p>
+                            </span> */}
+                              </p>
+                            )
+                          }
+                          {
+                            job.salary && (
+                              <p className="text-sm text-blue-800 font-getdevB md:text-center md:mt-2 md:rounded-full md:p-2 md:bg-gray-300">
+                                ₦{job.salary} - {job.salary_max && <span>₦{job.salary_max}</span>}
+                              </p>
+                            )
+                          }
                         </div>
                       </Link>
                     </div>
@@ -298,14 +324,14 @@ const Joblist = () => {
               <div className="px-3 py-2 m-1 border rounded-md ">
                 <p>Next</p>
               </div> */}
-              <Pagination
-              className="flex"
+              {/* <Pagination
+                className="flex"
                 activePage={activePage}
                 itemsCountPerPage={10}
                 totalItemsCount={jobs.length}
                 pageRangeDisplayed={5}
                 onChange={() => handlePageChange()}
-              />
+              /> */}
             </div>
           </div>
         </div>

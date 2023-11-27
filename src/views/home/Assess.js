@@ -14,7 +14,6 @@ function Assess() {
       <div className="visible p-5 py-8 md:hidden lg:hidden xl:hidden">
         <div className="h-full p-16 px-8 py-8 mb-5 bg-white rounded-lg md:bg-gray-300">
           <p>What will be the output of this function?</p>
-
           <pre>{question}</pre>
         </div>
 
@@ -80,11 +79,11 @@ function Assess() {
             className="p-32 -ml-1 bg-white md:w-1/2"
             style={{ backgroundImage: 'url("img/signup-bg-image.svg")' }}
           >
-            <h1 className="text-gdblue">
+            <h1 className="text-4xl text-gdblue">
               {' '}
               Let's Get your <span className="text-blue-500">Started</span>
             </h1>
-            <p>
+            <p className='mt-2 text-lg'>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
               Bibendum est ultricies integer quis. Iaculis urna id volutpat
@@ -144,7 +143,7 @@ function Assess() {
                     <span className="ml-2 text-gdblue hover:text-white">undefined</span>
                   </label>
                 </div>
-                <div className="flex justify-center  ">
+                <div className="flex justify-center ">
                   <input
                     type="submit"
                     value="Submit"

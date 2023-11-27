@@ -113,7 +113,7 @@ label {
   );
 }
 .dropdown:hover .dropdown-menu {
-  display: block;
+  display: inline-block;
 }
 
 .about-header {
