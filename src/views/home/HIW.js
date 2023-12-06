@@ -10,7 +10,7 @@ export const HIW = () => {
     <div className="container px-8 py-6 mx-auto bg-white shadow-xl lg:px-32 lg:py-8">
       <div className="flex items-center justify-center lg:px-16 lg:py-16">
         <div>
-          <h3 className="text-center text-gdblue">How it works</h3>
+          <h3 className="text-3xl text-center text-gdblue ">How it works</h3>
           <p className="text-center text-md ">
             GetDev simplify hiring process for developers, from setting up your profile and getting a job.{' '}
           </p>
@@ -24,7 +24,7 @@ export const HIW = () => {
             alt="Create an Account"
           />
           <p className="font-bold text-center thick-color">Create Profile</p>
-          <p className="text-xs">
+          <p className="text-sm">
             Setup profile with your expertise and frameworks.
           </p>
         </div>
@@ -35,18 +35,18 @@ export const HIW = () => {
             alt="Create an Account"
           />
           <p className="font-bold thick-color">Take Test</p>
-          <p className="text-xs">
+          <p className="text-sm">
             Take our automated tests matching your skill-sets.
           </p>
         </div>
         <div className="flex flex-col items-center justify-between">
           <img
             className="h-32 p-5 md:h-full"
-            src={application}
+            src={application} 
             alt="Create an Account"
           />
           <p className="font-bold text-center thick-color">Interview</p>
-          <p className="text-xs">
+          <p className="text-sm">
             Get Shortlisted for an interview.
           </p>
         </div>
@@ -57,7 +57,7 @@ export const HIW = () => {
             alt="Create an Account"
           />
           <p className="font-bold thick-color">Get Job</p>
-          <p className="text-xs">
+          <p className="text-sm">
             Recieve contract your email!
           </p>
         </div>

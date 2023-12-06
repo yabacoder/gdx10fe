@@ -14,7 +14,7 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         getProfileDp: builder.query({
             query: (id) => ({
-                url: '/profile/dp/'+id,
+                url: '/developer/profile/dp',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
@@ -23,11 +23,21 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         getProfileEdit: builder.query({
             query: () => ({
-                url: '/developer/profile/edit',
+                url: '/developer/profile',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
-            })
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data, "Return from login");
+
+                } catch (err) {
+                    // console.log(err.error.data, "Error returned");
+                    return err.error.data;
+                }
+            }
         }),
         addProfile: builder.mutation({
             query: profile => ({
@@ -41,8 +51,8 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         updateProfile: builder.mutation({
             query: profile => ({
-                url: '/developer/profile/edit',
-                method: 'POST', 
+                url: '/developer/profile',
+                method: 'PATCH',
                 body: {
                     ...profile
                 }
@@ -73,19 +83,19 @@ export const profileApiSplice = apiSlice.injectEndpoints({
         }),
         uploadCV: builder.mutation({
             query: profile => ({
-                url: '/developer/profile/upload/cv',
+                url: '/developer/profile/uploadCv',
                 method: 'POST',
                 body: {
                     ...profile
                 }
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Profile'}
+                { type: 'Profile' }
             ]
         }),
         uploadDP: builder.mutation({
             query: profile => ({
-                url: '/developer/profile/upload/image',
+                url: '/developer/profile/uploadDp',
                 method: 'POST',
                 body: {
                     ...profile
@@ -103,10 +113,18 @@ export const profileApiSplice = apiSlice.injectEndpoints({
                 }
             })
         }),
+        loadCV: builder.query({
+            query: () => ({
+                url: '/developer/profile/cv',
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError;
+                }
+            })
+        }),
         updateDevAvailability: builder.mutation({
             query: profile => ({
                 url: '/developer/profile/availability',
-                method: 'POST', 
+                method: 'PATCH',
                 body: {
                     ...profile
                 }
@@ -115,12 +133,13 @@ export const profileApiSplice = apiSlice.injectEndpoints({
                 { type: 'Profile' }
             ]
         }),
+        
     })
 });
 
 export const {
-    useGetProfileQuery, 
-    useGetProfileEditQuery, 
+    useGetProfileQuery,
+    useGetProfileEditQuery,
     useAddProfileMutation,
     useUpdateProfileMutation,
     useGetDevSkillQuery,
@@ -129,5 +148,6 @@ export const {
     useUpdateDevAvailabilityMutation,
     useUploadCVMutation,
     useUploadDPMutation,
-    useGetProfileDpQuery
+    useGetProfileDpQuery,
+    
 } = profileApiSplice;

@@ -27,10 +27,10 @@ const baseQuery = fetchBaseQuery({
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
         // const cookie = getState().auth.csrfToken;
-        // console.log(token);
+        // console.log(token.accessToken);
         if (token) {
-            headers.set("authorization", `Bearer ${token.data.accessToken}`);
-            headers.append("Accept", 'application/json');
+            headers.set("authorization", `Bearer ${token.accessToken}`);
+            // headers.append("Accept", 'application/json');
         }
 
         // console.log(cookie, "Plenty cookies");

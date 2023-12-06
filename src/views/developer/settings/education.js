@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 function Education() {
+
   const [openModal, setOpenModal] = useState(false);
   const [education, setEducation] = useState({});
   const [educations, setEducations] = useState([]);
@@ -37,7 +38,7 @@ function Education() {
   // console.log(data?.data, " education");
 
   useEffect(() => {
-    setEducations(data?.data);
+    setEducations(data?.data?.rows);
   }, [isSuccess]);
 
   const [addEducation, {
@@ -63,7 +64,7 @@ function Education() {
 
   useEffect(() => {
     (async () => {
-      setEducations(data?.data);
+      setEducations(data?.data.rows);
     })();
   }, [isSuccess, updateSuccess, isLoading, addIsSuccess]);
 
@@ -206,7 +207,7 @@ function Education() {
                     setEdit(false);
                     setOpenModal(true);
                   }}
-                  
+
                 >
                   Add Education +
                 </div>

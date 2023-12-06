@@ -5,7 +5,7 @@ export const projectSplice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         loadProjects: builder.query({
             query: () => ({
-                url: '/developer/project/all',
+                url: '/developer/projects/all',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
@@ -24,7 +24,7 @@ export const projectSplice = apiSlice.injectEndpoints({
        
         submitProject: builder.mutation({
             query: project => ({
-                url: `/developer/project/submit`,
+                url: `/developer/projects/submit`,
                 method: 'POST',
                 body: {
                     ...project
@@ -34,13 +34,11 @@ export const projectSplice = apiSlice.injectEndpoints({
                 { type: 'Project' }
             ]
         }),
-        startProject: builder.mutation({
+        requestProject: builder.query({
             query: id => ({
-                url: `/developer/project`,
-                method: 'POST',
-                body: {
-                    ...id
-                }
+                url: `/developer/projects/request`,
+                method: 'GET',
+               
             }),
             invalidatesTags: (result, error, arg) => [
                 { type: 'Project' }
@@ -48,8 +46,8 @@ export const projectSplice = apiSlice.injectEndpoints({
         }),
         deleteProject: builder.mutation({
             query: id => ({
-                url: `/developer/project/delete/${id}`,
-                method: 'POST',
+                url: `/developer/projects/${id}`,
+                method: 'DELETE',
                 body: {
                     ...id
                 }
@@ -64,6 +62,6 @@ export const projectSplice = apiSlice.injectEndpoints({
 
 export const {
    useLoadProjectsQuery,
-   useStartProjectMutation,
+   useRequestProjectQuery,
    useSubmitProjectMutation
 } = projectSplice;

@@ -7,20 +7,23 @@ import {
 } from '../features/developer/profileSlice';
 import Profile from '../assets/img/profile.png';
 import Camera from '../assets/img/camera.png';
+import { uploadImg } from '../utils/general';
+import useAuth from '../hooks/useAuth';
 
 
 
-const DPCard = ({ id }) => {
+const DPCard = ({ userId }) => {
   const [message, setMessage] = useState('');
   const [previewImage, setPreviewImage] = useState(undefined);
   const [imgSelected, setImgSelected] = useState(false);
   const [success, setSuccess] = useState(false);
   const [img, setImg] = useState(Profile);
+  const { token } = useAuth();
 
   const {
     data: dpData,
     isSuccess
-  } = useGetProfileDpQuery(id);
+  } = useGetProfileDpQuery(userId);
 
   // console.log(data, "Api call");
 
@@ -34,28 +37,30 @@ const DPCard = ({ id }) => {
   }] = useUploadDPMutation();
 
   useEffect(() => {
-    setImg(process.env.REACT_APP_UPLOADS_URL + dpData?.data);
+    setImg(`${process.env.REACT_APP_UPLOADS_URL}/` + dpData?.data.image);
   }, [isSuccess]);
 
-  const handleDpUpload = async () => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(img);
-      reader.onload = () => {
-        const result = uploadDP({ image: reader.result });
-        console.log(result);
-        if (isSuccess) {
-          setSuccess(true);
-          setMessage(result.message);
-          // setImgSelected(false);
-        } else {
-          setMessage(result.error);
-        }
-      };
-      reader.onerror = error => reject(error);
-      // };
-    });
-  };
+  // console.log(img)
+
+  // const handleDpUpload = async () => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(img);
+  //     reader.onload = () => {
+  //       const result = uploadDP({ image: reader.result });
+  //       console.log(result);
+  //       if (isSuccess) {
+  //         setSuccess(true);
+  //         setMessage(result.message);
+  //         // setImgSelected(false);
+  //       } else {
+  //         setMessage(result.error);
+  //       }
+  //     };
+  //     reader.onerror = error => reject(error);
+  //     // };
+  //   });
+  // };
   
   const browseImg = async (e) => {
     try {
@@ -66,6 +71,20 @@ const DPCard = ({ id }) => {
       setPreviewImage(localPath);
       setImgSelected(true);
       setImg(img);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDpUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("dp", img);
+    // console.log(userId);
+    try {
+      const resp = await uploadImg(`/developer/profile/uploadDp/${userId}`, formData, token);
+      console.log(resp, "Response");
+      setMessage("DP Uploaded Successfully!");
     } catch (error) {
       console.log(error);
     }

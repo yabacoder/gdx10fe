@@ -10,7 +10,15 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError;
                 }
             }),
-            providesTags: { type: 'Portfolio', }
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    console.log(data, "Portfolio");  
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            // providesTags: { type: 'Portfolio', }
         }),
         getPortfolio: builder.query({
             query: (id) => ({
@@ -32,7 +40,7 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
                 }
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Portfolio'}
+                { type: 'Portfolio' }
             ]
         }),
         updatePortfolio: builder.mutation({

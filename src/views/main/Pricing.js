@@ -1,18 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import Sync from '../../assets/img/sync.png';
 import Watch from '../../assets/img/watch.png';
 import Help from '../../assets/img/help.png';
 import useTitle from '../../hooks/useTitle';
+import http, { http2, http3 } from "../../utils/service";
 
 const Pricing = () => {
   useTitle("Pricing");
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [company, setCompany] = useState('');
+  const [title, setTitle] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+
+  // console.log(firstName);
+  const token = "";
+
+  const handleProcess = async (e) => {
+    e.preventDefault();
+    let error = [];
+
+    if (firstName.length < 2) {
+      error.push(" Enter your First name \n");
+    }
+    if (lastName.length < 2) {
+      error.push(" Enter your Last name\n");
+    }
+
+    if (company.length < 2) {
+      error.push(" Let's know your company\n");
+    }
+    if (email.length < 2) {
+      error.push(" Let's know your Email address\n");
+    }
+    if (phone.length < 2) {
+      error.push(" Let's know your phone number\n");
+    }
+
+    if (error.length < 1) {
+      // Process
+      // console.log("content!", firstName,
+      //   lastName,
+      //   company,
+      //   title,
+      //   email,
+      //   phone);
+      const data = {
+        firstName,
+        lastName,
+        company,
+        title,
+        email,
+        phone
+      };
+
+      try {
+        const resp = await http3("/company/request", data);
+        // console.log("posted", data);
+        setMessage(resp.message);
+      } catch (error) {
+        setMessage(error);
+      }
+    }
+    setMessage(error);
+    // console.log("Error occured!", error);
+  };
+
   return (
     <div>
       <section className="w-full">
-        <div className=" md:flex md:mx-16">
-          <div className="w-full px-6 pt-6 pb-3 md:w-1/2 md:p-6 ">
+        <div className="md:flex md:mx-16">
+          
+          <div className="w-full px-6 pt-6 pb-3 md:w-3/5 md:p-6 ">
             <div class="md:mx-auto w-full md:max-w-6xl md:py-12 pb-0 pt-12 h-8/10">
               <h1 className="mt-10 text-xl leading-none text-red-500 md:text-3xl md:text-white lg:text-5xl font-getdevB md:my-4">
                 ACCESS THE MOST ENGAGED NETWORK OF ENGINEERS
@@ -36,18 +100,14 @@ const Pricing = () => {
                         />
                       </svg>
                       {/* <CheckIcon className="text-red-600 h-7 w-7" /> */}
-
-
                       {/* <CheckCircleIcon className="w-6 h-6 white" />
                       <CheckIcon className="w-6 h-6 text-gray-500" /> */}
-
-
                     </span>
                     <div class="flex-grow font-medium px-4">
-                      Access to over 73,000 technically-assessed engineers
+                      Access to over 10,000+ technically-assessed engineers
                     </div>
                   </div>
-                  <div class="flex justify-start items-center  py-2 my-2">
+                  {/* <div class="flex justify-start items-center  py-2 my-2">
                     <span class="text-red-600 h-6 w-6 flex items-center justify-center  rounded-full bg-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +127,7 @@ const Pricing = () => {
                     <div class="flex-grow font-medium px-4">
                       Skills reports backed by machine learning
                     </div>
-                  </div>
+                  </div> */}
                   <div class="flex justify-start items-center  py-2 my-2">
                     <span class="text-red-600 h-6 w-6 flex items-center justify-center  rounded-full bg-white">
                       <svg
@@ -86,7 +146,7 @@ const Pricing = () => {
                       </svg>
                     </span>
                     <div class="flex-grow font-medium px-4">
-                      3x positive response rate compared to LinkedIn
+                      3x positive response rate compared to LinkedIn and other job boards
                     </div>
                   </div>
                   <div class="flex justify-start items-center  py-2 my-2">
@@ -158,102 +218,124 @@ const Pricing = () => {
               </div>
             </div>
           </div>
-          <div className="w-full px-6 pt-3 pb-6 md:w-1/2 md:p-6 ">
+          
+          <div className="w-full px-6 pt-3 pb-6 md:w-[500px] md:p-6 ">
             <div class="md:mx-auto w-full md:max-w-6xl md:p-12">
               <div class="flex flex-col md:flex-row justify-center">
                 <div class="md:w-full flex justify-start md:mt-2 md:justify-end w-full  ">
-                  <div class="shadow-md bg-white rounded-lg flex-auto max-w-sm p-5 md:p-10 md:pb-20 pb-20">
-                    <h4 className="uppercase text-gdsubBlue font-getdevB">
-                      {' '}
-                      Learn about our pricing
-                    </h4>
-                    <div class="w-full">
-                      <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
+                  <form
+                    onSubmit={handleProcess}
+                  >
+                    <div class="shadow-md bg-white rounded-lg flex-auto max-w-sm p-5 md:p-10 md:pb-20 pb-20">
+                      <p>{message && message.map((msg, indx) => (
+                        <p>{msg}</p>
+                      ))}</p>
+                      <h4 className="uppercase text-gdsubBlue font-getdevB">
                         {' '}
-                        First Name
+                        Learn about our pricing
+                      </h4>
+                      <div class="w-full">
+                        <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
+                          {' '}
+                          First Name
+                        </div>
+                        <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
+                          {' '}
+                          <input
+                            onChange={e => setFirstName(e.target.value)}
+                            value={firstName}
+                            placeholder="Jhon"
+                            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                          />{' '}
+                        </div>
                       </div>
-                      <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
-                        {' '}
-                        <input
-                          placeholder="Jhon"
-                          class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                        />{' '}
+                      <div class="w-full">
+                        <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
+                          {' '}
+                          Last Name
+                        </div>
+                        <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
+                          {' '}
+                          <input
+                            onChange={e => setLastName(e.target.value)}
+                            value={lastName}
+                            placeholder="Doe"
+                            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                          />{' '}
+                        </div>
                       </div>
-                    </div>
-                    <div class="w-full">
-                      <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
-                        {' '}
-                        Last Name
+                      <div class="w-full">
+                        <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
+                          {' '}
+                          Company
+                        </div>
+                        <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
+                          {' '}
+                          <input
+                            onChange={e => setCompany(e.target.value)}
+                            value={company}
+                            placeholder="jhon@doe.com"
+                            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                          />{' '}
+                        </div>
                       </div>
-                      <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
-                        {' '}
-                        <input
-                          placeholder="Doe"
-                          class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                        />{' '}
+                      <div class="w-full">
+                        <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
+                          {' '}
+                          Title
+                        </div>
+                        <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
+                          {' '}
+                          <input
+                            onChange={e => setTitle(e.target.value)}
+                            value={title}
+                            placeholder="Mr."
+                            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                          />{' '}
+                        </div>
                       </div>
-                    </div>
-                    <div class="w-full">
-                      <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
-                        {' '}
-                        Company
+                      <div class="w-full">
+                        <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
+                          {' '}
+                          Email
+                        </div>
+                        <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
+                          {' '}
+                          <input
+                            onChange={e => setEmail(e.target.value)}
+                            value={email}
+                            placeholder="info@company.com"
+                            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                          />{' '}
+                        </div>
                       </div>
-                      <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
-                        {' '}
-                        <input
-                          placeholder="jhon@doe.com"
-                          class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                        />{' '}
+                      <div class="w-full">
+                        <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
+                          {' '}
+                          Phone number
+                        </div>
+                        <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
+                          {' '}
+                          <input
+                            onChange={e => setPhone(e.target.value)}
+                            value={phone}
+                            placeholder="phone number"
+                            class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                          />{' '}
+                        </div>
                       </div>
-                    </div>
-                    <div class="w-full">
-                      <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
-                        {' '}
-                        Title
-                      </div>
-                      <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
-                        {' '}
-                        <input
-                          placeholder="jhon@doe.com"
-                          class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                        />{' '}
-                      </div>
-                    </div>
-                    <div class="w-full">
-                      <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
-                        {' '}
-                        Email
-                      </div>
-                      <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
-                        {' '}
-                        <input
-                          placeholder="info@company.com"
-                          class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                        />{' '}
-                      </div>
-                    </div>
-                    <div class="w-full">
-                      <div class="font-bold h-6 mt-3 text-gray-600 text-xs leading-8 uppercase">
-                        {' '}
-                        Phone number
-                      </div>
-                      <div class="my-2 bg-white p-1 flex border border-gray-200 rounded">
-                        {' '}
-                        <input
-                          placeholder="phone number"
-                          class="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-                        />{' '}
-                      </div>
-                    </div>
-                    <div class="mt-6 relative">
-                      <div
-                        class="shadow-md font-medium py-2 px-4 text-green-100 transition-opacity 1s hover:bg-red-500
+                      <div class="mt-6 relative">
+                        <button
+                          type='submit'
+                          // onClick={handleProcess}
+                          class="shadow-md font-medium py-2 px-4 text-green-100 transition-opacity 1s hover:bg-red-500
                   cursor-pointer bg-red-600 rounded text-sm tr-mt  absolute text-center w-full"
-                      >
-                        Request a demo
+                        >
+                          Make a Request
+                        </button>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>

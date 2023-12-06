@@ -27,14 +27,14 @@ function WorkExperience() {
 
   const {
     data,
-    isSuccess, 
+    isSuccess,
     isError,
     error,
     isLoading
   } = useLoadWorkExperienceQuery();
 
   useEffect(() => {
-    setExperiences(data?.data); 
+    setExperiences(data?.data?.rows);
   }, [isSuccess]);
 
   const [addWorkExperience, {
@@ -59,8 +59,8 @@ function WorkExperience() {
   }] = useDeleteWorkExperienceMutation();
 
   useEffect(() => {
-    (async () => { 
-      setExperiences(data?.data);
+    (async () => {
+      setExperiences(data?.data?.rows);
     })();
   }, [isSuccess, updateSuccess, isLoading, addIsSuccess]);
 

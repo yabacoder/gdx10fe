@@ -8,13 +8,7 @@ import useAuth from '../hooks/useAuth';
 // import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = () => {
-  const { profile: {
-    id,
-    name,
-    level,
-    location,
-    cv: asCV
-  } } = useAuth();
+  const { userId } = useAuth();
   const [response, setResponse] = useState([]);
   const [projects, setProjects] = useState([]);
   const [jobs, setJobs] = useState([]);
@@ -97,7 +91,7 @@ const Profile = () => {
       </div>
       <div className="flex flex-col items-center w-full p-10 text-center text-white bg-red-600 rounded-b-md profile-detail">
         <div className="w-24 h-24 mx-auto mb-3 -m-20 bg-gray-400 border-gray-100 rounded-full">
-          <DPCard id={id} />
+          <DPCard userId={userId} />
         </div>
         <div>
           {' '}

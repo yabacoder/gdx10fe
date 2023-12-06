@@ -26,8 +26,11 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await login({ email, password }).unwrap();
-      console.log(data, "Our data");
-      dispatch(setCredentials({ data }));
+      const accessToken = data?.accessToken;
+      console.log(accessToken, "Our accessToken");
+      dispatch(setCredentials({ accessToken }));
+
+      // Redirect to complete profile if not done
       if (!data.profile) {
         navigate("/developer/profile/edit");
       } else {
@@ -35,8 +38,8 @@ const Login = () => {
       }
     } catch (err) {
       console.log(err, "Cant login from the server");
-      console.log(err.data.message, "Error logging in"); 
-      setMsg(err?.data.message);
+      // console.log(err.data.message, "Error logging in");
+      setMsg(err?.message);
     }
   };
 

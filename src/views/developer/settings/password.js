@@ -17,9 +17,9 @@ const ChangePassword = () => {
     const processSubmit = async () => {
         try {
             const data = await changePassword({
-                old_password,
+                oldPassword: old_password,
                 password,
-                password_confirmation
+                cPassword: password_confirmation
             });
             setMessage(data?.data?.message);
             // console.log(data?.error.data.message);
@@ -31,7 +31,7 @@ const ChangePassword = () => {
             if (error) {
                 setHasError(true);
                 setMessage(error);
-                console.log();
+                // console.log();
             }
         } catch (err) {
             console.log(err.message);

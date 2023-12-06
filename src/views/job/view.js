@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import http from '../../utils/service';
 import { useParams } from 'react-router-dom';
+import { curFormat } from '../../utils/general';
 
 //import Nav from "../home/nav";
 // import Layout from "../layout";
@@ -54,17 +55,12 @@ const JobView = () => {
     types[3] = "Remote";
     types[4] = "Intership";
     types[5] = "Contract";
-    const rs = types.filter(ar => ar.indexOf[type+1] !== types[type]);
+    const rs = types.filter(ar => ar.indexOf[type + 1] !== types[type]);
 
     console.log(rs);
 
   };
   jobType(type);
-
-  const cur = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'NGN',
-  });
 
   return (
     <>
@@ -115,7 +111,7 @@ const JobView = () => {
                 <span className="inline-block"></span> {location}
               </p>
               <div className="w-4/5 py-2 text-center text-white bg-red-600 rounded-full shadow-sm md:w-3/5 font-getdevM ">
-                {cur.format(salary)} - {cur.format(salary_max)}
+                {curFormat.format(salary)} - {curFormat.format(salary_max)}
               </div>
 
               <div className="mt-10">

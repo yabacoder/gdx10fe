@@ -22,13 +22,7 @@ import {
 
 
 const Dashboard = () => {
-    const { profile: {
-        id,
-        name,
-        level,
-        location,
-        cv: asCV
-    } } = useAuth();
+    const { userId } = useAuth();
     const [jobs, setJobs] = useState([]);
     const [articles, setArticles] = useState([]);
     // const [article, setArticle] = useState([]);
@@ -70,11 +64,12 @@ const Dashboard = () => {
      */
 
     useEffect(() => {
-        setJobs(appliedJobs?.data);
+        setJobs(appliedJobs?.data?.rows);
         setArticles(articlesData?.data);
-        setRelatedJobs(relatedJobsData?.data);
+        setRelatedJobs(relatedJobsData?.data?.rows);
     }, [appliedIsSuccess, relatedIsSuccess, articleIsSuccess]);
-    console.log(articlesData?.data);
+    // console.log(jobs, "Jobs");
+
 
     return (
         <div className="flex">
@@ -103,19 +98,17 @@ const Dashboard = () => {
                             } */}
                             <tbody>
                                 {jobs &&
-                                    jobs.map((job, index) => (
-                                        <tr key={index}>
-                                            <td className="p-2 text-sm">{job.name} </td>
-                                            <td>{job.location}</td>
-                                            <td className="flex items-center pr-2">
-                                                {' '}
-                                                <span className="text-4xl text-yellow-500">
-                                                    &bull;
-                                                </span>{' '}
-                                                {job.status}
-                                            </td>
-                                        </tr>
-                                    ))}
+                                    jobs.map((job, index) => <tr key={index}>
+                                        <td className="p-2 text-sm">{job.Job.title} </td>
+                                        <td>{job.Job.location}</td>
+                                        <td className="flex items-center pr-2">
+                                            {' '}
+                                            <span className="text-4xl text-yellow-500">
+                                                &bull;
+                                            </span>{' '}
+                                            {job.Job.status}
+                                        </td>
+                                    </tr>)}
                             </tbody>
                         </table>
                     </div>
@@ -136,14 +129,14 @@ const Dashboard = () => {
                         </thead>
                         <tbody>
                             {relatedJobs &&
-                                relatedJobs.map((job, index) => (
+                                relatedJobs?.map((job, index) => (
                                     <tr className="p-5 border-b" key={index}>
                                         <td className="px-4 py-2 ">
                                             <Link
                                                 className=""
                                                 to={`/jobs/${job.id}/${job.link}`}
                                             >
-                                                {job.name}
+                                                {job.title}
                                             </Link>
                                         </td>
                                         <td>{job.location}</td>
@@ -167,7 +160,7 @@ const Dashboard = () => {
             <div className="flex flex-col w-4/12 max-h-screen p-5 ml-5 bg-white rounded-md shadow-md topNews">
                 <h5 className="text-base">Top Articles</h5>
                 {
-                    articles && articles.map(
+                    articles && articles?.map(
                         article =>
                             <div className="flex items-center justify-between px-3 py-3 my-3 bg-gray-200 rounded-lg">
                                 <div className="w-4/12 pr-2 article-img">

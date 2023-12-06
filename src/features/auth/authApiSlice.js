@@ -8,7 +8,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         login: builder.mutation({
             query: credentials => ({
-                url: '/login',
+                url: '/auth/login',
                 method: 'POST',
                 body: { ...credentials }
             }),
@@ -20,26 +20,26 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
             //     return '';
             // },
-        
-            
+
+
         }),
         register: builder.mutation({
             query: credentials => ({
-                url: '/register',
+                url: '/auth/register',
                 method: 'POST',
                 body: { ...credentials }
             }),
             providesTags: (result, error) => [{ type: 'User' }],
-            
+
         }),
         changePassword: builder.mutation({
             query: credentials => ({
-                url: '/password/change',
+                url: '/auth/change-password',
                 method: 'POST',
                 body: { ...credentials }
             }),
             providesTags: (result, error) => [{ type: 'User' }],
-            
+
         }),
 
         sendLogout: builder.mutation({

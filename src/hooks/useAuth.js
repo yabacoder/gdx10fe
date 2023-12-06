@@ -1,25 +1,19 @@
 import { useSelector } from 'react-redux';
 import { selectCurrentToken } from "../features/auth/authSlice";
-// import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const useAuth = () => {
-  const token = useSelector(selectCurrentToken);
-  // console.log(token.data)
+  const tokens = useSelector(selectCurrentToken);
+  // console.log(token, "Token");
 
-  if (token) {
-    // const decoded = jwtDecode(token);
-    const { profile, user, accessToken } = token.data;
-    // const { id: userId, email, username } = token.data.user;
+  if (tokens) {
+    const decoded = jwtDecode(tokens.accessToken);
+    // const { profile, user, accessToken } = decoded.accessToken; //token.data;
+    const token = tokens.accessToken;
+    const { userId, roleId, email, username, } = decoded.UserInfo;
     // console.log(decoded.UserInfo);
-    // const name = `${fname} ${lname}`;
 
-    // isManager = roles.includes('Manager');
-    // isAdmin = roles.includes('Admin');
-
-    // if (isManager) status = "Manager";
-    // if (isAdmin) status = "Admin";
-
-    return { profile, user, accessToken};
+    return { userId, email, roleId, username, token };
   }
 
   return { email: '', username: '' };

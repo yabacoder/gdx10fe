@@ -18,3 +18,8 @@ export const uploadImg = async (path, formData, accessToken) => {
   }
   console.log(accessToken);
 };
+
+export const curFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'NGN',
+});

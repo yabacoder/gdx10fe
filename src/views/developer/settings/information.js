@@ -5,15 +5,22 @@ import Camera from '../../../assets/img/camera.png';
 import useAuth from '../../../hooks/useAuth';
 import states from '../../../statics/states';
 import {
-  useGetProfileEditQuery,
+  useGetProfileQuery,
   useAddProfileMutation,
-  useUpdateProfileMutation
+  useUpdateProfileMutation,
+  useGetProfileEditQuery
 } from '../../../features/developer/profileSlice';
+import http, { http2 } from '../../../utils/service';
+import { useSelector } from 'react-redux';
+import { selectCurrentToken } from "../../../features/auth/authSlice";
 
 
 const countries = require('../../../statics/countries.json');
 const Information = () => {
-  const { user: {email, username} } = useAuth();
+  const token = useSelector(selectCurrentToken);
+
+  const { email, username } = useAuth();
+  // console.log(username);
   const [profile, setProfile] = useState([]);
   const [github, setGithub] = useState([]);
   const [uname, setUsername] = useState(username);
@@ -23,16 +30,16 @@ const Information = () => {
   const [bio, setBio] = useState('');
   const [dob, setDob] = useState('');
   const [image, setImage] = useState('');
-  const [country_id, setCountry_id] = useState('');
-  const [state_id, setState_id] = useState('');
+  const [countryId, setCountryId] = useState('');
+  const [stateId, setStateId] = useState('');
   const [filtered, setFiltered] = useState([]);
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState('');
 
   const {
     data,
     isSuccess
   } = useGetProfileEditQuery();
-  // console.log(data)
+  // console.log(data);
 
   const [addProfile, {
     isSuccess: addProfileIsSuccess
@@ -42,28 +49,35 @@ const Information = () => {
     isSuccess: updateProfileIsSuccess
   }] = useUpdateProfileMutation();
 
+
+
   useEffect(() => {
+    const fetchNow = async () => {
+      return await http2("/developer/profile", "GET", token.accessToken);
+    };
     (async () => {
+      const data = await fetchNow();
+      console.log(data);
       setProfile(data?.data);
       setBio(data?.data.bio);
       setGithub(data?.data.github);
       setName(data?.data.name);
-      setUsername(data?.data.username);
+      // setUsername(data?.data.username);
       setPhone(data?.data.phone);
       setName(data?.data.name);
       setSex(data?.data.sex);
       setBio(data?.data.bio);
       setImage(data?.data.image);
       setDob(data?.data.dob);
-      setCountry_id(data?.data.country_id);
-      setState_id(data?.data.state_id);
+      setCountryId(data?.data.countryId);
+      setStateId(data?.data.stateId);
     })();
-  }, [isSuccess]);
-  // setFiltered(states.filter(t => t.country_id === 160));
+  }, []);
+  // setFiltered(states.filter(t => t.countryId === 160));
   // console.log(filtered);
   states.map(country => {
-    // if (country.country_id === 160) {
-    //   console.log(country.country_id);
+    // if (country.countryId === 160) {
+    //   console.log(country.countryId);
     // } else {
     //   console.log('nothing found');
     // }
@@ -73,7 +87,7 @@ const Information = () => {
     e.preventDefault();
     try {
 
-      if(profile) {
+      if (profile) {
         const data = await updateProfile({
           phone,
           name,
@@ -82,8 +96,8 @@ const Information = () => {
           github,
           dob,
           image,
-          country_id,
-          state_id
+          countryId,
+          stateId
         }).unwrap();
       } else {
         const data = await addProfile({
@@ -94,8 +108,8 @@ const Information = () => {
           github,
           dob,
           image,
-          country_id,
-          state_id
+          countryId,
+          stateId
         }).unwrap();
       }
       console.log(data, "Posting thru RTK");
@@ -110,9 +124,9 @@ const Information = () => {
     <div>
       <h6> Basic Information</h6>
       {
-        msg && 
+        msg &&
         <div className='p-2 bg-green-600'>
-            <p className='text-white'>{msg}</p>
+          <p className='text-white'>{msg}</p>
         </div>
       }
       <form onSubmit={processSubmit}>
@@ -133,7 +147,7 @@ const Information = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="my-3">
               <p> Username</p>
               {/* <label htmlFor="price" class="block text-sm leading-5 font-medium text-gray-700">Price</label> */}
@@ -200,20 +214,20 @@ const Information = () => {
                 <select
                   className="w-full form-select"
                   required
-                  name="country_id"
-                  onChange={e => setCountry_id(e.target.value)}
+                  name="countryId"
+                  onChange={e => setCountryId(e.target.value)}
                 // onChange={this.onChange}
                 // className={
                 //   'w3-select w3-border w3-white w3-round-large' +
                 //   ' ' +
-                //   (this.state.errors.country_id ? 'w3-border-red' : '')
+                //   (this.state.errors.countryId ? 'w3-border-red' : '')
                 // }
                 >
                   <option>Select Country</option>
                   {countries.map(country => (
                     <option
                       selected={
-                        country_id === country.id - 0 || country_id === country.id
+                        countryId === country.id - 0 || countryId === country.id
                       }
                       value={country.id}
                     >
@@ -224,24 +238,23 @@ const Information = () => {
               </div>
               <div className="w-1/2 ml-5">
                 <p>State</p>
-
                 <select
-                  name="state_id"
-                  onChange={e => setState_id(e.target.value)}
+                  name="stateId"
+                  onChange={e => setStateId(e.target.value)}
                   required
                   className="w-full form-select"
                 // onChange={this.onChange}
                 // className={
                 //   'w3-select w3-white w3-border w3-round-large' +
                 //   ' ' +
-                //   (this.state.errors.state_id ? 'w3-border-red' : '')
+                //   (this.state.errors.stateId ? 'w3-border-red' : '')
                 // }
                 >
                   <option>Select State</option>
                   {filtered.map(state => (
                     <option
                       selected={
-                        state_id === state.id - 0 || state_id === state.id
+                        stateId === state.id - 0 || stateId === state.id
                       }
                       value={state.id}
                     >
@@ -268,7 +281,7 @@ const Information = () => {
                       />
                     </div>
                   </label>
-                 
+
                 </div>
               </div>
             </div>

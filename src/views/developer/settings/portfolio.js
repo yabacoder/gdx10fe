@@ -26,6 +26,7 @@ const Portfolio = () => {
     isSuccess: fetchSuccess
   } = useLoadPortfolioQuery();
   // console.log(data, "Fetched data");
+
   const [addPortfolio, {
     isSuccess,
     isError,
@@ -43,20 +44,23 @@ const Portfolio = () => {
   const [deletePortfolio, {
     isSuccess: deleteSuccess,
     isError: deleteIsError,
-    error: deleteError, 
+    error: deleteError,
     isLoading: deleteIsLoading
   }] = useDeletePortfolioMutation();
 
   useEffect(() => {
     (async () => {
-      setPortfolios(data?.data);
+      setPortfolios(data?.data?.rows);
     })();
   }, [fetchSuccess, updateSuccess, isLoading]);
 
-  useEffect(() => {
-    // setPortfolio(data?.data);
+  // useEffect(() => {
+  //   // setPortfolio(data?.data);
+  //   setPortfolios(data?.data);
 
-  }, [edit]);
+  // }, []);
+  // console.log(portfolios);
+
 
   const processSave = async (e) => {
     e.preventDefault();

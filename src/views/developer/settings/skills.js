@@ -6,9 +6,9 @@ import { Categories } from '../../../statics/categories';
 import { TECHNOLOGIES } from '../../../statics/technologies';
 // const countries = require('../../../statics/countries.json');
 import {
-  useGetDevSkillQuery,
+  // useGetDevSkillQuery,
   useUpdateSkillMutation,
-  useGetProfileEditQuery,
+  // useGetProfileEditQuery,
   useGetDevAvailabilityQuery,
   useUpdateDevAvailabilityMutation,
   useAddProfileMutation
@@ -18,24 +18,27 @@ const Skills = () => {
   const [fulltime, setFulltime] = useState(false);
   const [parttime, setParttime] = useState(false);
   const [remote, setRemote] = useState(false);
-  const [category_id, setCategory_id] = useState('');
-  const [level_id, setLevel_id] = useState();
+  const [categoryId, setCategoryId] = useState('');
+  const [levelId, setLevelId] = useState();
   const [technologies, setTechnologies] = useState(TECHNOLOGIES);
   const [stayOpen, setStayOpen] = useState(false);
   const [removeSelected, setRemoveSelected] = useState(true);
-  const [tech, setTech] = useState({});
+  const [tech, setTech] = useState([]);
   const [msg, setMsg] = useState('');
-  const [profile, setProfile] = useState([]);
+  // const [profile, setProfile] = useState([]);
+  const [newTech, setNewTech] = useState();
+
+  // const [availability, setAvailability] = useState({})
 
 
-  const {
-    data: defaultData,
-    isSuccess
-  } = useGetProfileEditQuery();
-  const {
-    data: defaultTech,
-    isSuccess: techIsSuccess
-  } = useGetDevSkillQuery();
+  // const {
+  //   data: defaultData,
+  //   isSuccess
+  // } = useGetProfileEditQuery();
+  // const {
+  //   data: defaultTech,
+  //   isSuccess: techIsSuccess
+  // } = useGetDevSkillQuery();
   const {
     data: devAvailability,
     isSuccess: devIsSuccess
@@ -51,40 +54,41 @@ const Skills = () => {
 
   // console.log(defaultTech?.data, "Techs");
 
-  const filterArray = (array1, array2) => {
-    const filtered = array1.filter(el => {
-      return array2.value === el;
-    });
-    return filtered;
+  const subFilter = (id) => {
+    return technologies.filter(el => {
+      return el.value == id;
+    }
+    );
   };
 
-  const tt = defaultTech;
-  // const filtered = filterArray(tt, TECHNOLOGIES);
-  // console.log(filtered, "Preprocessed");
-  const newTech = defaultTech;
-  // const newTech = filtered.forEach(TECHNOLOGIES.filter(v => v.value === filtered ))
 
-  // let obj = {};
-
-  let i, fil, obj, j;
-  for (i = 0; i <= tt?.length; i++) {
-    j = tt[i];
-    fil = TECHNOLOGIES.filter(v => v.value == j);
-    console.log(j, "filled");
-  }
-  // obj = fil;
-  // console.log(obj, "OBJ");
+  const filterArray = () => {
+    // let arr = [];
+    return tech?.forEach(tech => {
+      console.log(tech.technologyId, "Big Tech");
+      return subFilter(tech.technologyId);
+    }
+    );
+  };
 
   useEffect(() => {
-    setCategory_id(defaultData?.data.category_id);
-    setLevel_id(defaultData?.data.level_id);
-    setFulltime(devAvailability?.data.fulltime);
-    setParttime(devAvailability?.data.parttime);
-    setRemote(devAvailability?.data.remote);
-    setTech(defaultTech?.data);
-  }, [isSuccess,
-    techIsSuccess,
-    devIsSuccess]);
+    (async () => {
+      setNewTech(filterArray()); 
+    })();
+  }, []);
+  // console.log(filterArray(), "This is a tech");
+
+  // console.log(filterArray());
+
+  useEffect(() => {
+    setCategoryId(devAvailability?.data?.categoryId);
+    setLevelId(devAvailability?.data?.levelId);
+    setFulltime(devAvailability?.data?.availability?.fulltime);
+    setParttime(devAvailability?.data?.availability?.parttime);
+    setRemote(devAvailability?.data?.availability?.remote);
+    setTech(devAvailability?.data?.devTechnology);
+    // setTech(tech)
+  }, [devIsSuccess]);
 
 
   const [addProfile, {
@@ -99,8 +103,8 @@ const Skills = () => {
     e.preventDefault();
     // try {
     //   const data = await updateDevAvailability({
-    //     category_id,
-    //     level_id,
+    //     categoryId,
+    //     levelId,
     //     fulltime,
     //     parttime,
     //     remote,
@@ -119,31 +123,32 @@ const Skills = () => {
     //   console.log(error);
     // }
     // console.log(
-    //   category_id,
-    //   level_id,
+    //   categoryId,
+    //   levelId,
     //   fulltime,
     //   parttime,
     //   remote,
     //   "Update going backend"
     // );
-    console.log(technologies, "Incoming technologies");
+    // console.log(technologies, "Incoming technologies");
     try {
       const data = await updateDevAvailability({
-        category_id,
-        level_id,
+        categoryId,
+        levelId,
         fulltime,
         parttime,
         remote,
         value: technologies
       }).unwrap();
-      console.log(data, "Update skill and  availability categories");
+      // console.log(data, "Update skill and  availability categories");
       setMsg(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const options = TECHNOLOGIES;
+
+  // const options = TECHNOLOGIES;
   return (
     <div>
       <h6> Skills and Availability</h6>
@@ -162,13 +167,13 @@ const Skills = () => {
 
                 <select
                   // onChange={this.onChange}
-                  name="category_id"
+                  name="categoryId"
                   className="w-full form-select"
-                // className={state.errors.category_id ? 'w3-border-red' : ''}
+                // className={state.errors.categoryId ? 'w3-border-red' : ''}
                 >
                   <option value="">Select</option>
                   {Categories.map(data => (
-                    <option value={data.id} selected={category_id == data.id}>
+                    <option value={data.id} selected={categoryId == data.id}>
                       {data.name}
                     </option>
                   ))}
@@ -179,41 +184,41 @@ const Skills = () => {
 
                 <select
                   // onChange={this.onChange}
-                  name="level_id"
+                  name="levelId"
                   // className={ 
                   //   'w3-select w3-border w3-white w3-round-large' +
                   //   ' ' +
-                  //   (this.state.errors.level_id ? 'w3-border-red' : '')
+                  //   (this.state.errors.levelId ? 'w3-border-red' : '')
                   // }
                   className="w-full form-select"
                 >
                   <option value="">Select</option>
                   <option
-                    selected={level_id === '1' || level_id === 1}
+                    selected={levelId === '1' || levelId === 1}
                     value="1"
                   >
                     Intern
                   </option>
                   <option
-                    selected={level_id === '2' || level_id === 2}
+                    selected={levelId === '2' || levelId === 2}
                     value="2"
                   >
                     Junior
                   </option>
                   <option
-                    selected={level_id === '3' || level_id === 3}
+                    selected={levelId === '3' || levelId === 3}
                     value="3"
                   >
                     Intermediate
                   </option>
                   <option
-                    selected={level_id === '4' || level_id === 4}
+                    selected={levelId === '4' || levelId === 4}
                     value="4"
                   >
                     Advance
                   </option>
                   <option
-                    selected={level_id === '5' || level_id === 5}
+                    selected={levelId === '5' || levelId === 5}
                     value="5"
                   >
                     Senior
@@ -234,7 +239,7 @@ const Skills = () => {
                 required
                 isMulti
                 onChange={e => setTechnologies(e.target)}
-                options={options}
+                options={TECHNOLOGIES}
                 placeholder="Select"
                 removeSelected={removeSelected}
                 value={newTech}

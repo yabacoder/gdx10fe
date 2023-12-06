@@ -34,7 +34,7 @@ export const articleSplice = apiSlice.injectEndpoints({
             query: id => ({
                 url: `/developer/articles/${id}/apply`,
                 method: 'POST',
-                body: {
+                body: { 
                     ...id
                 }
             }),
@@ -62,5 +62,5 @@ export const {
    useLoadArticlesQuery,
    useArticleMutation,
    useLoadRecentArticlesQuery,
-   useLoadRelatedArticlesQuery
+   useLoadRelatedArticlesQuery 
 } = articleSplice;

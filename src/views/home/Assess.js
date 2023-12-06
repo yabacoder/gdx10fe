@@ -1,13 +1,16 @@
 import React from 'react';
 // import Nav from "./nav";
+import { Link } from 'react-router-dom';
 
 function Assess() {
+
   let question =
     '\n(function() {\n' +
     'var a = b = 5;\n' +
     '})();\n' +
     '\n' +
     'console.log(b);\n';
+    
   return (
     <div>
       {/* //Show only on mobile */}
@@ -144,11 +147,13 @@ function Assess() {
                   </label>
                 </div>
                 <div className="flex justify-center ">
-                  <input
+                  <Link
                     type="submit"
                     value="Submit"
-                    className="inline-block w-full p-3 text-center btn hover:cursor-pointer"
-                  />
+                    to={'/register'}
+                   
+                    className="inline-block w-full p-4 text-center btn hover:cursor-pointer"
+                  >Submit</Link>
                 </div>
               </div>
             </div>
