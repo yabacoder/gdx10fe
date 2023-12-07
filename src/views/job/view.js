@@ -3,7 +3,9 @@ import http from '../../utils/service';
 import { useParams } from 'react-router-dom';
 import { curFormat } from '../../utils/general';
 import useAuth from '../../hooks/useAuth';
+import useTitle from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 //import Nav from "../home/nav";
@@ -81,6 +83,7 @@ const JobView = () => {
 
   };
   jobType(type);
+  useTitle(title);
 
   return (
     <>
@@ -231,16 +234,17 @@ const JobView = () => {
                   </div>
                 </div>
               </div>
-              <div className="mt-5 mb-5">
-                <button
+
+              <div className="mt-5 mb-5 hover:cursor-pointer">
+                <Link
                   disabled={applied}
-                  class={`text-white inline-block w-full p-5 text-center ${applied ? 'bg-gray-600 ' : 'bg-red-600'} shadow-md hover:cursor-pointer`}
+                  class={`text-white inline-block w-full p-5 text-center ${applied ? 'bg-gray-600 ' : 'bg-red-600'} shadow-md `}
                   onClick={() => handleApply(id)}
                 >
                   {
                     applied ? 'Already Applied' : 'Apply for this job'
                   }
-                </button>
+                </Link>
               </div>
             </div>
           </div>

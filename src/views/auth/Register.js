@@ -23,17 +23,17 @@ const Register = () => {
   }] = useRegisterMutation();
 
   const handleRegister = async event => {
-    event.preventDefault();
+    event.preventDefault(); 
 
     try {
       const  data  = await register({
-        role_id: 1,
+        roleId: 1,
         email,
         username,
         password,
-        password_confirmation: cpassword, 
+        cpassword, 
       }).unwrap();
-      console.log(data, "Our data");
+      // console.log(data, "Our data");
       dispatch(setCredentials({ data }));
       navigate("/developer/profile/edit");
 
@@ -43,7 +43,7 @@ const Register = () => {
       setMsg(err?.data?.message);
     }
 
-    console.log(error)
+    // console.log(error)
 
   };
 
@@ -56,8 +56,8 @@ const Register = () => {
           isLoading && <p>Processing...</p>
         }
         <div className="block p-5 py-16 md:hidden lg:hidden xl:hidden">
-          <div className="hidden md:block p-24 md:w-1/2">
-            <h2 className="font-bold text-gdblue -p-10 text-wide text-center">
+          <div className="hidden p-24 md:block md:w-1/2">
+            <h2 className="font-bold text-center text-gdblue -p-10 text-wide">
               {' '}
               Now Let's Get You{' '}
               <span className="text-blue-500">Signed Up</span>
@@ -102,7 +102,7 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <div className="px-10 form-input w-full">
+              <div className="w-full px-10 form-input">
                 <input
                   onChange={e => setUsername(e.target.value)}
                   value={username}
@@ -142,7 +142,7 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <div className="px-10 mt-3 form-input w-full">
+              <div className="w-full px-10 mt-3 form-input">
                 <input
                   onChange={e => setEmail(e.target.value)}
                   value={email}
@@ -225,7 +225,7 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <div className="px-10 mt-3 form-input w-full">
+              <div className="w-full px-10 mt-3 form-input">
                 <input
                   onChange={e => setPassword(e.target.value)}
                   value={password}
@@ -308,7 +308,7 @@ const Register = () => {
                   </svg>
                 </div>
               </div>
-              <div className="px-10 mt-3 form-input w-full">
+              <div className="w-full px-10 mt-3 form-input">
                 <input
                   onChange={e => setCpassword(e.target.value)}
                   value={cpassword}
@@ -344,8 +344,8 @@ const Register = () => {
         </div>
         {/* <div className="invisible px-0 py-0 lg:px-40 md:py-16 md:visible lg:visible xl:visible">  */}
         <div className="hidden h-screen px-0 py-0 lg:px-40 md:py-32 md:block">
-          <div className="p-16 px-8 py-8 mt-16 mb-5  rounded-lg md:flex md:items-center md:justify-between md:mt-12 md:rounded-lg md:shadow-lg md:bg-white ">
-            <div className="hidden md:block p-24 md:w-1/2">
+          <div className="p-16 px-8 py-8 mt-16 mb-5 rounded-lg md:flex md:items-center md:justify-between md:mt-12 md:rounded-lg md:shadow-lg md:bg-white ">
+            <div className="hidden p-24 md:block md:w-1/2">
               <h2 className="font-bold text-gdblue -p-10 text-wide">
                 {' '}
                 Now Let's Get You{' '}
@@ -391,7 +391,7 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <div className="px-10 form-input w-full">
+                  <div className="w-full px-10 form-input">
                     <input
                       onChange={e => setUsername(e.target.value)}
                       value={username}
@@ -430,7 +430,7 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <div className="px-10 form-input w-full">
+                  <div className="w-full px-10 form-input">
                     <input
                       class=" block w-full px-5 focus:outline-none"
                       onChange={e => setEmail(e.target.value)}
@@ -512,7 +512,7 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <div className="px-10 form-input w-full">
+                  <div className="w-full px-10 form-input">
                     <input
                       class=" block w-full px-5 focus:outline-none"
                       onChange={e => setPassword(e.target.value)}
@@ -595,7 +595,7 @@ const Register = () => {
                       </svg>
                     </div>
                   </div>
-                  <div className="px-10 form-input w-full">
+                  <div className="w-full px-10 form-input">
                     <input
                       class=" block w-full px-5 focus:outline-none"
                       onChange={e => setCpassword(e.target.value)}

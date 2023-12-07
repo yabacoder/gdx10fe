@@ -24,26 +24,26 @@ export const curFormat = new Intl.NumberFormat('en-US', {
   currency: 'NGN',
 });
 
-export const getAccessToken = async () => {
+export const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
-  // console.log(accessToken);
+  // console.log(accessToken, "Tokenized");
 
   return JSON.parse(accessToken);
 };
 
-export const setAccessToken = async (accessToken) => {
+export const setAccessToken = (accessToken) => {
   // console.log(accessToken);
-  const existToken = await localStorage.getItem("accessToken");
+  const existToken = localStorage.getItem("accessToken");
   if (existToken) {
-    await localStorage.removeItem("accessToken");
+    localStorage.removeItem("accessToken");
   }
-  await localStorage.setItem("accessToken", JSON.stringify(accessToken));
+  localStorage.setItem("accessToken", JSON.stringify(accessToken));
   // await localStorage.setItem("profile", JSON.stringify(getProfile()));
 
 };
 
-export const removeAccessToken = async () => {
-  if (await localStorage.removeItem("accessToken")) {
+export const removeAccessToken = () => {
+  if (localStorage.removeItem("accessToken")) {
     return true;
   } else {
     return false;
@@ -52,17 +52,18 @@ export const removeAccessToken = async () => {
   // return;
 };
 
-export const savedProfile = async () => {
-  const accessToken = await localStorage.getItem("profile");
+export const savedProfile = () => {
+  const accessToken = localStorage.getItem("profile");
   console.log(accessToken, "profile");
 
   return JSON.parse(accessToken);
 };
 
 
-export const isLoggedIn = async () => {
+export const isLoggedIn = () => {
   // getRemoveToken()
   if (getAccessToken()) {
+    // console.log(getAccessToken(), "Token");
     return true;
   } else {
     return false;

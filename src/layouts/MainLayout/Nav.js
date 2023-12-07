@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import logo from '../../assets/img/logo.svg';
+import { getAccessToken, isLoggedIn } from '../../utils/general';
 
 const Nav = () => {
+    // console.log(isLoggedIn());
     return (
         <div className="container mx-auto ">
             <div className="container fixed z-10 flex flex-wrap items-center justify-between w-full px-4 py-4 mb-12 rounded-b header topNav bg-gdbase" >
@@ -71,7 +73,13 @@ const Nav = () => {
                             </li> */}
 
                             <li className="mt-5 lg:ml-5 md:mt-0">
-                                <Link to="/login" className="px-4 py-2 text-white transition duration-150 ease-in-out border border-white rounded-full font-getdevM hover:bg-white hover:text-black" > Login </Link>
+                                {
+                                    isLoggedIn() ? (
+                                        <Link to="/developer/dashboard" className="px-4 py-2 text-white transition duration-150 ease-in-out border border-white rounded-full font-getdevM hover:bg-white hover:text-black" > Dashboard </Link>
+                                    ) : (
+                                        <Link to="/login" className="px-4 py-2 text-white transition duration-150 ease-in-out border border-white rounded-full font-getdevM hover:bg-white hover:text-black" > Login </Link>
+                                    )
+                                }
                             </li>
                         </ul>
                     </nav>

@@ -14,13 +14,13 @@ const authSlice = createSlice({
             const data = action.payload;
             // console.log(data)
             state.token = data;
-            state.isLogged = true;
+            state.isLogged = true; 
             // Store token in the local storage 
             setAccessToken(data.accessToken);
         },
         logOut: async (state, action) => {
             state.token = null;
-            console.log(await removeAccessToken())
+            console.log(removeAccessToken())
         },
     },
     extraReducers: (builder) => {
