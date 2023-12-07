@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const useAuth = () => {
   const tokens = useSelector(selectCurrentToken);
-  // console.log(token, "Token");
+  console.log(tokens, "Token");
 
   if (tokens) {
     const decoded = jwtDecode(tokens.accessToken);

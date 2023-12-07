@@ -27,8 +27,10 @@ export const curFormat = new Intl.NumberFormat('en-US', {
 export const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
   // console.log(accessToken, "Tokenized");
+  if((accessToken !== undefined) || (accessToken !== null)) {
+    return JSON.parse(accessToken);
+  }
 
-  return JSON.parse(accessToken);
 };
 
 export const setAccessToken = (accessToken) => {

@@ -11,36 +11,39 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCpassword] = useState('');
-  // const [result, setResult] = useState({});
+  const [error, setError] = useState(false);
   // const [verify, setVerify] = useState('');
   // const [message, setMessage] = useState('');
   const [msg, setMsg] = useState('');
 
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [register, {
     isLoading,
-    error
+    error: regError
   }] = useRegisterMutation();
 
   const handleRegister = async event => {
-    event.preventDefault(); 
-
+    event.preventDefault();
     try {
-      const  data  = await register({
+      const data = await register({
         roleId: 1,
         email,
         username,
         password,
-        cpassword, 
+        cpassword,
       }).unwrap();
       // console.log(data, "Our data");
-      dispatch(setCredentials({ data }));
+      const accessToken = data?.data?.accessToken;
+      // console.log(data);
+      dispatch(setCredentials({ accessToken }));
       navigate("/developer/profile/edit");
+      setMsg(data?.message); 
 
     } catch (err) {
-      console.log(err, "Cant login from the server");
+      console.log(err?.data.message, "Cant login from the server");
       // console.log(err.data.message, "Error logging in");
       setMsg(err?.data?.message);
+      setError(true);
     }
 
     // console.log(error)
@@ -52,9 +55,7 @@ const Register = () => {
       <Nav />
       <form onSubmit={handleRegister}>
         {/* //Show only on mobile */}
-        {
-          isLoading && <p>Processing...</p>
-        }
+
         <div className="block p-5 py-16 md:hidden lg:hidden xl:hidden">
           <div className="hidden p-24 md:block md:w-1/2">
             <h2 className="font-bold text-center text-gdblue -p-10 text-wide">
@@ -63,10 +64,7 @@ const Register = () => {
               <span className="text-blue-500">Signed Up</span>
             </h2>
             <p className="mt-10 text-center">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Bibendum est ultricies integer quis. Iaculis urna id volutpat
-              lacus laoreet. Mauris vitae ultricies leo integer malesuada.
+              Create an account to apply for jobs and take our assessments.
             </p>
           </div>
           <div className="p-16 px-8 py-8 mt-16 mb-5 bg-white rounded-lg md:bg-gray-300">
@@ -235,7 +233,7 @@ const Register = () => {
                   placeholder=""
                 />
               </div>
-              {error && <p class="text-red-600">{error?.errors?.password}</p>}
+              {error && <p class="text-red-600">{error?.password}</p>}
             </label>
 
             <label class="block">
@@ -314,8 +312,8 @@ const Register = () => {
                   value={cpassword}
                   class=" block w-full px-5 focus:outline-none"
                   type="password"
-                  name="password_confirmation"
-                  placeholder=""
+                  name="cpassword"
+                  placeholder="Confirm password"
                 />
               </div>
               {/* {result.password_confirmation && (
@@ -352,10 +350,7 @@ const Register = () => {
                 <span className="text-blue-500">Signed Up</span>
               </h2>
               <p className="mt-10 text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Bibendum est ultricies integer quis. Iaculis urna id volutpat
-                lacus laoreet. Mauris vitae ultricies leo integer malesuada.
+                Signup to apply for jobs and take assessments!
               </p>
             </div>
             <div className="flex flex-col px-8 py-8 md:bg-white md:p-4 md:w-1/2">
@@ -363,6 +358,10 @@ const Register = () => {
                 <div class="p-5 border-b-2 border-blue-500 text-blue-600 w-full">
                   <h4>Developer Signup</h4>
                 </div>
+                {
+                  isLoading && <p>Processing...</p>
+                }
+                <p className="p-2 text-center text-red-600">{msg}</p>
                 <label class="block mt-10">
                   {/* <span class="text-gray-700">Name</span> */}
                   <div className="relative">
