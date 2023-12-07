@@ -10,10 +10,10 @@ const useAuth = () => {
     const decoded = jwtDecode(tokens.accessToken);
     // const { profile, user, accessToken } = decoded.accessToken; //token.data;
     const token = tokens.accessToken;
-    const { userId, roleId, email, username, } = decoded.UserInfo;
+    const { userId, roleId, email, username, cv, bio } = decoded.UserInfo;
     // console.log(decoded.UserInfo);
 
-    return { userId, email, roleId, username, token };
+    return { userId, email, roleId, username, token, cv, bio }; 
   }
 
   return { email: '', username: '' };

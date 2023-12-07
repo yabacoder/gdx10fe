@@ -23,7 +23,7 @@ const Education = () => {
     const getEducation = async () => {
       // const education = await http('/developer/resume/education', 'get');
       // setEducation(education.data);
-      setEducation(data?.data);
+      setEducation(data?.data?.rows);
       console.log(education);
     };
 

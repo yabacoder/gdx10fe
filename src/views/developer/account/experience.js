@@ -6,7 +6,7 @@ import {
 
 const Experience = () => {
   const [experience, setExperience] = useState([]);
-  
+
   const {
     data,
     isSuccess,
@@ -15,12 +15,12 @@ const Experience = () => {
     isLoading
   } = useLoadWorkExperienceQuery();
 
-  useEffect(() => { 
-    const getExperience = async () => { 
+  useEffect(() => {
+    const getExperience = async () => {
       // const experience = await http('/developer/resume/work_experience', 'get');
       // // console.log(experience);
       // setExperience(experience.data);
-      setExperience(data?.data);
+      setExperience(data?.data?.rows);
     };
 
     getExperience();
@@ -39,7 +39,7 @@ const Experience = () => {
                     <li className="pr-4 text-xs border-r-2">
                       {exp.start} - {exp.end}
                     </li>
-                   
+
                   </ul>
                 </div>
               </div>

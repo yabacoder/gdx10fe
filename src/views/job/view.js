@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import http from '../../utils/service';
 import { useParams } from 'react-router-dom';
 import { curFormat } from '../../utils/general';
+import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+
 
 //import Nav from "../home/nav";
 // import Layout from "../layout";
@@ -12,6 +15,10 @@ const JobView = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const params = useParams();
+  const { token } = useAuth();
+  const [applied, setApplied] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -20,19 +27,32 @@ const JobView = () => {
       console.log(job);
       setJob(job.data);
     };
-
     fetchJob();
   }, []);
   useEffect(() => { }, []);
 
   const handleApply = async id => {
-    // const response = await http(`/developer/job/apply/${id}`, 'POST'); //status // error
-    // console.log(response);
-    // if (response.status === 1) {
-    //   setMessage(response.message);
-    // } else {
-    //   setError(response.error);
-    // }
+    // check to see that a user is loged in
+
+    // ask to login/sign up
+    // make apply endpoint call ->
+    // display alert ->
+    // remove/disable apply button ->
+    // console.log(token, "Applied");
+
+    if (token) {
+      const response = await http(`/jobs/${id}/apply`, 'POST', token); //status // error
+      console.log(response);
+      if (response.status) {
+        setApplied(true);
+        setMessage(response.message);
+      } else {
+        setError(response.error);
+      }
+    } else {
+      setMessage("You need to login to apply");
+      navigate("/login", { state: { url: `/jobs/${params.id}` } });
+    }
   };
   const {
     id,
@@ -57,7 +77,7 @@ const JobView = () => {
     types[5] = "Contract";
     const rs = types.filter(ar => ar.indexOf[type + 1] !== types[type]);
 
-    console.log(rs);
+    // console.log(rs);
 
   };
   jobType(type);
@@ -213,10 +233,13 @@ const JobView = () => {
               </div>
               <div className="mt-5 mb-5">
                 <button
-                  class="btn inline-block w-full p-5 text-center bg-red-500 shadow-md"
+                  disabled={applied}
+                  class={`text-white inline-block w-full p-5 text-center ${applied ? 'bg-gray-600 ' : 'bg-red-600'} shadow-md hover:cursor-pointer`}
                   onClick={() => handleApply(id)}
                 >
-                  Apply for this job
+                  {
+                    applied ? 'Already Applied' : 'Apply for this job'
+                  }
                 </button>
               </div>
             </div>

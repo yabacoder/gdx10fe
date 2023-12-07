@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 // import http from '../../../utils/service';
 const About = () => {
-  const { profile } = useAuth();
+  const { name, bio } = useAuth();
 
   useEffect(() => {
     const getUser = async () => {
@@ -18,11 +18,11 @@ const About = () => {
   return (
     <div className="p-4 px-6 bg-white rounded-md">
       <div className="flex justify-between header">
-        <h6 className="text-blue-800">About {profile.name} </h6>
+        <h6 className="text-blue-800">About {name} </h6>
 
-        <Link 
+        <Link
           to="/developer/profile/edit"
-        className="text-sm text-gray-500 ">
+          className="text-sm text-gray-500 ">
           <svg viewBox="0 0 18 17" className="inline-flex w-4 mx-2">
             <defs />
             <g
@@ -43,7 +43,7 @@ const About = () => {
       <div>
         <p
           className="py-2 text-gray-600"
-          dangerouslySetInnerHTML={{ __html: profile.bio }}
+          dangerouslySetInnerHTML={{ __html: bio }}
         ></p>
       </div>
     </div>

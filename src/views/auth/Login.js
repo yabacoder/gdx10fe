@@ -5,6 +5,7 @@ import Nav from '../../layouts/MainLayout/Nav';
 import { useLoginMutation } from '../../features/auth/authApiSlice';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../features/auth/authSlice';
+import { getAccessToken } from '../../utils/general';
 
 const Login = () => {
   //const { login } = useAuth();
@@ -26,12 +27,13 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await login({ email, password }).unwrap();
+      console.log(data, "Fetched");
       const accessToken = data?.accessToken;
-      console.log(accessToken, "Our accessToken");
+      // console.log(await getAccessToken(), "Our accessToken");
       dispatch(setCredentials({ accessToken }));
 
       // Redirect to complete profile if not done
-      if (!data.profile) {
+      if (!data.developerId) {
         navigate("/developer/profile/edit");
       } else {
         navigate("/developer/dashboard");

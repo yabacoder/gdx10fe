@@ -14,10 +14,12 @@ const Portfolio = () => {
 
   useEffect(() => {
     const getPortfolio = async () => {
-      setPortfolio(data?.data);
+      setPortfolio(data?.data?.rows);
     };
     getPortfolio();
   }, [isSuccess]);
+
+  console.log(portfolio, "Portfolio");
   return (
     <div className='bg-white rounded-md'>
       {
@@ -42,7 +44,7 @@ const Portfolio = () => {
           // {portfolio}
           <ul className="text-sm">
             {
-              portfolio.map(port => (
+              portfolio?.map(port => (
                 <>
                   {' '}
                   <li className="flex justify-between py-4 border-b">
@@ -72,67 +74,67 @@ const Portfolio = () => {
                         </svg>
                       </span> */}
                     <a href={port.url} target="_blank" rel="noopener noreferrer">
-                    <span className="px-2">{port.title}</span>
-                  </a>
-                  <span>
-                    <ul className="inline-flex">
-                      <li className="flex items-center px-4 text-sm border-r border-gray-500">
-                        <svg
-                          viewBox="0 0 18 17"
-                          className="inline-flex w-4 mx-2 hover:cursor-pointer"
-                        // onClick={() => {
-                        //   // setPortfolio(port);
-                        //   setId(port.id);
-                        //   setTitle(port.title);
-                        //   setUrl(port.url);
-                        //   setDescription(port.description);
-                        //   setEdit(true);
-                        //   setOpenModal(true);
-                        // }}
-                        >
-                          <defs />
-                          <g
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            opacity=".6"
-                          >
-                            <path d="M9 16h8M13 2a2 2 0 112 2L4 15l-3 1 1-4z" />
-                          </g>
-                        </svg>
-                      </li>
-                      <li className="px-3">
-                        <svg
+                      <span className="px-2">{port.title}</span>
+                    </a>
+                    <span>
+                      <ul className="inline-flex">
+                        <li className="flex items-center px-4 text-sm border-r border-gray-500">
+                          <svg
+                            viewBox="0 0 18 17"
+                            className="inline-flex w-4 mx-2 hover:cursor-pointer"
                           // onClick={() => {
-                          //   processDelete(port.id);
+                          //   // setPortfolio(port);
+                          //   setId(port.id);
+                          //   setTitle(port.title);
+                          //   setUrl(port.url);
+                          //   setDescription(port.description);
+                          //   setEdit(true);
+                          //   setOpenModal(true);
                           // }}
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          className="w-5 hover:cursor-pointer"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </li>
-                    </ul>
-                  </span>
-                </li >
-                    </>
-        ))}
-    </ul>
+                          >
+                            <defs />
+                            <g
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              opacity=".6"
+                            >
+                              <path d="M9 16h8M13 2a2 2 0 112 2L4 15l-3 1 1-4z" />
+                            </g>
+                          </svg>
+                        </li>
+                        <li className="px-3">
+                          <svg
+                            // onClick={() => {
+                            //   processDelete(port.id);
+                            // }}
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            className="w-5 hover:cursor-pointer"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                        </li>
+                      </ul>
+                    </span>
+                  </li >
+                </>
+              ))}
+          </ul>
 
-  )
+        )
 
-}
-      
+      }
+
     </div >
   );
 };

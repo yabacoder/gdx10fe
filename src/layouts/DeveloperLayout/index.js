@@ -2,10 +2,16 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import logo from '../../assets/img/logo2.svg';
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth'
+import { useNavigate  } from 'react-router-dom'
+
 
 
 export const DeveloperLayout = () => {
-    return (
+    const { token } = useAuth();
+    const navigate = useNavigate()
+
+    return !token ? navigate("/login") : (
         <div>
             <div className="inset-0 flex w-screen h-screen">
                 <div className="w-3/12 h-full px-16 py-8 overflow-hidden bg-white shadow-sm sidebar">
@@ -85,5 +91,5 @@ export const DeveloperLayout = () => {
                 </div>
             </div>
         </div>
-    );
+    ); 
 };

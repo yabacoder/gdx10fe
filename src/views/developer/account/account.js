@@ -18,13 +18,14 @@ import {
 import useAuth from '../../../hooks/useAuth';
 
 const Account = () => {
-    const { profile: {
-        id,
+    const {
+        userId,
         name,
         level,
         location,
-        cv: asCV
-    } } = useAuth();
+        bio,
+        cd :hasCV
+    } = useAuth();
     const [openTab, setOpenTab] = useState('about');
     const [projects, setProjects] = useState('');
     const [applications, setApplications] = useState('');
@@ -48,12 +49,12 @@ const Account = () => {
     const {
         data: dpData,
         isSuccess: dpFetchIsSuccess
-    } = useGetProfileDpQuery(id);
-    
+    } = useGetProfileDpQuery(userId);
+
     // console.log(data, "Api call");
 
     useEffect(() => {
-        setImg(process.env.REACT_APP_UPLOADS_URL+dpData?.data);
+        setImg(process.env.REACT_APP_UPLOADS_URL + dpData?.data);
     }, [dpFetchIsSuccess]);
     // console.log(img);
 
@@ -252,10 +253,10 @@ const Account = () => {
                         </span>
                         <span className="mx-1">
                             {
-                                asCV === true ? (
+                                hasCV === true ? (
                                     <Link
                                         // onClick={() => setOpenModal(true)}
-                                        to={`${process.env.REACT_API_URL}/cv/download/${id}`}
+                                        to={`${process.env.REACT_API_URL}/cv/download/${userId}`}
                                         className="p-2 px-5 my-2 text-xs text-white transition duration-150 ease-in-out bg-blue-700 border rounded-md hover:border hover:bg-transparent hover:text-blue-700">
                                         Download Resume
                                     </Link>

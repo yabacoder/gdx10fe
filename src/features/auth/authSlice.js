@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { getRemoveToken, setAccessToken } from '../../utils';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeAccessToken, setAccessToken } from '../../utils/general';
 import { PURGE } from "redux-persist";
 
 
@@ -8,19 +7,20 @@ const initialToken = null; // AsyncStorage.getItem("accessToken") ? AsyncStorage
 
 const authSlice = createSlice({
     name: 'auth',
-    initialState: { token: initialToken },
+    initialState: { token: initialToken, isLogged: false },
     reducers: {
         setCredentials: (state, action) => {
             // console.log(action.payload, "Payload")
-            const  data  = action.payload;
+            const data = action.payload;
             // console.log(data)
             state.token = data;
+            state.isLogged = true;
             // Store token in the local storage 
-            // setAccessToken(accessToken)
+            setAccessToken(data.accessToken);
         },
-        logOut: (state, action) => {
+        logOut: async (state, action) => {
             state.token = null;
-            // getRemoveToken()   
+            console.log(await removeAccessToken())
         },
     },
     extraReducers: (builder) => {

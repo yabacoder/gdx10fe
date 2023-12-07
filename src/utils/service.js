@@ -36,7 +36,7 @@ export const http3 = async (path, data) => {
       body: `${JSON.stringify(data)}`
     });
     // console.log(bd);
-    return response.json();  
+    return response.json();
   } catch (error) {
     console.log("Error making call", error);
   }
@@ -90,7 +90,7 @@ export const uploadImg = async (path, formData, token) => {
 
 async function http(path, method, token, data, object) {
   return new Promise((resolve, reject) => {
-    console.log(data);
+    console.log(data); 
     const body = "body:" + JSON.stringify(data);
     let bd = (method === 'POST') ? body : '';
     // var myHeaders = new Headers();
