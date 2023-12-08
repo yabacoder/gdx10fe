@@ -30,7 +30,7 @@ const Register = () => {
         email,
         username,
         password,
-        cpassword,
+        
       }).unwrap();
       // console.log(data, "Our data");
       const accessToken = data?.data?.accessToken;
@@ -236,7 +236,7 @@ const Register = () => {
               {error && <p class="text-red-600">{error?.password}</p>}
             </label>
 
-            <label class="block">
+            {/* <label class="block">
               <div className="relative">
                 <div className="absolute p-3 ">
                   <svg
@@ -316,10 +316,10 @@ const Register = () => {
                   placeholder="Confirm password"
                 />
               </div>
+            </label> */}
               {/* {result.password_confirmation && (
                 <p class="text-red-600">{result.password_confirmation}</p>
               )} */}
-            </label>
 
             <div className="flex flex-col justify-center pt-5">
               <button
@@ -518,13 +518,13 @@ const Register = () => {
                       value={password}
                       type="password"
                       name="password"
-                      placeholder=""
+                      placeholder="Enter your password"
                     />
                   </div>
                 </label>
 
-                <label class="block mt-2">
                   {/* <span class="text-gray-700">Name</span> */}
+                {/* <label class="block mt-2">
                   <div className="relative">
                     <div className="absolute p-3 ">
                       <svg
@@ -601,10 +601,10 @@ const Register = () => {
                       value={cpassword}
                       type="password"
                       name="password_confirmation"
-                      placeholder=""
+                      placeholder="Confirm your password"
                     />
                   </div>
-                </label>
+                </label> */}
 
                 <div className="flex flex-col justify-center pt-5">
                   <button

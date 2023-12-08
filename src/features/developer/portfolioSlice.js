@@ -13,12 +13,12 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled;
-                    console.log(data, "Portfolio");  
+                    console.log(data, "Portfolio");
                 } catch (err) {
                     console.log(err);
                 }
-            }
-            // providesTags: { type: 'Portfolio', }
+            },
+            providesTags: { type: 'Portfolio' }
         }),
         getPortfolio: builder.query({
             query: (id) => ({
@@ -56,12 +56,12 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
             ]
         }),
         deletePortfolio: builder.mutation({
-            query: portfolio => ({
-                url: '/developer/portfolio/delete',
-                method: 'POST',
-                body: {
-                    ...portfolio
-                }
+            query: (id) => ({
+                url: `/developer/portfolio/${id}`,
+                method: 'DELETE',
+                // body: {
+                //     ...portfolio
+                // }
             }),
             invalidatesTags: (result, error, arg) => [
                 { type: 'Portfolio' }

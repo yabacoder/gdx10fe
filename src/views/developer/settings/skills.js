@@ -43,6 +43,7 @@ const Skills = () => {
     data: devAvailability,
     isSuccess: devIsSuccess
   } = useGetDevAvailabilityQuery();
+  // console.log(devAvailability?.data, "Fetched Data!");
 
   const [updateSkill, {
     isError
@@ -73,7 +74,7 @@ const Skills = () => {
 
   useEffect(() => {
     (async () => {
-      setNewTech(filterArray()); 
+      setNewTech(filterArray());
     })();
   }, []);
   // console.log(filterArray(), "This is a tech");
@@ -140,8 +141,8 @@ const Skills = () => {
         remote,
         value: technologies
       }).unwrap();
-      // console.log(data, "Update skill and  availability categories");
-      setMsg(data);
+      console.log(data, "Update skill and  availability categories");
+      setMsg(data.message);
     } catch (error) {
       console.log(error);
     }
@@ -167,6 +168,7 @@ const Skills = () => {
 
                 <select
                   // onChange={this.onChange}
+                  onChange={e => setCategoryId(e.target.value)}
                   name="categoryId"
                   className="w-full form-select"
                 // className={state.errors.categoryId ? 'w3-border-red' : ''}
@@ -183,7 +185,7 @@ const Skills = () => {
                 <p>Skills Level</p>
 
                 <select
-                  // onChange={this.onChange}
+                  onChange={e => setLevelId(e.target.value)}
                   name="levelId"
                   // className={ 
                   //   'w3-select w3-border w3-white w3-round-large' +

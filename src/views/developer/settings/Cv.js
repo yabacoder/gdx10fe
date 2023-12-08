@@ -12,12 +12,11 @@ import { http2 } from '../../../utils/service';
 
 
 function UploadCv() {
-  // const { data: { accessToken } } = useSelector(selectCurrentToken);
-  // const { accessToken: token } = useSelector(selectCurrentToken);
-  const { userId, token } = useAuth();
+ 
+  const { userId, token, developerId } = useAuth();
 
   const [openModal, setOpenModal] = useState(false);
-  const [cv, setCv] = useState([1, 2, 3]);
+  const [cv, setCv] = useState([]);
   const [fileName, setFileName] = useState('Select Your CV');
   const [file, setFile] = useState('');
   const [success, setSuccess] = useState(false);
@@ -34,12 +33,14 @@ function UploadCv() {
   }] = useUploadCVMutation();
 
   const getCv = async () => {
-    try {
-      const cv = await http2("/developer/profile/cv", "GET", token);
-      // console.log(cv.data.cv, "This is a CV");
-      setCv(cv.data.cv);
-    } catch (error) {
-      console.log(error);
+    if (developerId) {
+      try {
+        const cv = await http2("/developer/profile/cv", "GET", token);
+        // console.log(cv.data.cv, "This is a CV");
+        setCv(cv.data.cv);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   // console.log(cv)

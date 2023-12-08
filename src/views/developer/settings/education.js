@@ -9,9 +9,11 @@ import {
 } from '../../../features/developer/educationSlice';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import useAuth from '../../../hooks/useAuth';
 
 
 function Education() {
+  const { developerId } = useAuth();
 
   const [openModal, setOpenModal] = useState(false);
   const [education, setEducation] = useState({});
@@ -38,7 +40,10 @@ function Education() {
   // console.log(data?.data, " education");
 
   useEffect(() => {
-    setEducations(data?.data?.rows);
+    if (developerId) {
+
+      setEducations(data?.data?.rows);
+    }
   }, [isSuccess]);
 
   const [addEducation, {

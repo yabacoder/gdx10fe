@@ -27,7 +27,7 @@ export const curFormat = new Intl.NumberFormat('en-US', {
 export const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");
   // console.log(accessToken, "Tokenized");
-  if((accessToken !== undefined) || (accessToken !== null)) {
+  if ((accessToken !== undefined) || (accessToken !== null)) {
     return JSON.parse(accessToken);
   }
 
@@ -40,7 +40,6 @@ export const setAccessToken = (accessToken) => {
     localStorage.removeItem("accessToken");
   }
   localStorage.setItem("accessToken", JSON.stringify(accessToken));
-  // await localStorage.setItem("profile", JSON.stringify(getProfile()));
 
 };
 

@@ -16,6 +16,7 @@ const JobView = () => {
   const [job, setJob] = useState({});
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [noLogged, setNoLogged] = useState(false);
   const params = useParams();
   const { token } = useAuth();
   const [applied, setApplied] = useState(false);
@@ -52,9 +53,11 @@ const JobView = () => {
         setError(response.error);
       }
     } else {
-      setMessage("You need to login to apply");
+      setError(`You need to login to apply, click here to `);
       navigate("/login", { state: { url: `/jobs/${params.id}` } });
+      setNoLogged(true)
     }
+    window.scrollTo(0, 0);
   };
   const {
     id,
@@ -111,6 +114,7 @@ const JobView = () => {
             </p>
             <div className="w-full md:hidden">
               <img
+              
                 src="https://via.placeholder.com/350"
                 className="rounded-md"
               />
@@ -124,7 +128,7 @@ const JobView = () => {
               {message ? (
                 <p className="success">{message}</p>
               ) : (
-                error && <p className="error">{error}</p>
+                  error && <Link to="/register" className="error">{error} {noLogged && <Link to={'/register'}>Register</Link>}</Link>
               )}
               <p className="mt-3 text-2xl md:text-3xl text-gdblue font-getdevM">
                 {title}

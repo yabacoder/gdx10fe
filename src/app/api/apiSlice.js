@@ -29,7 +29,7 @@ const baseQuery = fetchBaseQuery({
         // const cookie = getState().auth.csrfToken;
         // console.log(token.accessToken);
         if (token) {
-            headers.set("authorization", `Bearer ${token.accessToken}`);
+            headers.set("Authorization", `Bearer ${token.accessToken}`);
             // headers.append("Accept", 'application/json');
         }
 

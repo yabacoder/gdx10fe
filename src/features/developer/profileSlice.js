@@ -45,9 +45,9 @@ export const profileApiSplice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...profile }
             }),
-            // invalidatesTags: [
-            //     { type: 'Profile', id: 'NEW' }
-            // ]
+            invalidatesTags: [
+                { type: 'Profile' }
+            ]
         }),
         updateProfile: builder.mutation({
             query: profile => ({
@@ -57,9 +57,9 @@ export const profileApiSplice = apiSlice.injectEndpoints({
                     ...profile
                 }
             }),
-            // invalidatesTags: (result, error, arg) => [
-            //     { type: 'Profile', id: arg.id }
-            // ] 
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Profile' }
+            ] 
         }),
         getDevSkill: builder.query({
             query: () => ({

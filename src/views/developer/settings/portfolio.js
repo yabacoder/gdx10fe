@@ -52,7 +52,7 @@ const Portfolio = () => {
     (async () => {
       setPortfolios(data?.data?.rows);
     })();
-  }, [fetchSuccess, updateSuccess, isLoading]);
+  }, [fetchSuccess, updateSuccess, deleteSuccess, isSuccess]);
 
   // useEffect(() => {
   //   // setPortfolio(data?.data);
@@ -84,8 +84,9 @@ const Portfolio = () => {
   };
 
   const processDelete = async (id) => {
+    // console.log(id, "The ID");
     try {
-      const { data } = await deletePortfolio({ id }).unwrap();
+      const { data } = await deletePortfolio(id);
       console.log(data);
     } catch (error) {
       console.log(error);

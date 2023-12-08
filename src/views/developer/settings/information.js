@@ -17,10 +17,10 @@ import { selectCurrentToken } from "../../../features/auth/authSlice";
 
 const countries = require('../../../statics/countries.json');
 const Information = () => {
-  const token = useSelector(selectCurrentToken);
+  // const token = useSelector(selectCurrentToken);
 
-  const { email, username } = useAuth();
-  // console.log(username);
+  let { email, username, developerId: devId, token } = useAuth();
+  console.log(devId);
   const [profile, setProfile] = useState([]);
   const [github, setGithub] = useState([]);
   const [uname, setUsername] = useState(username);
@@ -34,12 +34,13 @@ const Information = () => {
   const [stateId, setStateId] = useState('');
   const [filtered, setFiltered] = useState([]);
   const [msg, setMsg] = useState('');
+  const [developerId, setDeveloperId] = useState(devId);
 
   const {
     data,
     isSuccess
   } = useGetProfileEditQuery();
-  // console.log(data);
+  // console.log(developerId);
 
   const [addProfile, {
     isSuccess: addProfileIsSuccess
@@ -49,28 +50,28 @@ const Information = () => {
     isSuccess: updateProfileIsSuccess
   }] = useUpdateProfileMutation();
 
-
-
   useEffect(() => {
     const fetchNow = async () => {
-      return await http2("/developer/profile", "GET", token.accessToken);
+      return await http2("/developer/profile", "GET", token);
     };
     (async () => {
-      const data = await fetchNow();
-      console.log(data);
-      setProfile(data?.data);
-      setBio(data?.data.bio);
-      setGithub(data?.data.github);
-      setName(data?.data.name);
-      // setUsername(data?.data.username);
-      setPhone(data?.data.phone);
-      setName(data?.data.name);
-      setSex(data?.data.sex);
-      setBio(data?.data.bio);
-      setImage(data?.data.image);
-      setDob(data?.data.dob);
-      setCountryId(data?.data.countryId);
-      setStateId(data?.data.stateId);
+      if (developerId) {
+        const data = await fetchNow();
+        console.log(data); 
+        setProfile(data?.data);
+        setBio(data?.data?.bio);
+        setGithub(data?.data?.github);
+        setName(data?.data?.name);
+        // setUsername(data?.data.username);
+        setPhone(data?.data?.phone);
+        setName(data?.data?.name);
+        setSex(data?.data?.sex);
+        // setBio(data?.data?.bio);
+        setImage(data?.data?.image);
+        setDob(data?.data?.dob);
+        setCountryId(data?.data?.countryId);
+        setStateId(data?.data?.stateId);
+      }
     })();
   }, []);
   // setFiltered(states.filter(t => t.countryId === 160));
@@ -87,7 +88,7 @@ const Information = () => {
     e.preventDefault();
     try {
 
-      if (profile) {
+      if (developerId) {
         const data = await updateProfile({
           phone,
           name,
@@ -111,6 +112,8 @@ const Information = () => {
           countryId,
           stateId
         }).unwrap();
+        console.log(data?.data);
+        setDeveloperId(data?.data?.id);
       }
       console.log(data, "Posting thru RTK");
       setMsg(data.message);
@@ -250,7 +253,7 @@ const Information = () => {
                 //   (this.state.errors.stateId ? 'w3-border-red' : '')
                 // }
                 >
-                  <option>Select State</option>
+                  <option value="1">Select State</option>
                   {filtered.map(state => (
                     <option
                       selected={
