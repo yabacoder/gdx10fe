@@ -64,7 +64,7 @@ const Footer = () => {
                   </li>
 
                   <li>
-                    <Link href="/contact" title="Contact Us"
+                    <Link to="/contact" title="Contact Us"
                       class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
                       Contact Us
                     </Link>
@@ -95,7 +95,7 @@ const Footer = () => {
           </p>
         </div>
       </footer>
-      {/* <div className="hidden md:block -mb-5">
+      {/* <div className="hidden -mb-5 md:block">
         <div className="flex items-center justify-center w-full p-20 px-8 py-8 mt-10 footerx ">
           <div className="container mt-20 text-center text-white ">
             <h3 className="text-lg md:text-2xl text-bold">
@@ -108,7 +108,7 @@ const Footer = () => {
               <div>
                 <div className="flex px-2 py-5 -my-1 bg-transparent bg-blue-600 bg-opacity-30 md:w-96">
                   <input
-                    className="w-full h-full px-4 pr-10 placeholder:text-white text-white bg-transparent  border-0 rounded-none form-input focus:outline-none outline-none "
+                    className="w-full h-full px-4 pr-10 text-white bg-transparent border-0 rounded-none outline-none placeholder:text-white form-input focus:outline-none "
                     type="text"
                     placeholder='Your email address'
                   />
