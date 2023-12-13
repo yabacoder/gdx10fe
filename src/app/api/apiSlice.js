@@ -16,7 +16,6 @@ export const getCookie = (cookieName) => {
         }
 
     }
-
     return undefined;
 };
 

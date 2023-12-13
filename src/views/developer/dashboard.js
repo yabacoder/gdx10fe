@@ -134,7 +134,7 @@ const Dashboard = () => {
                                         <td className="px-4 py-2 ">
                                             <Link
                                                 className=""
-                                                to={`/jobs/${job.id}/${job.link}`}
+                                                to={`/jobs/${job.id}`}
                                             >
                                                 {job.title}
                                             </Link>
@@ -145,7 +145,7 @@ const Dashboard = () => {
                                         <td className="flex items-center justify-center p-5 actions">
                                             <Link
                                                 className="px-4 py-2 text-sm btn"
-                                                to={`/jobs/${job.id}/${job.link}`}
+                                                to={`/jobs/${job.id}`}
                                             >
                                                 Apply
                                             </Link>
