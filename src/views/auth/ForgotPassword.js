@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Nav from '../../layouts/MainLayout/Nav';
-import { useResetPasswordMutation } from '../../features/auth/authApiSlice';
+import { useForgotPasswordMutation } from '../../features/auth/authApiSlice';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../features/auth/authSlice';
 // import { getAccessToken } from '../../utils/general';
 
-const PasswordRecovery = () => {
+const ForgotPassword = () => {
   //const { login } = useAuth();
-  // const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selected, setSelected] = useState('developer');
   const [msg, setMsg] = useState('');
@@ -20,9 +20,9 @@ const PasswordRecovery = () => {
   // let error;
   const navigate = useNavigate();
 
-  const [resetPassword, {
+  const [forgotPassword, {
     isLoading,
-  }] = useResetPasswordMutation();
+  }] = useForgotPasswordMutation();
 
   const dispatch = useDispatch();
 
@@ -30,21 +30,21 @@ const PasswordRecovery = () => {
     e.preventDefault();
 
     try {
-      const data = await resetPassword({ code, userId, password }).unwrap();
+      const data = await forgotPassword({ email }).unwrap();
       // console.log(data, "Fetched");
-      const accessToken = data?.data?.accessToken;
-      // console.log(await getAccessToken(), "Our accessToken");
-
-      dispatch(setCredentials({ accessToken }));
-      setMsg(data?.message);
+      // const accessToken = data?.accessToken;
+      // // console.log(await getAccessToken(), "Our accessToken");
+      // dispatch(setCredentials({ accessToken }));
 
       // Redirect to complete profile if not done
       // if (!data.developerId) {
       //   navigate("/developer/profile/edit");
       // } else {
       //   navigate("/developer/dashboard");
-      // } 
+      // }
 
+      console.log(data);
+      setMsg(data.message);
     } catch (err) {
       console.log(err, "Cant login from the server");
       // console.log(err.data.message, "Error logging in");
@@ -73,22 +73,9 @@ const PasswordRecovery = () => {
                 <h4>Company </h4>
               </div> */}
             </div>
-            {
-              msg && <>
-
-                <p className='text-green-600'>
-                  {msg}
-                  <br />
-                </p>
-                <p>
-                  <Link to={"/developer/profile/edit"}>Click here to continue</Link>
-                </p>
-              </>
-            }
-
 
             {/* <span class="text-gray-700">Name</span> */}
-            {/* <label class="block mt-10">
+            <label class="block mt-10">
               <p className="p-2 text-center text-red-600">{msg}</p>
               <div className="relative">
                 <div className="absolute p-3 ">
@@ -127,90 +114,8 @@ const PasswordRecovery = () => {
                 />
 
               </div>
-            </label> */}
-
-            <label class="block ">
-              {/* <span class="text-gray-700">Name</span> */}
-              <div className="relative">
-                <div className="absolute p-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10.813"
-                    height="12.338"
-                    viewBox="0 0 10.813 12.338"
-                  >
-                    <g id="padlock" class="cls-1">
-                      <g id="Group_315" data-name="Group 315">
-                        <g id="Group_314" data-name="Group 314">
-                          <path
-                            id="Path_551"
-                            data-name="Path 551"
-                            class="cls-2"
-                            d="M42.33,8.723a.482.482,0,0,0,.483-.482V6.458A1.932,1.932,0,0,0,40.882,4.53H40.3v-1.7a2.9,2.9,0,0,0-5.792,0v1.7h-.578A1.932,1.932,0,0,0,32,6.458V10.41a1.932,1.932,0,0,0,1.931,1.928h6.951a1.932,1.932,0,0,0,1.931-1.928.483.483,0,0,0-.965,0,.966.966,0,0,1-.965.964H33.931a.966.966,0,0,1-.965-.964V6.458a.966.966,0,0,1,.965-.964h6.951a.966.966,0,0,1,.965.964V8.241A.482.482,0,0,0,42.33,8.723ZM39.336,4.53H35.475v-1.7a1.932,1.932,0,0,1,3.862,0Z"
-                            transform="translate(-32)"
-                          />
-                        </g>
-                      </g>
-                      <g
-                        id="Group_317"
-                        data-name="Group 317"
-                        transform="translate(4.936 7.873)"
-                      >
-                        <g
-                          id="Group_316"
-                          data-name="Group 316"
-                          transform="translate(0 0)"
-                        >
-                          <ellipse
-                            id="Ellipse_14"
-                            data-name="Ellipse 14"
-                            class="cls-2"
-                            cx="0.471"
-                            cy="0.47"
-                            rx="0.471"
-                            ry="0.47"
-                          />
-                        </g>
-                      </g>
-                    </g>
-                  </svg>
-                </div>
-                <div className="absolute inset-y-0 right-0 p-3 pt-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12.439"
-                    height="7.831"
-                    viewBox="0 0 12.439 7.831"
-                  >
-                    <g id="eye-view" class="cls-1">
-                      <g
-                        id="Group_86"
-                        data-name="Group 86"
-                        transform="translate(0 0)"
-                      >
-                        <path
-                          id="Path_160"
-                          data-name="Path 160"
-                          class="cls-2"
-                          d="M1.446,95.385a6.662,6.662,0,0,0,4.773,1.927,6.692,6.692,0,0,0,4.773-1.927A6.963,6.963,0,0,0,12.4,93.444a.42.42,0,0,0,0-.35,5.952,5.952,0,0,0-1.372-1.824,6.954,6.954,0,0,0-4.853-1.788,6.8,6.8,0,0,0-4.809,1.8A5.641,5.641,0,0,0,.03,93.108a.413.413,0,0,0,.007.336A6.787,6.787,0,0,0,1.446,95.385Zm4.707-5a2.131,2.131,0,1,1-2.131,2.131A2.133,2.133,0,0,1,6.153,90.386Zm-2.474.423a2.981,2.981,0,0,0-.533,1.708,3.007,3.007,0,1,0,5.466-1.722,5.547,5.547,0,0,1,2.883,2.481,6.609,6.609,0,0,1-1.153,1.518,5.717,5.717,0,0,1-4.13,1.657,5.754,5.754,0,0,1-4.13-1.664,6.634,6.634,0,0,1-1.16-1.525A5.348,5.348,0,0,1,3.679,90.809Z"
-                          transform="translate(0.002 -89.481)"
-                        />
-                      </g>
-                    </g>
-                  </svg>
-                </div>
-              </div>
-              <div className="w-full px-10 mt-5 form-input">
-                <input
-                  class="block w-full px-5 focus:outline-none"
-                  type="password"
-                  name="password"
-                  placeholder="New Password"
-                  onChange={e => setPassword(e.target.value)}
-                  value={password}
-                />
-              </div>
             </label>
+
 
             <div className="flex flex-col justify-center pt-5">
               <button
@@ -226,7 +131,7 @@ const PasswordRecovery = () => {
                     </svg>
                     <p>Processing...</p></div> :
                     <>
-                      Change Password{' '}
+                      Retrieve Password{' '}
                     </>
                 }
               </button>
@@ -248,4 +153,4 @@ const PasswordRecovery = () => {
   );
 };
 
-export default PasswordRecovery;
+export default ForgotPassword;

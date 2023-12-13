@@ -50,6 +50,7 @@ import Backend from "./views/main/career_path/backend";
 import Frontend from "./views/main/career_path/frontend";
 import Fullstack from "./views/main/career_path/fullstack";
 import PasswordRecovery from "./views/auth/PasswordRecovery";
+import ForgotPassword from "./views/auth/ForgotPassword";
 
 
 
@@ -295,6 +296,10 @@ export function Routes() {
         {
             path: "password-recovery/:code/:userId",
             element: <PasswordRecovery />,
+        },
+        {
+            path: "forgot-password",
+            element: <ForgotPassword />,
         },
         {
             path: "register",
