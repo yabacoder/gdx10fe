@@ -209,11 +209,13 @@ const Login = () => {
                       Login{' '}
                     </>
                 }
-
-
               </button>
             </div>
-
+            <div className='flex items-center justify-center mt-4'>
+              <Link to={"/forgot-password"}>
+              Forgot Password
+              </Link>
+            </div>
             <div className="flex flex-col justify-center pt-20">
               <Link
                 to="/register"
