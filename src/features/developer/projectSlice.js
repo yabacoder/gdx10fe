@@ -24,7 +24,19 @@ export const projectSplice = apiSlice.injectEndpoints({
        
         submitProject: builder.mutation({
             query: project => ({
-                url: `/developer/projects/submit`,
+                url: `/developer/projects/submit`, 
+                method: 'POST',
+                body: {
+                    ...project
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Project' }
+            ]
+        }),
+        startProject: builder.mutation({
+            query: project => ({
+                url: `/developer/projects/start`, 
                 method: 'POST',
                 body: {
                     ...project
@@ -37,8 +49,7 @@ export const projectSplice = apiSlice.injectEndpoints({
         requestProject: builder.query({
             query: id => ({
                 url: `/developer/projects/request`,
-                method: 'GET',
-               
+                method: 'GET',  
             }),
             invalidatesTags: (result, error, arg) => [
                 { type: 'Project' }
@@ -63,5 +74,6 @@ export const projectSplice = apiSlice.injectEndpoints({
 export const {
    useLoadProjectsQuery,
    useRequestProjectQuery,
-   useSubmitProjectMutation
+   useSubmitProjectMutation,
+   useStartProjectMutation
 } = projectSplice;

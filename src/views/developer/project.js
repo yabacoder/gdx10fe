@@ -9,10 +9,12 @@ import Countdown from 'react-countdown-now';
 import {
   useLoadProjectsQuery,
   useRequestProjectQuery,
-  useSubmitProjectMutation
+  useSubmitProjectMutation,
+  useStartProjectMutation
 } from '../../features/developer/projectSlice';
-import http, { http2 } from '../../utils/service';
+import { http2 } from '../../utils/service';
 import useAuth from '../../hooks/useAuth';
+// import { toBeRequired } from '@testing-library/jest-dom/matchers';
 
 // // Random component
 const Timeout = () => {
@@ -24,11 +26,13 @@ function Project() {
   // console.log(token);
   const [openModal, setOpenModal] = useState(false);
   const [project, setProject] = useState('');
+  const [projectId, setProjectId] = useState('');
+  const [projectDuration, setProjectDuration] = useState('');
   const [repo, setRepo] = useState('');
   const [url, setUrl] = useState('');
   const [lang, setLang] = useState('');
   const [comment, setComment] = useState('');
-  const [status, setStatus] = useState(false);
+  const [ongoing, setOngoing] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState([]);
   const [newProject, setNewProject] = useState(false); //Make request for a new project
@@ -48,6 +52,10 @@ function Project() {
     data: submitData,
     isSuccess: submitIsSuccess
   }] = useSubmitProjectMutation();
+  const [startProject, {
+    data: startData,
+    isSuccess: startIsSuccess
+  }] = useStartProjectMutation();
 
 
 
@@ -66,167 +74,194 @@ function Project() {
     }
   };
 
-  const pullProject = async () => {
-    // const response = await http('/developer/project', 'GET');
-    // // response = JSON.stringify(response);
-    // if (response.status === 1) {
-    //   setProject(response.data);
-    //   // console.log(response.data);
-    // }
+  const processStartProject = async (duration) => {
+    try {
+      const data = {
+        projectId,
+        duration: projectDuration
+      };
+      const response = await startProject(data);
+      // response = JSON.stringify(response);
+      console.log(response.data);
+      if (response) {
+        // setProject(response.data);
+        console.log(response.data);
+        // setNewProject(true);
+        setOngoing(true);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const newPullProject = async () => {
     // try {
-      //   await requestProject();
-      //   if (requestIsSuccess) {
-      //     setProject(requestData.data);
-      //     setNewProject(true);
-      //   }
-      // } catch (error) {
-      //   console.log(error.message);
-      //   setMessage(error.message);
-      // }
-      try {
-        const response = await http2('/developer/projects/request', 'GET', token);
-        // response = JSON.stringify(response);
-        // if (response.status === 1) {
+    //   await requestProject();
+    //   if (requestIsSuccess) {
+    //     setProject(requestData.data);
+    //     setNewProject(true);
+    //   }
+    // } catch (error) {
+    //   console.log(error.message);
+    //   setMessage(error.message);
+    // }
+    try {
+      const response = await http2('/developer/projects/request', 'GET', token);
+      // response = JSON.stringify(response);
+      if (response.status) {
+        if (response.data.ongoing) {
+          setOngoing(true);
+          setProject(response?.data?.data);
+          setProjectId(response?.data?.data?.id);
+          setProjectDuration(response?.data?.data?.duration);
+        } else {
           setProject(response.data);
-          console.log(response.data);
+          setProjectId(response?.data?.id);
+          setProjectDuration(response?.data?.duration);
+          console.log(response);
           setNewProject(true);
-        // }
-      } catch (error) {
-        console.log(error)
+        }
+
+        // setOngoing(false);
+
       }
-     
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  // useEffect(() => {
+  //   newPullProject();
+  //   // pullProject();
+  //   // setProject(data?.data[0]);
+  // }, [newProject]);
+  // console.log(data);
+
+  const submitHandler = async e => {
+    e.preventDefault();
+
+    const data = {
+      id: project.id,
+      repo,
+      url,
+      lang,
+      comment,
     };
 
-    useEffect(() => {
-      newPullProject();
-      // pullProject();
-      // setProject(data?.data[0]);
-    }, []);
-    console.log(data);
+    try {
+      const savedData = await submitProject(data);
+      setOngoing(false);
+      setNewProject(false);
+      setMessage(savedData.data.message);
+      setOpenModal(false);
+      console.log(savedData);
+    } catch (error) {
+      console.log(error);
+    }
 
-    const submitHandler = async e => {
-      e.preventDefault();
+    // const response = await http(`/developer/project/submit`, 'POST', data);
+    // if (response.status) {
+    //   setStatus(true);
+    //   setMessage(response.message);
+    //   setOpenModal(false);
+    // } else {
+    //   setError(response.errors);
+    // }
+  };
 
-      const data = {
-        id: project.id,
-        repo,
-        url,
-        lang,
-        comment,
-      };
+  return (
+    <>
+      <div className="flex">
+        <div className="w-8/12 p-6 bg-white rounded-md shadow-md highlights">
+          <div className="project-unavailabe">
+            <h5 className="pb-2 text-base border-b">Projects </h5>
+            <p className="mt-2">
+              We want to ensure you are not ONLY book-smart but also can get
+              things done! Attempt the project below, the earlier you completed
+              them, the higher your rating.
+            </p>
+            {!project && (
+              <>
+                <div className="flex flex-col items-center justify-center p-10 my-4 bg-gray-300 rounded-md ">
+                  <svg viewBox="0 0 47.8 62.3" className="w-12">
+                    <defs />
+                    <path
+                      d="M48 15v1H32V0h1a3 3 0 012 1l12 12a3 3 0 011 2zm-17 4a3 3 0 01-3-2V0H3a3 3 0 00-3 3v56a3 3 0 003 3h42a3 3 0 003-3V19zM15 49a1 1 0 01-1 0l-8-8a1 1 0 010-1l8-7a1 1 0 011 0l3 3a1 1 0 010 1l-5 4 5 4a1 1 0 010 1zm7 6l-4-1a1 1 0 010-1l7-26a1 1 0 011 0l4 1a1 1 0 010 1l-7 25a1 1 0 01-1 1zm20-14l-8 8a1 1 0 01-1 0l-3-3a1 1 0 010-1l5-4-5-4a1 1 0 010-1l3-3a1 1 0 011 0l8 7a1 1 0 010 1z"
+                      fill="rgba(72,86,133,0.28)"
+                    />
+                  </svg>
 
-      try {
-        const savedData = await submitProject(data);
-        setMessage(savedData.data.message);
-        setOpenModal(false);
-        console.log(savedData);
-      } catch (error) {
-        console.log(error);
-      }
+                  <p className="my-2 text-xs text-center text-gray-600">
+                    Sorry, we currently do not have a project for you, please try
+                    again later!
+                  </p>
+                </div>
 
-      // const response = await http(`/developer/project/submit`, 'POST', data);
-      // if (response.status) {
-      //   setStatus(true);
-      //   setMessage(response.message);
-      //   setOpenModal(false);
-      // } else {
-      //   setError(response.errors);
-      // }
-    };
-
-    return (
-      <>
-        <div className="flex">
-          <div className="w-8/12 p-6 bg-white rounded-md shadow-md highlights">
-            <div className="project-unavailabe">
-              <h5 className="pb-2 text-base border-b">Projects </h5>
-              <p className="mt-2">
-                We want to ensure you are not ONLY book-smart but also can get
-                things done! Attempt the project below, the earlier you completed
-                them, the higher your rating.
-              </p>
-              {!project && (
-                <>
-                  <div className="flex flex-col items-center justify-center p-10 my-4 bg-gray-300 rounded-md ">
-                    <svg viewBox="0 0 47.8 62.3" className="w-12">
-                      <defs />
-                      <path
-                        d="M48 15v1H32V0h1a3 3 0 012 1l12 12a3 3 0 011 2zm-17 4a3 3 0 01-3-2V0H3a3 3 0 00-3 3v56a3 3 0 003 3h42a3 3 0 003-3V19zM15 49a1 1 0 01-1 0l-8-8a1 1 0 010-1l8-7a1 1 0 011 0l3 3a1 1 0 010 1l-5 4 5 4a1 1 0 010 1zm7 6l-4-1a1 1 0 010-1l7-26a1 1 0 011 0l4 1a1 1 0 010 1l-7 25a1 1 0 01-1 1zm20-14l-8 8a1 1 0 01-1 0l-3-3a1 1 0 010-1l5-4-5-4a1 1 0 010-1l3-3a1 1 0 011 0l8 7a1 1 0 010 1z"
-                        fill="rgba(72,86,133,0.28)"
-                      />
-                    </svg>
-
-                    <p className="my-2 text-xs text-center text-gray-600">
-                      Sorry, we currently do not have a project for you, please try
-                      again later!
-                    </p>
-                  </div>
-
-                </>
-              )}
-              <div className="mt-5">
-                <button
-                  className="w-full px-5 py-3 text-sm rounded-sm btn focus:border-current"
-                  onClick={newPullProject}
-                >
-                  {' '}
-                  Request a Project{' '}
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="inline-flex w-4"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>{' '}
-                </button>
-              </div>
+              </>
+            )}
+            <div className="mt-5">
+              <button
+                className="w-full px-5 py-3 text-sm rounded-sm btn focus:border-current"
+                onClick={newPullProject}
+              >
+                {' '}
+                Request a Project{' '}
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="inline-flex w-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>{' '}
+              </button>
             </div>
-            {
-              message && <p className='p-2 mt-4 text-white bg-green-600'>{message}</p>
-            }
+          </div>
+          {
+            message && <p className='p-2 mt-4 text-white bg-green-600'>{message}</p>
+          }
 
-            {project && (
-              <div className="mt-5 project-available">
-                <div className="p-5 text-center border rounded-t-md border-b-none project-title">
-                  <h6>Project Task</h6>
-                </div>
-                <div
-                  className="p-10 bg-gray-200 border rounded-b-md border-t-none project-detail"
-                  dangerouslySetInnerHTML={{ __html: project?.question }}
-                ></div>
+          {project && (
+            <div className="mt-5 project-available">
+              <div className="p-5 text-center border rounded-t-md border-b-none project-title">
+                <h6>Project Task</h6>
+              </div>
+              <div
+                className="p-10 bg-gray-200 border rounded-b-md border-t-none project-detail"
+                dangerouslySetInnerHTML={{ __html: project?.question }}
+              ></div>
 
-                <div className="flex justify-around p-5 mt-10 border rounded-lg">
-                  <div className="flex flex-col items-center w-1/2 pr-10 border-r">
-                    <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
-                      Submission Date
-                    </div>
-                    <p className="mt-2 font-bold">{project?.duration}</p>
+              <div className="flex justify-around p-5 mt-10 border rounded-lg">
+                <div className="flex flex-col items-center w-1/2 pr-10 border-r">
+                  <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
+                    Submission Date
                   </div>
-                  <div className="flex flex-col items-center w-1/2">
-                    <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
-                      Countdown
-                    </div>
-                    <p className="mt-2 font-bold text-red-600">
-                      <Countdown
-                        className="text-sm font-bold "
-                        date={project?.countdown}
-                        renderer={renderer}
-                      />
-                    </p>
-                  </div>
+                  <p className="mt-2 font-bold">{project?.duration}</p>
                 </div>
+                <div className="flex flex-col items-center w-1/2">
+                  <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
+                    Countdown
+                  </div>
+                  <p className="mt-2 font-bold text-red-600">
+                    <Countdown
+                      className="text-sm font-bold "
+                      date={project?.countdown}
+                      renderer={renderer}
+                    />
+                  </p>
+                </div>
+              </div>
 
-                <div className="mt-10">
+              {
+                ongoing ? (<div className="mt-10">
                   <button
                     className="w-full px-5 py-3 text-sm btn focus:border-transparent"
                     onClick={() => setOpenModal(true)}
@@ -248,76 +283,16 @@ function Project() {
                       </svg>
                     </span>
                   </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="flex flex-col w-4/12 px-5 ml-5 topNews">
-            <RightNav />
-          </div>
-        </div>
-
-        <div
-          className={
-            openModal
-              ? 'absolute flex justify-end  bg-gray-800 bg-opacity-50 inset-0 h-screen'
-              : 'hidden'
-          }
-        >
-          <div className="w-1/3" onClick={() => setOpenModal(false)} />
-          <div className="flex justify-end w-2/3 bg-white main-container">
-            <div className="w-3/5 p-10 project-submission">
-              <div className="p-5 border-b">
-                <h6>Project Submission</h6>
-              </div>
-              <form onSubmit={submitHandler}>
-                <div className="flex justify-between mt-10">
-                  <div className="w-1/2">
-                    <p>Github</p>
-                    <input
-                      value={repo}
-                      onChange={e => setRepo(e.target.value)}
-                      type="text"
-                      className="w-full mt-3 form-input"
-                    />
-                  </div>
-                  <div className="w-1/2 ml-5">
-                    <p>Test URL</p>
-                    <input
-                      value={url}
-                      onChange={e => setUrl(e.target.value)}
-                      type="text"
-                      className="w-full mt-3 form-input"
-                    />
-                  </div>
-                </div>
-                <div className="mt-10 ">
-                  <p>Languages and Frameworks (separated by comma)</p>
-                  <input
-                    value={lang}
-                    onChange={e => setLang(e.target.value)}
-                    type="text"
-                    className="w-full mt-3 form-input"
-                  />
-                </div>
-
-                <div className="mt-10 ">
-                  <p>Comment</p>
-                  {/* <input type="text" className="w-full mt-3 form-input" /> */}
-                  <textarea
-                    className="w-full mt-3 form-input"
-                    onChange={e => setComment(e.target.value)}
-                    row="15"
-                    cols="50"
+                </div>) : (<div className="mt-10">
+                  <button
+                    className="w-full px-5 py-3 text-sm btn focus:border-transparent"
+                    onClick={() => {
+                      setProjectId(project?.Id);
+                      processStartProject(project?.duration);
+                    }}
                   >
-                    {comment}
-                  </textarea>
-                </div>
-                <div className="mt-10 ">
-                  <button className="w-full px-5 py-3 btn">
                     {' '}
-                    Submit Project
+                    Start Project
                     <span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -333,53 +308,139 @@ function Project() {
                       </svg>
                     </span>
                   </button>
-                </div>
-              </form>
+                </div>)
+              }
             </div>
-            <div className="w-1/2 p-10 bg-gray-100">
-              <div className="flex justify-end">
-                <div>
-                  <button onClick={() => setOpenModal(false)}>X</button>
+          )}
+        </div>
+
+        <div className="flex flex-col w-4/12 px-5 ml-5 topNews">
+          <RightNav />
+        </div>
+      </div>
+
+      <div
+        className={
+          openModal
+            ? 'absolute flex justify-end  bg-gray-800 bg-opacity-50 inset-0 h-screen'
+            : 'hidden'
+        }
+      >
+        <div className="w-1/3" onClick={() => setOpenModal(false)} />
+        <div className="flex justify-end w-2/3 bg-white main-container">
+          <div className="w-3/5 p-10 project-submission">
+            <div className="p-5 border-b">
+              <h6>Project Submission</h6>
+            </div>
+            <form onSubmit={submitHandler}>
+              <div className="flex justify-between mt-10">
+                <div className="w-1/2">
+                  <p>Github</p>
+                  <input
+                    value={repo}
+                    onChange={e => setRepo(e.target.value)}
+                    type="text"
+                    className="w-full mt-3 form-input"
+                  />
+                </div>
+                <div className="w-1/2 ml-5">
+                  <p>Test URL</p>
+                  <input
+                    value={url}
+                    onChange={e => setUrl(e.target.value)}
+                    type="text"
+                    className="w-full mt-3 form-input"
+                  />
                 </div>
               </div>
-              <div className="p-5 -mt-5 border-b">
-                <h6>Task Overview</h6>
+              <div className="mt-10 ">
+                <p>Languages and Frameworks (separated by comma)</p>
+                <input
+                  value={lang}
+                  onChange={e => setLang(e.target.value)}
+                  type="text"
+                  className="w-full mt-3 form-input"
+                />
               </div>
-              <div
-                className="p-5 my-5 overflow-y-auto text-blue-800 bg-gray-300 border rounded-lg h-2/3"
-                dangerouslySetInnerHTML={{ __html: project?.task }}
-              ></div>
 
-              <hr />
+              <div className="mt-10 ">
+                <p>Comment</p>
+                {/* <input type="text" className="w-full mt-3 form-input" /> */}
+                <textarea
+                  className="w-full mt-3 form-input"
+                  onChange={e => setComment(e.target.value)}
+                  row="15"
+                  cols="50"
+                >
+                  {comment}
+                </textarea>
+              </div>
+              <div className="mt-10 ">
+                <button className="w-full px-5 py-3 btn">
+                  {' '}
+                  Submit Project
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="inline-flex w-4"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div className="w-1/2 p-10 bg-gray-100">
+            <div className="flex justify-end">
               <div>
-                <div className="py-5 ">
-                  <div className="flex flex-row items-center justify-between my-2">
-                    <div className="px-2 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
-                      Submission Date
-                    </div>
-                    <p className="text-sm font-bold">{project?.duration}</p>
+                <button onClick={() => setOpenModal(false)}>X</button>
+              </div>
+            </div>
+            <div className="p-5 -mt-5 border-b">
+              <h6>Task Overview</h6>
+            </div>
+            <div
+              className="p-5 my-5 overflow-y-auto text-blue-800 bg-gray-300 border rounded-lg h-2/3"
+              dangerouslySetInnerHTML={{ __html: project?.question }}
+            ></div>
+
+            <hr />
+            <div>
+              <div className="py-5 ">
+                <div className="flex flex-row items-center justify-between my-2">
+                  <div className="px-2 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
+                    Submission Date
                   </div>
-                  <div className="flex flex-row items-center justify-between my-2">
-                    <div className="px-4 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
-                      Countdown
-                    </div>
-                    <Countdown
-                      className="text-sm font-bold "
-                      date={project?.countdown}
-                      renderer={renderer}
-                    />
+                  <p className="text-sm font-bold">{project?.duration}</p>
+                </div>
+                <div className="flex flex-row items-center justify-between my-2">
+                  <div className="px-4 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
+                    Countdown
                   </div>
+                  <Countdown
+                    className="text-sm font-bold "
+                    date={project?.countdown}
+                    renderer={renderer}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </>
-      // </Layout>
-    );
-  };
+      </div>
+    </>
+    // </Layout>
+  );
+};
 
-  export default Project;
+export default Project;
 
 // import React from 'react';
 // import {Button, Input} from "../statics/form";
