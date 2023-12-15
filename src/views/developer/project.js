@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // import Layout from "./layout";
 import RightNav from './utils/RightNav';
 // import SubmitProject from './utils/SubmitProject';
-import Countdown from 'react-countdown-now';
+import Countdown from 'react-countdown';
 import {
   useLoadProjectsQuery,
   useRequestProjectQuery,
@@ -14,6 +14,9 @@ import {
 } from '../../features/developer/projectSlice';
 import { http2 } from '../../utils/service';
 import useAuth from '../../hooks/useAuth';
+import dayjs from 'dayjs';
+var relativeTime = require('dayjs/plugin/relativeTime');
+dayjs.extend(relativeTime);
 // import { toBeRequired } from '@testing-library/jest-dom/matchers';
 
 // // Random component
@@ -109,17 +112,22 @@ function Project() {
     try {
       const response = await http2('/developer/projects/request', 'GET', token);
       // response = JSON.stringify(response);
+      console.log(response);
       if (response.status) {
         if (response.data.ongoing) {
           setOngoing(true);
           setProject(response?.data?.data);
           setProjectId(response?.data?.data?.id);
-          setProjectDuration(response?.data?.data?.duration);
+          const dt = dayjs(response?.data?.createdAt);
+          const duration = dt.add(response?.data?.data?.duration, 'day');
+          // console.log(duration);
+          setProjectDuration(duration);
+
         } else {
           setProject(response.data);
           setProjectId(response?.data?.id);
           setProjectDuration(response?.data?.duration);
-          console.log(response);
+          // console.log(response);
           setNewProject(true);
         }
 
@@ -132,11 +140,11 @@ function Project() {
 
   };
 
-  // useEffect(() => {
-  //   newPullProject();
-  //   // pullProject();
-  //   // setProject(data?.data[0]);
-  // }, [newProject]);
+  useEffect(() => {
+    newPullProject();
+    // pullProject();
+    // setProject(data?.data[0]);
+  }, []);
   // console.log(data);
 
   const submitHandler = async e => {
@@ -244,19 +252,32 @@ function Project() {
                   <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
                     Submission Date
                   </div>
-                  <p className="mt-2 font-bold">{project?.duration}</p>
+                  {
+                    ongoing ? (
+                      <p className="text-sm font-bold">{projectDuration.fromNow()}</p>
+                    ) : (
+                      <p className="text-sm font-bold">{`project?.duration`}</p>
+                    )
+                  }
+                  {/* <p className="mt-2 font-bold">{project?.duration}</p> */}
                 </div>
                 <div className="flex flex-col items-center w-1/2">
                   <div className="px-4 py-2 mt-3 text-sm bg-gray-200 border rounded-full">
                     Countdown
                   </div>
-                  <p className="mt-2 font-bold text-red-600">
-                    <Countdown
-                      className="text-sm font-bold "
-                      date={project?.countdown}
-                      renderer={renderer}
-                    />
-                  </p>
+                  {
+                    ongoing && <p className="mt-2 font-bold text-red-600">
+                      <Countdown
+                        className="text-sm font-bold"
+
+                        date={projectDuration}
+                        // date={new Date(project?.countdown)}
+                        renderer={renderer} 
+                      />
+                      {/* {project?.countdown} */}
+                    </p>
+                  }
+
                 </div>
               </div>
 
@@ -418,15 +439,22 @@ function Project() {
                   <div className="px-2 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
                     Submission Date
                   </div>
-                  <p className="text-sm font-bold">{project?.duration}</p>
+                  {
+                    ongoing ? (
+                      <p className="text-sm font-bold">{projectDuration.fromNow()}</p>
+                    ) : (
+                      <p className="text-sm font-bold">{`project?.duration`}</p>
+                    )
+                  }
                 </div>
                 <div className="flex flex-row items-center justify-between my-2">
                   <div className="px-4 py-2 text-sm text-center text-red-600 bg-red-200 border rounded-full">
                     Countdown
+
                   </div>
                   <Countdown
-                    className="text-sm font-bold "
-                    date={project?.countdown}
+                    className="text-sm font-bold"
+                    date={projectDuration} 
                     renderer={renderer}
                   />
                 </div>
@@ -434,7 +462,7 @@ function Project() {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
     // </Layout>
   );
