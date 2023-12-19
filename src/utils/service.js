@@ -42,7 +42,7 @@ export const http3 = async (path, data) => {
   }
 };
 export const http2 = async (path, method = "GET", token, data = "") => {
-  // console.log(data, "post dats");
+  console.log(data, "post dats");
   try {
     // const body = "body: " + JSON.stringify({ answer: "optA", question_id: "223" });
     // let bd = (method === 'POST') ? body + "," : '';
@@ -90,7 +90,7 @@ export const uploadImg = async (path, formData, token) => {
 
 async function http(path, method, token, data, object) {
   return new Promise((resolve, reject) => {
-    console.log(data); 
+    console.log(data);
     const body = "body:" + JSON.stringify(data);
     let bd = (method === 'POST') ? body : '';
     // var myHeaders = new Headers();

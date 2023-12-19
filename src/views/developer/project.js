@@ -457,7 +457,7 @@ function Project() {
                     date={projectDuration} 
                     renderer={renderer}
                   />
-                </div>
+                </div> 
               </div>
             </div>
           </div>
