@@ -5,7 +5,7 @@ import http, { http2 } from '../../../utils/service';
 import useAuth from '../../../hooks/useAuth';
 
 function Question() {
-  const { accessToken: token } = useAuth();
+  const { token } = useAuth();
   const [time, setTime] = useState({});
   const [data, setData] = useState({ options: [] });
   const [total, setTotal] = useState(0);

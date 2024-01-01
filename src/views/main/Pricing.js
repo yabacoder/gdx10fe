@@ -17,29 +17,30 @@ const Pricing = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
+  const [error, setError] = useState(false);
 
   // console.log(firstName);
-  const token = "";
+  // const token = "";
 
   const handleProcess = async (e) => {
     e.preventDefault();
     let error = [];
 
     if (firstName.length < 2) {
-      error.push(" Enter your First name \n");
+      error.push("Enter your First name \n");
     }
     if (lastName.length < 2) {
-      error.push(" Enter your Last name\n");
+      error.push("Enter your Last name\n");
     }
 
     if (company.length < 2) {
-      error.push(" Let's know your company\n");
+      error.push("Let's know your company\n");
     }
     if (email.length < 2) {
       error.push(" Let's know your Email address\n");
     }
     if (phone.length < 2) {
-      error.push(" Let's know your phone number\n");
+      error.push("Let's know your phone number\n");
     }
 
     if (error.length < 1) {
@@ -61,13 +62,20 @@ const Pricing = () => {
 
       try {
         const resp = await http3("/company/request", data);
-        // console.log("posted", data);
+        // console.log("posted", resp.message);
         setMessage(resp.message);
+        setFirstName("")
+        setLastName("")
+        setEmail("")
+        setCompany("")
+        setPhone("")
+        setTitle("")
       } catch (error) {
+        setError(true)
         setMessage(error);
       }
     }
-    setMessage(error);
+    // setMessage(error);
     // console.log("Error occured!", error);
   };
 
@@ -75,7 +83,7 @@ const Pricing = () => {
     <div>
       <section className="w-full">
         <div className="md:flex md:mx-16">
-          
+
           <div className="w-full px-6 pt-6 pb-3 md:w-3/5 md:p-6 ">
             <div class="md:mx-auto w-full md:max-w-6xl md:py-12 pb-0 pt-12 h-8/10">
               <h1 className="mt-10 text-xl leading-none text-red-500 md:text-3xl md:text-white lg:text-5xl font-getdevB md:my-4">
@@ -218,7 +226,7 @@ const Pricing = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="w-full px-6 pt-3 pb-6 md:w-[500px] md:p-6 ">
             <div class="md:mx-auto w-full md:max-w-6xl md:p-12">
               <div class="flex flex-col md:flex-row justify-center">
@@ -227,7 +235,11 @@ const Pricing = () => {
                     onSubmit={handleProcess}
                   >
                     <div class="shadow-md bg-white rounded-lg flex-auto max-w-sm p-5 md:p-10 md:pb-20 pb-20">
-                      <p>{message && message.map((msg, indx) => (
+                      {
+                        message &&
+                        <p className='p-2 text-white bg-green-600'>{message}</p>
+                      }
+                      <p>{error && message.map((msg, indx) => (
                         <p>{msg}</p>
                       ))}</p>
                       <h4 className="uppercase text-gdsubBlue font-getdevB">

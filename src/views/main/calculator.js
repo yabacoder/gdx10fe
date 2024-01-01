@@ -52,7 +52,7 @@ const Calculator = () => {
 			}
 		});
 	};
-	
+
 	/**
 	 * Get all processes defined on the backend.
 	 */
@@ -66,7 +66,7 @@ const Calculator = () => {
 			}
 		});
 	};
-	
+
 
 	const selectProcesses = e => {
 		// setSelected(selected.value);
@@ -88,7 +88,7 @@ const Calculator = () => {
 		}
 
 	};
-	
+
 	const selectIndustry = e => {
 		// setSelected(selected.value);
 		// if it's checked, store in the array state.
@@ -124,7 +124,7 @@ const Calculator = () => {
 			const res = await http3("/processes/calculate", data);
 			setResult(res.message);
 		} catch (err) {
-			console.log(err);
+			console.log(err); 
 		}
 
 		// .then(res => {

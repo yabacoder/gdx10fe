@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 
 const JobView = () => {
   const [job, setJob] = useState({});
+  const [tech, setTech] = useState([]);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [noLogged, setNoLogged] = useState(false);
@@ -27,8 +28,9 @@ const JobView = () => {
     window.scrollTo(0, 0);
     const fetchJob = async () => {
       const job = await http(`/jobs/${params.id}`, 'GET');
-      console.log(job);
+      // console.log(job);
       setJob(job.data);
+      setTech(job.data.technologies?.split(","));
     };
     fetchJob();
   }, []);
@@ -55,7 +57,7 @@ const JobView = () => {
     } else {
       setError(`You need to login to apply, click here to `);
       navigate("/login", { state: { url: `/jobs/${params.id}` } });
-      setNoLogged(true)
+      setNoLogged(true);
     }
     window.scrollTo(0, 0);
   };
@@ -72,6 +74,7 @@ const JobView = () => {
     status,
     currency,
     technologies } = job;
+
 
   const jobType = (type) => {
     let types = [];
@@ -114,7 +117,7 @@ const JobView = () => {
             </p>
             <div className="w-full md:hidden">
               <img
-              
+
                 src="https://via.placeholder.com/350"
                 className="rounded-md"
               />
@@ -128,7 +131,7 @@ const JobView = () => {
               {message ? (
                 <p className="success">{message}</p>
               ) : (
-                  error && <Link to="/register" className="error">{error} {noLogged && <Link to={'/register'}>Register</Link>}</Link>
+                error && <Link to="/register" className="error">{error} {noLogged && <Link to={'/register'}>Register</Link>}</Link>
               )}
               <p className="mt-3 text-2xl md:text-3xl text-gdblue font-getdevM">
                 {title}
@@ -178,7 +181,7 @@ const JobView = () => {
                 </div> */}
               </div>
             </div>
-            <div className="">
+            <div className="md:w-1/3">
               <div className="hidden w-full md:block">
                 <img
                   src="https://via.placeholder.com/350"
@@ -195,20 +198,21 @@ const JobView = () => {
                 <div class="inline-flex shadow-md mb-3 text-white">
                   <span class="  py-3 px-4 rounded-l text-gdsubBlue bg-gray-200">
                     {type == 1 ? "Full Time" : "Part Time"}
+                    {type == 3 ? "Contract" : ""}
                   </span>
                   {/* <span class="   py-3 px-4 rounded-r bg-blue-700">
                     1 Month
                   </span> */}
                 </div>
                 <div className="py-3 border-gray-200 md:w-5/6 md:border-b-2">
-                  <div className="p-3 mb-3 border-2 border-gray-200 rounded-lg">
+                  {/* <div className="p-3 mb-3 border-2 border-gray-200 rounded-lg">
                     <span className="px-3 py-1 text-sm bg-gray-300 rounded-full">
                       From:
                     </span>{' '}
                     <span className="pl-3 text-base font-getdevM">
                       {date}
                     </span>
-                  </div>
+                  </div> */}
                   {/* <div className="p-3 mb-3 border-2 border-gray-200 rounded-lg">
                     <span className="px-3 py-1 text-sm bg-gray-300 rounded-full">
                       To:
@@ -221,17 +225,17 @@ const JobView = () => {
                 <div className="py-3 border-gray-200 md:border-b-2">
                   <h6 className="text-gdblue">Job Availability</h6>
                   <div className="inline-flex my-2 ">
-                    <div className="px-4 tag "> {status}</div>
+                    <div className="px-4 tag "> {status == 1 ? "Open" : "Closed"}</div>
                     {/* <div className="px-4 mx-3 tag">Remote </div> */}
                   </div>
                 </div>
                 <div>
                   <h6 className="my-2 text-gdblue"> Tech Stack </h6>
 
-                  <div className="inline-flex ">
-                    {technologies &&
-                      technologies?.map(tech => (
-                        <div className="tag "> {tech}</div>
+                  <div className="flex flex-wrap">
+                    {tech &&
+                      tech?.map(tech => (
+                        <div className="mx-1 my-1 tag"> {tech}</div>
                       ))}
                     {/* <div className="tag "> PHP</div>
                     <div className="mx-3 tag">Python </div> */}

@@ -32,19 +32,19 @@ const Footer = () => {
                     </Link>
                   </li>
 
-                  <li>
+                  {/* <li>
                     <Link to="/refer" title=""
                       class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
                       Refer a Friend
                     </Link>
-                  </li>
+                  </li> */}
 
-                  <li>
+                  {/* <li>
                     <Link to="/articles" title="Read technical articles"
                       class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
                       Articles
                     </Link>
-                  </li>
+                  </li> */}
 
 
                 </ul>
@@ -60,7 +60,7 @@ const Footer = () => {
                     <Link to="/about" title="About Us"
                       class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
                       About us
-                    </Link>
+                    </Link> 
                   </li>
 
                   <li>
@@ -70,12 +70,12 @@ const Footer = () => {
                     </Link>
                   </li>
 
-                  <li>
+                  {/* <li>
                     <Link href="/manifesto" title="Manifesto"
                       class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
                       Manifesto
                     </Link>
-                  </li>
+                  </li> */}
 
                   {/* <li>
                   <a href="#" title=""
@@ -91,7 +91,7 @@ const Footer = () => {
           <hr class="mt-12 border-gray-500 lg:mt-20 xl:mt-24 sm:mt-16" />
 
           <p class="mt-8 text-sm font-normal text-center text-gray-500">
-            © 2023, GetDev Technology
+            © 2024, GetDev Technology
           </p>
         </div>
       </footer>

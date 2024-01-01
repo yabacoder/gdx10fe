@@ -1,29 +1,99 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { http3 } from '../../utils/service';
 
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [info, setInfo] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState(false);
+
+  const handleProcess = async (e) => {
+    e.preventDefault();
+    let error = [];
+
+    if (name.length < 2) {
+      setError(true);
+      error.push("Enter your Last name\n");
+    }
+
+    if (info.length < 2) {
+      setError(true);
+      error.push("Let's know your Message\n");
+    }
+    if (info.subject < 2) {
+      setError(true);
+      error.push("Let's know your Subject\n");
+    }
+    if (email.length < 2) {
+      setError(true);
+      error.push(" Let's know your Email address\n");
+    }
+    if (error.length > 0) {
+      setMessage(error);
+      console.log(error);
+    } else {
+      try {
+        const data = {
+          name, email, subject, info
+        };
+        const resp = await http3("/company/contact-us", data);
+        // console.log("posted", resp.message);
+        setMessage(resp.message);
+        setName("");
+        setEmail("");
+        setSubject("");
+        setInfo("");
+
+      } catch (error) {
+        setError(true);
+        setMessage(error);
+      }
+    }
+  };
+
   return (
     <section className="px-6 py-32 mx-auto bg-white rounded-md shadow-lg md:p-16 md:mt-16 md:py-10 md:px-16 md:w-1/2">
       <div className="flex flex-col mb-4 text-center md:px-5 md:py-3 section-header">
+        {
+          (message && !error) ?
+            <p className='p-2 text-white bg-green-600'>{message}</p>
+            :
+            <></>
+        }
+        {/* <p>{error && message?.map((msg, indx) => (
+          <p>{msg}</p> 
+        ))}</p> */}
         <h3>Keep in Touch</h3>
         <div>
           <label class="block">
-            <input class="form-input mt-1 block w-full" placeholder="Name" />
+            <input
+              onChange={e => setName(e.target.value)}
+              class="form-input mt-1 block w-full" placeholder="Name" />
           </label>
           <label class="block">
-            <input class="form-input mt-1 block w-full" placeholder="Email" />
+            <input
+              onChange={e => setEmail(e.target.value)}
+              class="form-input mt-1 block w-full" placeholder="Email" />
           </label>
           <label class="block">
-            <input class="form-input mt-1 block w-full" placeholder="Subject" />
+            <input
+              onChange={e => setSubject(e.target.value)}
+              class="form-input mt-1 block w-full" placeholder="Subject" />
           </label>
           <label class="block">
             <textarea
+              onChange={e => setInfo(e.target.value)}
               class="form-textarea mt-1 block w-full"
               rows="3"
               placeholder="Enter some long form content."
             ></textarea>
           </label>
           <div>
-            <button className="w-full px-4 py-3 mt-5 text-center btn">
+            <button
+              onClick={handleProcess}
+              className="w-full px-4 py-3 mt-5 text-center btn">
               {' '}
               Send
               <span>
