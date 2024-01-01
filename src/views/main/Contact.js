@@ -69,21 +69,25 @@ const Contact = () => {
         <div>
           <label class="block">
             <input
+              value={name}
               onChange={e => setName(e.target.value)}
               class="form-input mt-1 block w-full" placeholder="Name" />
           </label>
           <label class="block">
             <input
+              value={email}
               onChange={e => setEmail(e.target.value)}
               class="form-input mt-1 block w-full" placeholder="Email" />
           </label>
           <label class="block">
             <input
+              value={subject}
               onChange={e => setSubject(e.target.value)}
               class="form-input mt-1 block w-full" placeholder="Subject" />
           </label>
           <label class="block">
             <textarea
+              value={info}
               onChange={e => setInfo(e.target.value)}
               class="form-textarea mt-1 block w-full"
               rows="3"
