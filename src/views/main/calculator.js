@@ -18,7 +18,7 @@ const Calculator = () => {
 	const [industry, setIndustry] = useState([]);
 	const [result, setResult] = useState("");
 	const [email, setEmail] = useState("");
-	const [yoe, setYoe] = useState(0);
+	const [yoe, setYoe] = useState(0); 
 	const [teamIc, setTeamIc] = useState(0);
 	const [teamLed, setTeamLed] = useState(0);
 	const [project, setProject] = useState(0);
@@ -40,7 +40,7 @@ const Calculator = () => {
 		console.log(selected, "Selected");
 	};
 	/**
-	 * Get all processes defined on the backend.
+	 * Get all processes defined on the backend. 
 	 */
 	const getProcesses = () => {
 		http("/processes", "GET").then(res => {
@@ -374,10 +374,10 @@ const Calculator = () => {
 				</div>
 			)}
 			{result && (
-				<div className="px-6">
+				<div className="px-6 h-[160px]">
 					<p>Your result is {result}</p>
 					<button
-						className="content-center p-3 btn"
+						className="content-center p-3 btn mt-4"
 						onClick={() => setResult("")}
 					>
 						Go back

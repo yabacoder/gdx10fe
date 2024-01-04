@@ -11,7 +11,7 @@ export const HIW = () => {
       <div className="flex items-center justify-center lg:px-16 lg:py-16">
         <div>
           <h3 className="text-3xl text-center text-gdblue ">How it works</h3>
-          <p className="text-center text-md ">
+          <p className="text-base text-center ">
             GetDev simplify hiring process for developers, from setting up your profile and getting a job.{' '}
           </p>
         </div>

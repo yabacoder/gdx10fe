@@ -122,7 +122,6 @@ const Dashboard = () => {
                                 <th className="px-4 py-2">Location</th>
                                 <th className="px-4 py-2">Salary</th>
                                 <th className="px-4 py-2">Job Type</th>
-
                                 <th className="px-4 py-2">Actions</th>
                                 <th className="px-4 py-2">Status</th>
                             </tr>

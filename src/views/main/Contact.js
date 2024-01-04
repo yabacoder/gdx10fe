@@ -79,7 +79,7 @@ const Contact = () => {
               onChange={e => setEmail(e.target.value)}
               class="form-input mt-1 block w-full" placeholder="Email" />
           </label>
-          <label class="block">
+          <label class="block"> 
             <input
               value={subject}
               onChange={e => setSubject(e.target.value)}
@@ -132,7 +132,7 @@ const Contact = () => {
                   transform="translate(-36 -587)"
                 >
                   <circle
-                    id="Ellipse_936"
+                    id="Ellipse_936" 
                     data-name="Ellipse 936"
                     cx="16"
                     cy="16"
@@ -155,7 +155,7 @@ const Contact = () => {
           </div>
           <div className="flex items-center justify-between md:p-5">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/2000/svg" 
               width="32"
               height="32"
               viewBox="0 0 32 32"
