@@ -91,6 +91,8 @@ const Skills = () => {
     // setTech(tech)
   }, [devIsSuccess]);
 
+  console.log(newTech, "Selected Tech");
+
 
   const [addProfile, {
     isSuccess: addProfileIsSuccess
@@ -133,13 +135,14 @@ const Skills = () => {
     // );
     // console.log(technologies, "Incoming technologies");
     try {
+      console.log(newTech, "Selected Tech");
       const data = await updateDevAvailability({
         categoryId,
         levelId,
         fulltime,
         parttime,
         remote,
-        value: technologies
+        value: newTech
       }).unwrap();
       console.log(data, "Update skill and  availability categories");
       setMsg(data.message);
@@ -240,7 +243,7 @@ const Skills = () => {
                 // defaultValue={newTech}
                 required
                 isMulti
-                onChange={e => setTechnologies(e.target)}
+                onChange={e => setNewTech(e.target)}
                 options={TECHNOLOGIES}
                 placeholder="Select"
                 removeSelected={removeSelected}

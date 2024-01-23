@@ -37,7 +37,7 @@ const Index = () => {
     <>
       <div className="px-10 py-5 -mt-10 bg-white rounded-md">
         <div className="inline-flex items-center w-full">
-          <div className="px-4 text-gray-500 w-2-12">
+          {/* <div className="px-4 text-gray-500 w-2-12">
             <h6 className="">Your profile is:</h6>
           </div>
           <div className="w-2/12 mr-2 text-center">
@@ -53,7 +53,7 @@ const Index = () => {
               <div class="bg-green-500 text-xs rounded-full leading-none py-2 text-center text-white w-9/12"></div>
             </div>
             <p className="text-xs"></p>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="flex mt-5">

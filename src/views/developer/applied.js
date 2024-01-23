@@ -52,7 +52,7 @@ const Applied = () => {
   useEffect(() => {
     window.scroll(0, 0);
     // fetchRecentApplications();
-    setJobs(data?.data);
+    setJobs(data?.data?.rows);
   }, [isSuccess, del]);
 
   return (
@@ -135,14 +135,14 @@ const Applied = () => {
               <div className="flex flex-col jobs">
                 {/* {console.log(jobs)} */}
                 {jobs &&
-                  jobs.map((job, index) => (
+                  jobs?.map((job, index) => (
                     <div className="flex items-center justify-between px-6 py-4 my-3 bg-gray-200 rounded-lg">
                       <div>
-                        <h4 className="text-base text-blue-800">{job.name}</h4>
+                        <h4 className="text-base text-blue-800">{job.Job.title}</h4>
                         <div className="info">
                           <ul className="flex items-center">
                             {
-                              job.salary && (
+                              job?.salary && (
                                 <li className="px-4 py-1 text-xs text-red-600 bg-red-300 bg-opacity-50 border border-red-600 rounded-full">
                                   ₦{job.salary} {job.salary_max && <> - ₦{job.salary_max}</>}
                                 </li>
@@ -164,7 +164,7 @@ const Applied = () => {
                                   />
                                 </svg>
                               </span>
-                              {job.location}
+                              {job?.location}
                             </li>
                           </ul>
                         </div>

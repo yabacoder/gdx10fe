@@ -40,14 +40,14 @@ export const DeveloperLayout = () => {
                                 Projects
                             </li>
                         </Link>
-                        <Link to="/developer/assessment">
+                        {/* <Link to="/developer/assessment">
                             <li className="flex items-center p-5 text-sm font-semibold text-gray-500">
                                 <svg className="p-1 fill-current" xmlns="http://www.w3.org/2000/svg" width="25.847" height="18.093" viewBox="0 0 25.847 18.093">
                                     <path id="Icon_material-assessment" data-name="Icon material-assessment" d="M21.389,4.5H6.611A2.117,2.117,0,0,0,4.5,6.611V21.389A2.117,2.117,0,0,0,6.611,23.5H21.389A2.117,2.117,0,0,0,23.5,21.389V6.611A2.117,2.117,0,0,0,21.389,4.5ZM10.833,19.278H8.722V11.889h2.111Zm4.222,0H12.944V8.722h2.111Zm4.222,0H17.167V15.056h2.111Z" transform="translate(-4.5 -4.5)" />
                                 </svg>
                                 Assessments
                             </li>
-                        </Link>
+                        </Link> */}
                         {/* <Link to="/developer/articles">
                             <li className="flex items-center p-5 text-sm font-semibold text-gray-500">
                                 <svg className="p-1 fill-current" xmlns="http://www.w3.org/2000/svg" width="25.847" height="18.091" viewBox="0 0 25.847 18.091">

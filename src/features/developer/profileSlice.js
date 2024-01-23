@@ -106,7 +106,7 @@ export const profileApiSplice = apiSlice.injectEndpoints({
             ]
         }),
         getDevAvailability: builder.query({
-            query: () => ({
+            query: () => ({ 
                 url: '/developer/profile/availability',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;

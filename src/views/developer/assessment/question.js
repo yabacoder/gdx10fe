@@ -5,7 +5,7 @@ import http, { http2 } from '../../../utils/service';
 import useAuth from '../../../hooks/useAuth';
 
 function Question() {
-  const { token } = useAuth();
+  const { token, developerId } = useAuth();
   const [time, setTime] = useState({});
   const [data, setData] = useState({ options: [] });
   const [total, setTotal] = useState(0);
@@ -18,138 +18,234 @@ function Question() {
   const [alert, setAlert] = useState(false);
   const [preload, setPreload] = useState(false);
   const [message, setMessage] = useState('');
+  const [devtech, setDevtech] = useState([]);
+  const [questionsTaken, setQuestionsTaken] = useState([]);
+  const [question, setQuestion] = useState({});
   let timer = 0;
+  console.log(devtech, "Technologies");
 
-  const secondsToTime = secs => {
-    let hours = Math.floor(secs / (60 * 60));
+  /**
+   * TODO:
+   * 1. Get User's technologies
+   * 2. Log number of question taken for each tech
+   * 3. Make a request for question set per tech
+   * 4. When a user completes a set for a tech, move to the next
+   * 5. If questions for all sets are taken, show results.
+   * 6. Redirect to result page
+   * 
+   * @returns 
+   */
 
-    let divisor_for_minutes = secs % (60 * 60);
-    let minutes = Math.floor(divisor_for_minutes / 60);
-
-    let divisor_for_seconds = divisor_for_minutes % 60;
-    let seconds = Math.ceil(divisor_for_seconds);
-
-    let obj = {
-      h: hours,
-      m: minutes,
-      s: seconds,
-    };
-    return obj;
+  const getUserTech = async () => {
+    let devTech = await http2('/developer/profile/devtech/' + developerId, 'GET', token, data);
+    // console.log(tech);
+    // const tech = Object.entries(devTech.data);
+    // let techs = [];
+    // tech.map(th => {
+    //   const technologyId = th.technologyId;
+    //   const technologyName = th.Technology?.name;
+    //   // console.log(th);
+    //   techs = [...techs, technologyId, technologyName];
+    // });
+    console.log(devTech, "Loaded Technologies");
+    setDevtech(devTech);
   };
+  const techQuestionsLog = () => { };
+  const getQuestions = async () => {
+    // (async() => {
+    const result = await http2('/developer/assessment', 'GET', token);
+    console.log(result?.data, "Questions first");
+    setDevtech(result?.data);
+    setMessage("No more questions");
+    // })()
+  };
+
+  const getSingleQuestions = async () => {
+    filterTaken();
+    console.log("None taken.");
+    if (questionId) {
+      const q = await http2('/developer/assessment/questions/' + questionId, 'GET', token);
+      setQuestion(q.data);
+    }
+  };
+
+  const filterTaken = () => {
+    const questions = devtech;// Object.entries(devtech);
+    const index = questions[(Math.floor(Math.random() * questions.length))];
+    // console.log(questions, "Questions");
+    const id = index?.questionId;
+    if (id === questionId) {
+      return;
+    }
+
+    if (questionsTaken.includes(questionId)) {
+      filterTaken();
+    }
+    setQuestionId(id);
+  };
+
+  const techQuestionsComplete = (technologyId) => { };
+  const calculateResult = () => { };
+
+  useEffect(() => {
+    // (async () => {
+    //   return getUserTech();
+    // });
+    // getUserTech();
+    getQuestions();
+    // getSingleQuestions();
+  }, []);
+
+  useEffect(() => {
+    // (async () => {
+    //   return getUserTech();
+    // });
+    // getUserTech();
+    // getQuestions();
+    getSingleQuestions();
+  }, [devtech]);
+
+  // console.log(question);
+
+
+  // const secondsToTime = secs => {
+  //   let hours = Math.floor(secs / (60 * 60));
+
+  //   let divisor_for_minutes = secs % (60 * 60);
+  //   let minutes = Math.floor(divisor_for_minutes / 60);
+
+  //   let divisor_for_seconds = divisor_for_minutes % 60;
+  //   let seconds = Math.ceil(divisor_for_seconds);
+
+  //   let obj = {
+  //     h: hours,
+  //     m: minutes,
+  //     s: seconds,
+  //   };
+  //   return obj;
+  // };
 
   const cont = async () => {
     setTimeouts(!timeout);
     setPreload(!preload);
     setSeconds(60);
-    const data = { answer, question_id: questionId}
-    const result = await  http2('/developer/assessment', 'POST', token, data);
+    const data = { answer, questionId: questionId };
+    console.log(answer);
+    const result = await http2('/developer/assessment/questions/' + questionId + "/" + answer, 'POST', token, data);
+    setQuestionsTaken([...questionsTaken, questionId]);
     console.log(result);
-    if (result.status === 1) {
-      setResult(result);
-      let time = result.data.time * 60;
-      setAnswer("");
-      // setQuestionId( result.data.question_id);
-      setSeconds(time);
-      window.scrollTo(0, 0);
-    } else if (result.status === 3) {
-      setResult(true);
-    } else {
-      setAlert(true);
-      setMessage(result.error);
-    }
+    // if (result.status === 1) {
+    //   setResult(result);
+    //   let time = result.data.time * 60;
+    //   setAnswer("");
+    //   // setQuestionId( result.data.question_id);
+    //   setSeconds(time);
+    //   window.scrollTo(0, 0);
+    // } else if (result.status === 3) {
+    //   setResult(true);
+    // } else {
+    //   setAlert(true);
+    //   setMessage(result.error);
+    // }
     setPreload(!preload);
-  };
-
-  // const timeout = () => {
-  //   this.setState({ preload: !this.state.preload });
-  //   localStorage.removeItem('timer');
-  //   const result = http('/api/developer/assessment', this.state);
-  //   this.setState({ timeout: true, preload: !this.state.preload });
-  // };
-
-  const countDown = () => {
-    // Remove one second, set state so a re-render happens.
-    let secs = seconds - 1;
-    setTime(secondsToTime(secs));
-    setSeconds(secs);
-
-    localStorage.setItem('timer', secs);
-    // Check if we're at zero.
-    if (secs === 0) {
-      timeout();
-    }
-  };
-
-  const startTimer = () => {
-    if (timer === 0) {
-      timer = setInterval(countDown, 1000);
-    }
+    getSingleQuestions();
+    // setAnswer("");
   };
 
   const timeout = () => {
-    // this.setState({ preload: !this.state.preload });
+    this.setState({ preload: !this.state.preload });
     localStorage.removeItem('timer');
-    // http('/api/developer/assessment', 'post', data).then(result => {
-    // this.setState({ timeout: true, preload: !this.state.preload });
-    // });
-    setTimeouts(!timeout);
-    setPreload(!preload);
-    setSeconds(60);
+    const result = http('/api/developer/assessment', this.state);
+    this.setState({ timeout: true, preload: !this.state.preload });
   };
 
+  // const countDown = () => {
+  //   // Remove one second, set state so a re-render happens.
+  //   let secs = seconds - 1;
+  //   setTime(secondsToTime(secs));
+  //   setSeconds(secs);
+
+  //   localStorage.setItem('timer', secs);
+  //   // Check if we're at zero.
+  //   if (secs === 0) {
+  //     timeout();
+  //   }
+  // };
+
+  // const startTimer = () => {
+  //   if (timer === 0) {
+  //     timer = setInterval(countDown, 1000);
+  //   }
+  // };
+
+  // const timeout = () => {
+  //   // this.setState({ preload: !this.state.preload });
+  //   localStorage.removeItem('timer');
+  //   // http('/api/developer/assessment', 'post', data).then(result => {
+  //   // this.setState({ timeout: true, preload: !this.state.preload });
+  //   // });
+  //   setTimeouts(!timeout);
+  //   setPreload(!preload);
+  //   setSeconds(60);
+  // };
+
   useEffect(() => {
-    const loadQuestion = async () => {
-      setPreload(!preload);
-      const result = await http('/developer/assessment', 'get', token);
-      // console.log(result); 
-      if (result.status === 1) {
-        setData(result.data);
-        setCurrent(result.current);
-        setTotal(result.total);
-        let time = result.data.time * 60;
-        // setAnswer(""); // What else do we have here?
-        setQuestionId(result.data.question_id); // What else do we have here?
+    // const loadQuestion = async () => {
+    //   setPreload(!preload);
+    //   const result = await http('/developer/assessment', 'get', token);
+    //   // console.log(result, "Result");
+    //   if (result.status === 1) {
+    //     setData(result.data);
+    //     setCurrent(result.current);
+    //     setTotal(result.total);
+    //     let time = result.data.time * 60;
+    //     // setAnswer(""); // What else do we have here?
+    //     setQuestionId(result.data.question_id); // What else do we have here?
 
-        if (localStorage.getItem('timer') > 0) {
-          setSeconds(localStorage.getItem('timer'));
-          let timeLeftVar = secondsToTime(localStorage.getItem('timer'));
-          setTime(timeLeftVar);
-        } else {
-          setSeconds(time);
-          let timeLeftVar = secondsToTime(result.data.time * 60);
-          setTime(timeLeftVar);
-        }
-        startTimer();
-      } else if (result.status === 2) {
-        localStorage.setItem("result", JSON.stringify(result))
-        window.location = '/developer/profile/edit';
-      } else if (result.status === 3) {
-        setResult(true);
-      } else {
-        setAlert(true);
-        setMessage(result.error);
-      }
-      setPreload(!preload);
-    };
+    //     if (localStorage.getItem('timer') > 0) {
+    //       setSeconds(localStorage.getItem('timer'));
+    //       let timeLeftVar = secondsToTime(localStorage.getItem('timer'));
+    //       setTime(timeLeftVar);
+    //     } else {
+    //       setSeconds(time);
+    //       let timeLeftVar = secondsToTime(result.data.time * 60);
+    //       setTime(timeLeftVar);
+    //     }
+    //     startTimer();
+    //   } else if (result.status === 2) {
+    //     localStorage.setItem("result", JSON.stringify(result));
+    //     window.location = '/developer/profile/edit';
+    //   } else if (result.status === 3) {
+    //     setResult(true);
+    //   } else {
+    //     setAlert(true);
+    //     setMessage(result.error);
+    //   }
+    //   setPreload(!preload);
+    // };
 
-    loadQuestion();
-  }, [result]);
+    // loadQuestion();
+    // (async() => {
+    //   const result = await http2('/developer/assessment', 'GET', token);
+    //   console.log(result, "Result");
+    // })()
+  }, []);
 
   // Output after last question
-//{
-//   "status": 2,
-//     "result": {
-//     "percentage": 80,
-//       "point": 8,
-//         "validity": "2023-11-15 08:36:56";
-//   },
-//   "ratings": [
-//     {
-//       "subject": " HTML5",
-//       "percentage": "51.783070919123"
-//     }
-//   ];
-// }
+  //{
+  //   "status": 2,
+  //     "result": {
+  //     "percentage": 80,
+  //       "point": 8,
+  //         "validity": "2023-11-15 08:36:56";
+  //   },
+  //   "ratings": [
+  //     {
+  //       "subject": " HTML5",
+  //       "percentage": "51.783070919123"
+  //     }
+  //   ];
+  // }
 
   return (
     <>
@@ -168,13 +264,13 @@ function Question() {
                     <p>Subject</p>
                   </div>
                   <div className="ml-4 ">
-                    <p className="font-bold">{data.subject}</p>
+                    <p className="font-bold">{question?.technologyName}</p>
                   </div>
                 </div>
                 <div className="px-5 py-8 -mt-8 text-white bg-red-600 rounded-b shadow-lg timer">
                   <p>Time</p>
                   <h6>
-                    {time.m} : {time.s} 
+                    {time.m} : {time.s}
                   </h6>
                 </div>
                 <div className="flex justify-around p-5 mt-10 rounded-md shadow-md subject-section">
@@ -188,38 +284,38 @@ function Question() {
               </div>
               <div
                 className="p-10 mt-10 bg-gray-200 border rounded-md"
-                dangerouslySetInnerHTML={{ __html: data.question }}
+                dangerouslySetInnerHTML={{ __html: question?.question }}
               ></div>
               <div className="mt-6 mb-4 ml-12 border-t-2 border-dashed">
                 <p className="pr-5 -mt-3 -ml-12">Options &nbsp;&nbsp;</p>
               </div>
               <div className="flex flex-wrap justify-between">
                 <div className="w-1/2 ">
-                  <div 
+                  <div
                     onClick={() => { setAnswer("optA"); }}
                     className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optA" ? "bg-red-600 text-white" : ""}`}>
-                    <p>{data.options.optA}</p>
+                    <p>{question?.answers?.optA}</p>
                   </div>
                 </div>
                 <div className="w-1/2 ">
                   <div
                     onClick={() => { setAnswer("optB"); }}
                     className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optB" ? "bg-red-600" : ""}`}>
-                    <p>{data.options.optB}</p>
+                    <p>{question?.answers?.optB}</p>
                   </div>
                 </div>
                 <div className="w-1/2 ">
-                  <div 
+                  <div
                     onClick={() => { setAnswer("optC"); }}
                     className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optC" ? "bg-red-600 text-white" : ""}`}>
-                    <p>{data.options.optC}</p>
+                    <p>{question?.answers?.optC}</p>
                   </div>
                 </div>
                 <div className="w-1/2 ">
-                  <div 
+                  <div
                     onClick={() => { setAnswer("optD"); }}
                     className={`px-4 py-5 mx-3 my-2 transition duration-200 ease-in-out border rounded-md cursor-pointer hover:bg-red-600 hover:text-white ${answer === "optD" ? "bg-red-600 text-white" : ""}`}>
-                    <p>{data.options.optD}</p>
+                    <p>{question?.answers?.optD}</p>
                   </div>
                 </div>
               </div>

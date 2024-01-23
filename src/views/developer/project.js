@@ -256,7 +256,7 @@ function Project() {
                     ongoing ? (
                       <p className="text-sm font-bold">{projectDuration.fromNow()}</p>
                     ) : (
-                      <p className="text-sm font-bold">{`project?.duration`}</p>
+                      <p className="text-sm font-bold">{`${project?.duration}`}</p>
                     )
                   }
                   {/* <p className="mt-2 font-bold">{project?.duration}</p> */}
