@@ -22,7 +22,7 @@ const Information = () => {
   let { email, username, developerId: devId, token } = useAuth();
   console.log(devId);
   const [profile, setProfile] = useState([]);
-  const [github, setGithub] = useState([]);
+  const [github, setGithub] = useState('');
   const [uname, setUsername] = useState(username);
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
@@ -57,7 +57,7 @@ const Information = () => {
     (async () => {
       if (developerId) {
         const data = await fetchNow();
-        console.log(data); 
+        console.log(data);
         setProfile(data?.data);
         setBio(data?.data?.bio);
         setGithub(data?.data?.github);
