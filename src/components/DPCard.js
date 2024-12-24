@@ -37,7 +37,7 @@ const DPCard = ({ userId }) => {
   }] = useUploadDPMutation();
 
   useEffect(() => {
-    setImg(`${process.env.REACT_APP_UPLOADS_URL}/` + dpData?.data.image);
+    setImg(`${process.env.REACT_APP_UPLOADS_URL}/` + dpData?.data?.image);
   }, [isSuccess]);
 
   // console.log(img)
@@ -61,7 +61,7 @@ const DPCard = ({ userId }) => {
   //     // };
   //   });
   // };
-  
+
   const browseImg = async (e) => {
     try {
       const formData = new FormData();
