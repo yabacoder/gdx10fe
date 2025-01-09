@@ -54,8 +54,8 @@ const Nav = () => {
                     </li> */}
 
                             <li className="">
-                                <a href="https://jobs.getdev.co" target="_blank" className="py-2 md:mx-6 font-getdevM">Jobs</a>
-                                {/* <Link to="/jobs" className="py-2 md:mx-6 font-getdevM" > Jobs</Link> */}
+                                {/* <a href="https://jobs.getdev.co" target="_blank" className="py-2 md:mx-6 font-getdevM">Jobs</a> */}
+                                <Link to="/jobs" className="py-2 md:mx-6 font-getdevM" > Jobs</Link>
                             </li>
                             {/* <li className="relative inline-block py-1 mt-1 text-white md:mx-2 dropdown font-getdevM">
                                 <div className="inline-flex items-center bg-red-600">

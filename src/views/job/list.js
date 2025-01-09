@@ -103,7 +103,7 @@ const Joblist = () => {
               <h3 className="font-getdevM text-gdblue">Available Jobs</h3>
               <p className="text-base text-gray-600">
                 {' '}
-                Latest jobs matching your preferrences
+                Latest jobs matching your preferences
               </p>
             </div>
 
