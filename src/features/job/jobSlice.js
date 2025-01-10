@@ -1,11 +1,11 @@
 
-import { apiSlice } from '../../app/api/apiSlice';
+import { apiSlice } from '../../app/api/apiSlice'; 
 
 export const applicationSplice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         loadJobs: builder.query({
             query: (page) => ({
-                url: `/jobs/${page}`,
+                url: `/jobs/recent/${page}`,
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
