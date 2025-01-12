@@ -118,7 +118,7 @@ const JobView = () => {
             <div className="w-full md:hidden">
               <img
 
-                src="https://via.placeholder.com/350"
+                src="https://placeholder.co/350x350"
                 className="rounded-md"
               />
             </div>

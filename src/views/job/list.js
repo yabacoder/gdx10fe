@@ -228,7 +228,7 @@ const Joblist = () => {
                           >
                             <div className="p-2 mr-6 md:w-1/5">
                               <img
-                                src="https://via.placeholder.com/75"
+                                src="https://placehold.co/75x75"
                                 className="w-full rounded-md"
                                 alt='logo'
                               />
