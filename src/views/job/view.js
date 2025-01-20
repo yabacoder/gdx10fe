@@ -118,7 +118,7 @@ const JobView = () => {
             <div className="w-full md:hidden">
               <img
 
-                src="https://via.placeholder.com/350"
+                src="https://placeholder.co/350x350"
                 className="rounded-md"
               />
             </div>
@@ -244,7 +244,7 @@ const JobView = () => {
               </div>
 
               <div className="mt-5 mb-5 hover:cursor-pointer">
-                <Link
+                <button
                   disabled={applied}
                   class={`text-white inline-block w-full p-5 text-center ${applied ? 'bg-gray-600 ' : 'bg-red-600'} shadow-md `}
                   onClick={() => handleApply(id)}
@@ -252,7 +252,7 @@ const JobView = () => {
                   {
                     applied ? 'Already Applied' : 'Apply for this job'
                   }
-                </Link>
+                </button>
               </div>
             </div>
           </div>

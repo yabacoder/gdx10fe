@@ -19,6 +19,7 @@ import {
     useLoadRecentJobsQuery,
     useLoadRelatedJobsQuery
 } from '../../features/developer/jobSlice';
+import { curFormat } from '../../utils/general';
 
 
 const Dashboard = () => {
@@ -84,7 +85,7 @@ const Dashboard = () => {
                             <thead>
                                 <tr className="border-b">
                                     <th className="px-4 py-2 text-sm">Role</th>
-                                    <th className="px-4 py-2 text-sm">Location</th>
+                                    {/* <th className="px-4 py-2 text-sm">Location</th> */}
                                     <th className="px-4 py-2 text-sm">Status</th>
                                 </tr>
                             </thead>
@@ -100,13 +101,18 @@ const Dashboard = () => {
                                 {jobs &&
                                     jobs.map((job, index) => <tr key={index}>
                                         <td className="p-2 text-sm">{job.Job.title} </td>
-                                        <td>{job.Job.location}</td>
+                                        {/* <td>{job.Job.location}</td> */}
                                         <td className="flex items-center pr-2">
                                             {' '}
-                                            <span className="text-4xl text-yellow-500">
+                                            {job.Job.status == 1 ? (<span className="text-4xl text-green-500">
                                                 &bull;
-                                            </span>{' '}
-                                            {job.Job.status}
+                                            </span>) : (
+                                                <span className="text-4xl text-red-500">
+                                                    &bull;
+                                                </span>
+                                            )}
+
+                                            {/* <div className="px-4 tag "> {job.Job.status == 1 ? "Open" : "Closed"}</div> */}
                                         </td>
                                     </tr>)}
                             </tbody>
@@ -119,9 +125,9 @@ const Dashboard = () => {
                         <thead>
                             <tr className="border-b">
                                 <th className="px-4 py-2">Role</th>
-                                <th className="px-4 py-2">Location</th>
+                                {/* <th className="px-4 py-2">Location</th> */}
                                 <th className="px-4 py-2">Salary</th>
-                                <th className="px-4 py-2">Job Type</th>
+                                {/* <th className="px-4 py-2">Job Type</th> */}
                                 <th className="px-4 py-2">Actions</th>
                                 <th className="px-4 py-2">Status</th>
                             </tr>
@@ -138,9 +144,11 @@ const Dashboard = () => {
                                                 {job.title}
                                             </Link>
                                         </td>
-                                        <td>{job.location}</td>
-                                        <td className="px-4 py-2 ">{job.salary}</td>
-                                        <td className="px-4 py-2 ">{job.type}</td>
+                                        {/* <td>{job.location}</td> */}
+                                        <td className="px-4 py-1 text-xs">
+                                            {curFormat.format(job.salary)} - {curFormat.format(job.salary_max)}
+                                        </td>
+                                        {/* <td className="px-4 py-2 ">{job.type}</td> */}
                                         <td className="flex items-center justify-center p-5 actions">
                                             <Link
                                                 className="px-4 py-2 text-sm btn"
@@ -149,7 +157,9 @@ const Dashboard = () => {
                                                 Apply
                                             </Link>
                                         </td>
-                                        <td className="px-4 py-2 ">{job.status}</td>
+                                        <td className="px-4 py-2 ">
+                                            <div className="px-4 tag "> {job.status == 1 ? "Open" : "Closed"}</div>
+                                        </td>
                                     </tr>
                                 ))}
                         </tbody>

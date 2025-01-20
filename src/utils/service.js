@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAccessToken } from './general';
 
 let Authorization = null;
 let token = null; //localStorage.getItem('userInfo')  ? JSON.parse(localStorage.getItem('userInfo')) : '';
@@ -24,6 +25,25 @@ export const baseUrl = process.env.REACT_APP_API_URL;
 // 'localhost'
 //   ? process.env.REACT_APP_API_URL
 //   : 'https://api.getdev.co';
+
+export const getData = async (path) => {
+  const token = getAccessToken();
+  try {
+    const response = await fetch(baseUrl + path, {
+      method: "POST",
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+
+    });
+    // console.log(bd);
+    return response.json();
+  } catch (error) {
+    console.log("Error making call", error);
+  }
+};
 
 export const http3 = async (path, data) => {
   try {

@@ -7,6 +7,7 @@ import {
   useDeletePortfolioMutation,
   useLoadPortfolioQuery
 } from '../../../features/developer/portfolioSlice';
+import {getData } from "../../../utils/service"
 
 const Portfolio = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -22,8 +23,10 @@ const Portfolio = () => {
 
 
   const {
-    data,
-    isSuccess: fetchSuccess
+    data: fetchData,
+    isSuccess: fetchSuccess,
+    isLoading,
+    refetch
   } = useLoadPortfolioQuery();
   // console.log(data, "Fetched data");
 
@@ -31,7 +34,7 @@ const Portfolio = () => {
     isSuccess,
     isError,
     error,
-    isLoading
+    isLoading: addIsLoading
   }] = useAddPortfolioMutation();
 
   const [updatePortfolio, {
@@ -50,16 +53,24 @@ const Portfolio = () => {
 
   useEffect(() => {
     (async () => {
-      setPortfolios(data?.data?.rows);
+      setPortfolios(fetchData?.data?.rows);
     })();
-  }, [fetchSuccess, updateSuccess, deleteSuccess, isSuccess]);
+  }, [fetchSuccess, updateSuccess, deleteSuccess, isSuccess, deleteIsError, refetch]);
 
-  // useEffect(() => {
-  //   // setPortfolio(data?.data);
-  //   setPortfolios(data?.data);
+  useEffect(() => {
+    // setPortfolio(data?.data);
+    setPortfolios(fetchData?.data?.rows);
 
-  // }, []);
+  }, []);
   // console.log(portfolios);
+
+  const getPortfolios = async () => {
+    try {
+      const data = await getData("/developer/portfolio")
+    } catch(error) {
+      
+    }
+  }
 
 
   const processSave = async (e) => {
@@ -72,8 +83,10 @@ const Portfolio = () => {
       } else {
         // Add new
         const { data } = await addPortfolio({ title, url, description }).unwrap();
+        // setPortfolios(data);
+        refetch();
       }
-      console.log(data);
+      // console.log(data);
       setEdit(false);
       setOpenModal(false);
 
@@ -87,7 +100,8 @@ const Portfolio = () => {
     // console.log(id, "The ID");
     try {
       const { data } = await deletePortfolio(id);
-      console.log(data);
+      // setPortfolios([]);
+      // console.log(data);
     } catch (error) {
       console.log(error);
     }

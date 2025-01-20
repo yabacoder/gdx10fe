@@ -33,9 +33,9 @@ const Joblist = () => {
   // console.log(data?.data?.rows);
 
   const fetchJobs = async () => {
-    const response = await http2('/jobs', 'GET');
+    const response = await http2('/jobs/recent', 'GET');
     //do pagination
-    setJobs(response?.data);
+    setJobs(response?.data?.rows);
     console.log(response);
   };
   // totalItems;
@@ -43,8 +43,8 @@ const Joblist = () => {
   // currentPage
   useEffect(() => {
     window.scrollTo(0, 0);
-    // fetchJobs();
-    setJobs(data?.data?.items);
+    fetchJobs();
+    // setJobs(data?.data?.items);
     setActivePage(data?.data?.currentPage);
     setTotalPages(data?.data?.totalPages);
     setTotalItems(data?.data?.totalItems);
@@ -103,7 +103,7 @@ const Joblist = () => {
               <h3 className="font-getdevM text-gdblue">Available Jobs</h3>
               <p className="text-base text-gray-600">
                 {' '}
-                Latest jobs matching your preferrences
+                Latest jobs matching your preferences
               </p>
             </div>
 
@@ -228,7 +228,7 @@ const Joblist = () => {
                           >
                             <div className="p-2 mr-6 md:w-1/5">
                               <img
-                                src="https://via.placeholder.com/75"
+                                src="https://placehold.co/75x75"
                                 className="w-full rounded-md"
                                 alt='logo'
                               />
@@ -389,6 +389,8 @@ const Joblist = () => {
                 pageRangeDisplayed={5}
                 onChange={() => handlePageChange()}
               /> */}
+            {/*
+              
             <ReactPaginate
               className='flex space-x-3'
               breakLabel="..."
@@ -399,6 +401,7 @@ const Joblist = () => {
               previousLabel="< previous"
               renderOnZeroPageCount={null}
             />
+              */}
           </div>
           {/* </div> */}
         </div>

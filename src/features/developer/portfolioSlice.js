@@ -10,14 +10,14 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError;
                 }
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    console.log(data, "Portfolio");
-                } catch (err) {
-                    console.log(err);
-                }
-            },
+            // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            //     try {
+            //         const { data } = await queryFulfilled;
+            //         console.log(data, "Portfolio");
+            //     } catch (err) {
+            //         console.log(err);
+            //     }
+            // },
             providesTags: { type: 'Portfolio' }
         }),
         getPortfolio: builder.query({
@@ -27,7 +27,7 @@ export const portfolioApiSplice = apiSlice.injectEndpoints({
                     return response.status === 200 && !result.isError;
                 }
             }),
-            // invalidatesTags: (result, error, arg) => [
+            // invalidatesTags: (result, error, arg) => [ 
             //     { type: 'Portfolio' }
             // ]
         }),

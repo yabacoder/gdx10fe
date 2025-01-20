@@ -5,7 +5,7 @@ export const jobSplice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         loadJobs: builder.query({
             query: () => ({
-                url: '/jobs',
+                url: '/jobs/recent',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError;
                 }
@@ -54,13 +54,13 @@ export const jobSplice = apiSlice.injectEndpoints({
                 { type: 'Job' }
             ]
         }),
- 
+
     })
 });
 
 export const {
-   useLoadJobQuery,
-   useApplyJobMutation,
-   useLoadRecentJobsQuery,
-   useLoadRelatedJobsQuery
+    useLoadJobQuery,
+    useApplyJobMutation,
+    useLoadRecentJobsQuery,
+    useLoadRelatedJobsQuery
 } = jobSplice;
