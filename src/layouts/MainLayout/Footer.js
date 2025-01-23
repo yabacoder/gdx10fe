@@ -60,9 +60,15 @@ const Footer = () => {
                     <Link to="/about" title="About Us"
                       class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
                       About us
-                    </Link> 
+                    </Link>
                   </li>
 
+                  <li>
+                    <a href="https://blog.getdev.co" title="GetDev Insights"
+                      class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
+                      GetDev Insights
+                    </a>
+                  </li>
                   <li>
                     <Link to="/contact" title="Contact Us"
                       class="flex text-base font-normal transition-all transform text-gray-50 hover:text-white duruation hover:translate-x-1">
@@ -91,7 +97,7 @@ const Footer = () => {
           <hr class="mt-12 border-gray-500 lg:mt-20 xl:mt-24 sm:mt-16" />
 
           <p class="mt-8 text-sm font-normal text-center text-gray-500">
-            © 2024, GetDev Technology
+            © 2025, GetDev Technology
           </p>
         </div>
       </footer>
